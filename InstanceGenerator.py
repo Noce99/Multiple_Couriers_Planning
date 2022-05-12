@@ -13,7 +13,7 @@ for file in os.listdir("./inst"):
   # Splitting the file by rows
   content = text.split('\n')
 
-  # Number of objects to deliver
+  # Number of items to be delivered
   n = int(content[1])
   
   # Delivery coordinates of each object
