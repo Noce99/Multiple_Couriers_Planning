@@ -1,37 +1,34 @@
+% Use this editor as a MiniZinc scratch book
 include "globals.mzn";
 
-predicate my_lex_lesseq_and(array[int] of var int:x, array[int] of var int:y) = 
-  forall(j in 1..length(x))(
-    forall(i in 1..j-1)(x[i] = y[i]) -> x[j] <= y[j]);
-
-predicate my_lex_lesseq_or(array[int] of var int:x, array[int] of var int:y) = 
-  exists(j in 1..length(x))(
-    forall(i in 1..j-1)(x[i] = y[i]) /\
-     if (j = length(x)) then (x[j] <= y[j]) else (x[j] < y[j]) endif);
-
 int: n;
-array[1..n] of var 1..n: q;
+int: m;
+array[1..m] of int: l;
+array[1..n] of int: s;
+array[1..n+1, 1..n+1] of int: D;
 
-constraint alldifferent(q)::domain;
+array[1..m, 1..n] of var 0..n: tour;
+array[1..m, 1..n] of var bool: binary;
 
-% Diagonal Checks
-constraint alldifferent([q[i]+i | i in 1..n])::domain;
-constraint alldifferent([q[i]-i | i in 1..n])::domain;
+% Creates the binary matrix given the tour.
+constraint forall(i in 1..m, j in 1..n)(tour[i, j] > 0 <-> binary[i, j] == 1);
 
-% Dual model
-array[1..n, 1..n] of var bool: qb;
+% TOUR MATRIX CONSTRAINTS
 
-% Chanelling Constraint
-constraint forall(i,j in 1..n)(qb[i,j] <-> q[i]=j);
+% Each sequence must contain different objects.
+constraint forall(i in 1..m)(alldifferent_except_0(tour[i, 1..n]));
+constraint forall(i in 1..m, j in 1..n-1)(tour[i, j] == 0 -> tour[i, j+1] == 0);
 
-% Symmetry Breaking
-constraint 
-my_lex_lesseq_and(array1d(qb), [qb[j,i] | i,j in 1..n]) /\  
-my_lex_lesseq_and(array1d(qb), [qb[i,j] | i in reverse(1..n), j in 1..n]) /\ 
-my_lex_lesseq_and(array1d(qb), [qb[j,i] | i in 1..n, j in reverse(1..n)]) /\ 
-my_lex_lesseq_and(array1d(qb), [qb[i,j] | i in 1..n, j in reverse(1..n)]) /\ 
-my_lex_lesseq_and(array1d(qb), [qb[j,i] | i in reverse(1..n), j in 1..n]) /\ 
-my_lex_lesseq_and(array1d(qb), [qb[i,j] | i,j in reverse(1..n)]) /\
-my_lex_lesseq_and(array1d(qb), [qb[j,i] | i,j in reverse(1..n)]);
+% BINARY MATRIX CONTRAINTS
 
-solve :: int_search(q, first_fail, indomain_min) satisfy;
+% Each object must be contained exactly once in the couriers.
+constraint forall(j in 1..n)(exactly(1, binary[1..m, j], 1));
+
+% Limit to the SIZE (weight) tranported by each courier.
+constraint forall(i in 1..m)(sum(j in 1..n where binary[i, j] == 1)(s[j]) <= l[i]);
+
+solve satisfy;
+
+output[show(tour[1..m, 1..n]) ++ "\n" ++ show(binary[1..m, 1])];
+output[show(sum(j in 1..n where binary[1, j] == 1)(s[j]))]
+
