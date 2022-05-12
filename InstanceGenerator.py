@@ -1,3 +1,5 @@
+# UPLOAD ALL THE INSTANCES IN THE 'Inst' FOLDER, THEN RUN THIS PROGRAM.
+
 import numpy as np
 import os
 
