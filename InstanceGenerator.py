@@ -31,7 +31,7 @@ for file in os.listdir("./Inst"):
       dist[i, j] = dist[j, i] = abs(x[i] - x[j]) + abs(y[i] - y[j])
 
   # Creating a file in the new folder
-  f = open('new_inst/' + file, "w")
+  f = open('new_inst/' + file + '.dzn', "w")
 
   # Writing the new file .dzn of the instance
   f.write('n = ' + content[0] + ';\n')
