@@ -3,10 +3,10 @@ import os
 
 os.mkdir('new_inst')
 
-for file in os.listdir("./inst"):
+for file in os.listdir("./Inst"):
 
   # Reading the file
-  f = open('instances/' + file, "r")
+  f = open('Inst/' + file, "r")
   text = f.read()
   f.close()
 
