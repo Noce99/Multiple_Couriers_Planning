@@ -8,33 +8,29 @@ array[1..n] of int: s;
 array[1..n+1, 1..n+1] of int: D;
 
 array[1..m, 1..n] of var 0..n: tour;
-%array[1..m, 1..n] of var 0..1: binary;
-
-% Creates the binary matrix given the tour.
-
-%constraint forall(i in 1..m, j in 1..n)(tour[i, j] > 0 -> binary[i, tour[i, j]] = 1);
-%constraint forall(i in 1..m, j in 1..n)(binary[i, j] = 1 -> count_eq(row(tour, i), j, 1));
+%array[1..m, 1..n+1] of var 0..max(l): freeLoad;
 
 % TOUR MATRIX CONSTRAINTS
+%constraint forall(i in 1..m)(freeLoad[i, 1] = l[i]);
+%constraint forall(i in 1..m, j in 1..n)(if tour[i, j] > 0 then freeLoad[i, j+1] = freeLoad[i, j] - s[tour[i, j]] else freeLoad[i, j+1] = freeLoad[i, j] endif);
 
 % Each sequence must contain different objects.
-% After a 0 we must have all 0
+constraint alldifferent_except_0(tour);
+constraint nvalue(n+1, tour);
 constraint forall(i in 1..m, j in 1..n-1)(tour[i, j] = 0 -> tour[i, j+1] = 0);
 
-% BINARY MATRIX CONTRAINTS
-
 % Each object must be contained exactly once in the couriers.
-% constraint forall(j in 1..n)(count_eq(col(binary, j), 1, 1));
-constraint nvalue(n+1, tour);
-constraint alldifferent_except_0(tour);
-
+%constraint forall(j in 1..n)(count_eq(tour, j, 1));
 
 % Limit to the SIZE (weight) tranported by each courier.
-constraint forall(i in 1..m)(sum(j in 1..n)(if tour[i, j] > 0 then s[tour[i, j]] else 0 endif) <= l[i]);
+constraint forall(i in 1..m)(sum(j in 1..n where tour[i, j] != 0)(s[tour[i, j]]) <= l[i]);
 
-solve satisfy;
+include "Gecode.mzn";
 
-output[show(tour) ++ "\n"];
-%output[show(sum(j in 1..n where binary[1, j] == 1)(s[j])) ++ "\n"];
-output[show(s) ++ "\n"];
-output[show(l) ++ "\n"];
+solve 
+::int_search(tour, dom_w_deg, indomain_random)
+::restart_luby(250)
+satisfy;
+
+output[show(tour[1..m, 1..n])];
+%output[show(freeLoad)];
