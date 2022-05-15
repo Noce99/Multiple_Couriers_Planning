@@ -1,36 +1,36 @@
-% Use this editor as a MiniZinc scratch book
 include "globals.mzn";
 
 int: n;
 int: m;
 array[1..m] of int: l;
 array[1..n] of int: s;
+
+%array[1..n+1] of int: x;
+%array[1..n+1] of int: y;
+%array[1..n+1, 1..n+1] of int: D = array2d(1..n+1, 1..n+1, [abs(x[i] - x[j]) + abs(y[i] - y[j]) | i, j in 1..n+1]);
+
 array[1..n+1, 1..n+1] of int: D;
 
-array[1..m, 1..n] of var 0..n: tour;
-%array[1..m, 1..n+1] of var 0..max(l): freeLoad;
+int: N = n+1;
+int: E = N*(N-1);
+array[1..E] of int: w = [D[i, j] | i in 1..N, j in 1..N where i != j];
 
-% TOUR MATRIX CONSTRAINTS
-%constraint forall(i in 1..m)(freeLoad[i, 1] = l[i]);
-%constraint forall(i in 1..m, j in 1..n)(if tour[i, j] > 0 then freeLoad[i, j+1] = freeLoad[i, j] - s[tour[i, j]] else freeLoad[i, j+1] = freeLoad[i, j] endif);
+array[1..E] of int: from = [i | i in 1..N, j in 1..N where i != j];
+array[1..E] of int: to = [j | i in 1..N, j in 1..N where i != j];
 
-% Each sequence must contain different objects.
-constraint alldifferent_except_0(tour);
-constraint nvalue(n+1, tour);
-constraint forall(i in 1..m, j in 1..n-1)(tour[i, j] = 0 -> tour[i, j+1] = 0);
+array[1..N] of var bool: ns;
+array[1..E] of var bool: es;
 
-% Each object must be contained exactly once in the couriers.
-%constraint forall(j in 1..n)(count_eq(tour, j, 1));
+var int: dist;
 
-% Limit to the SIZE (weight) tranported by each courier.
-constraint forall(i in 1..m)(sum(j in 1..n where tour[i, j] != 0)(s[tour[i, j]]) <= l[i]);
+constraint bounded_path(N, E, from, to, w, 1, n+1, ns, es, dist);
+%constraint dpath(N, E, from, to, n+1, n+1, ns, es);
+constraint bool2int(ns[7]) = 1;
 
-include "Gecode.mzn";
+solve minimize dist;
 
-solve 
-::int_search(tour, dom_w_deg, indomain_random)
-::restart_luby(250)
-satisfy;
 
-output[show(tour[1..m, 1..n])];
-%output[show(freeLoad)];
+output["From: " ++ show(from[i]) ++ " To: " ++ show(to[i]) ++ " Dist: " ++ show(w[i]) ++ "\n" | i in 1..E];
+output[show(ns) ++ "\n"];
+output[show(es) ++ "\n"];
+output[show(dist) ++ "\n"];
