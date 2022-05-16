@@ -29,15 +29,35 @@ for file in os.listdir("Inst/"):
   for i in range(n+1):
     for j in range(i, n+1):
       dist[i, j] = dist[j, i] = abs(x[i] - x[j]) + abs(y[i] - y[j])
-
+      
+  # Creating w (ordered s)
+  w = [int(L) for L in content[3].split(' ')]
+  w.sort()
+  
+  # Creating length
+  l = [int(L) for L in content[2].split(' ')]
+  length = []
+  for ll in l:
+    sum = 0
+    length_l = 0
+    for ww in w:
+      sum += ww
+      if sum > ll:
+        break
+      length_l += 1
+    length.append(length_l)
+  
   # Creating a file in the new folder
   f = open('new_inst/' + file + '.dzn', "w")
-
+    
   # Writing the new file .dzn of the instance
   f.write('m = ' + content[0] + ';\n')
   f.write('n = ' + content[1] + ';\n')
   f.write('l = ['); f.writelines([str(int(L)) + ', ' for L in content[2].split(' ')]); f.write('];\n')
   f.write('s = ['); f.writelines([str(int(L)) + ', ' for L in content[3].split(' ')]); f.write('];\n')
+  f.write('w = ['); f.writelines([str(L) + ', ' for L in w]); f.write('];\n')
+  f.write('length = ['); f.writelines([str(L) + ', ' for L in length]); f.write('];\n')
+  f.write('max_length = ' + str(max(length)) + ';\n')
   
   # Writing the matrix values in the file
   f.write('D = [|') 
