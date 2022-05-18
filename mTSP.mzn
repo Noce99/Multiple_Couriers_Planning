@@ -55,9 +55,9 @@ constraint circuit(successor);
 constraint redundant_constraint(circuit(predecessor));
 
 % predecessor of start nodes are end nodes
-constraint redundant_constraint(forall(i in START)(predecessor[i] = i+m /\ successor[i+m] = i));
+constraint redundant_constraint(forall(i in START)(predecessor[i] = i+m);
 % successors of end nodes are start nodes
-constraint redundant_constraint(forall(i in END)(successor[i] = i-m /\ predecessor[i-m] = i));
+constraint redundant_constraint(forall(i in END)(successor[i] = i-m);
 
 constraint redundant_constraint(forall(i in NODES)(successor[predecessor[i]] = i));
 constraint redundant_constraint(forall(i in NODES)(predecessor[successor[i]] = i));
@@ -75,7 +75,7 @@ constraint forall(i in END)(courier[i] = i - n - m); %RECALL: END = n+m+1..n+2*m
 constraint forall(i in NODES)(courier[i] = courier[predecessor[i]]);
 
 % Each item is transported by the same Courier of its successor.
-constraint redundant_constraint(forall(i in NODES)(courier[i] = courier[predecessor[i]]));
+constraint redundant_constraint(forall(i in NODES)(courier[i] = courier[successor[i]]));
 
 
 
