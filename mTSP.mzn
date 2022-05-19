@@ -19,29 +19,29 @@ array[ITEMS] of int: s;
 array[1..n+1] of int: x;
 array[1..n+1] of int: y;
 
-% The NODES in the Graph: n (ITEMS) + 2m (Depot) 
+% The NODES in the Graph: n (ITEMS) + 2m (Depot)
 int: N = n + 2*m;
 set of int: NODES = 1..N;
-set of int: DEPOTS = n+1..N;
+set of int: DEPOTS = n+1..N; % last 2*m cells
 set of int: START = n+1..n+m;
 set of int: END = n+m+1..N;
 
 % The Distances between Nodes
-array[NODES, NODES] of int: D = array2d(NODES, NODES, 
+array[NODES, NODES] of int: D = array2d(NODES, NODES,
                             [if j > n /\ i > n then 0
-                             else 
-                             (if j > n then abs(x[i] - x[n+1]) + abs(y[i] - y[n+1]) 
+                             else
+                             (if j > n then abs(x[i] - x[n+1]) + abs(y[i] - y[n+1])
                              else
                              (if i > n then abs(x[n+1] - x[j]) + abs(y[n+1] - y[j])
                              else abs(x[i] - x[j]) + abs(y[i] - y[j]) endif) endif) endif | i, j in NODES]);
-                             
+
 array[NODES] of var NODES: predecessor;
 array[NODES] of var NODES: successor;
 array[NODES] of var COURIERS: courier;
 array[NODES] of var 0..max(l): load;
 array[NODES] of var 0..10000: dist;
 
-var 0..10000: obj;
+var 0..10000: obj; % ?????
 
 
 % =================================================%
@@ -50,14 +50,33 @@ var 0..10000: obj;
 
 % ------ initialization constraints ---- %
 
-% The elements of successor array must define a circuit where successor[i] = j means that j is the successor of i. 
+% The elements of successor array must define a circuit where successor[i] = j means that j is the successor of i.
 constraint circuit(successor);
 constraint redundant_constraint(circuit(predecessor));
 
-% predecessor of start nodes are end nodes
-constraint redundant_constraint(forall(i in START)(predecessor[i] = i+m);
+% predecessor of start nodes are end nodes (Shifting di uno in avanti non sappiamo why!)
+constraint redundant_constraint(
+   forall(k in (n+2..n+m)) (
+     predecessor[k] = k + m - 1
+   )
+);
+
+constraint redundant_constraint(
+   predecessor[n+1] = n+2*m
+);
+% Vecchio constraints
+% constraint redundant_constraint(forall(i in START)(predecessor[i] = i+m);
 % successors of end nodes are start nodes
-constraint redundant_constraint(forall(i in END)(successor[i] = i-m);
+constraint redundant_constraint(
+   forall(k in (n+m+1..n+m+m-1))(
+     successor[k] = k - m + 1
+   )
+);
+
+constraint redundant_constraint(
+   successor[n+m+m] = n+1
+);
+% constraint redundant_constraint(forall(i in END)(successor[i] = i-m);
 
 constraint redundant_constraint(forall(i in NODES)(successor[predecessor[i]] = i));
 constraint redundant_constraint(forall(i in NODES)(predecessor[successor[i]] = i));
@@ -66,16 +85,13 @@ constraint redundant_constraint(forall(i in NODES)(predecessor[successor[i]] = i
 constraint forall(i in START)(courier[i] = i - n);   %RECALL: START = n+1..n+m;
 constraint forall(i in END)(courier[i] = i - n - m); %RECALL: END = n+m+1..n+2*m;
 
-
-
-
 % ------ COURIER CONSTRAINTS ---- %
 
 % Each item is transported by the same Courier of its predecessor.
-constraint forall(i in NODES)(courier[i] = courier[predecessor[i]]);
+constraint forall(i in ITEMS)(courier[i] = courier[predecessor[i]]);
 
 % Each item is transported by the same Courier of its successor.
-constraint redundant_constraint(forall(i in NODES)(courier[i] = courier[successor[i]]));
+constraint redundant_constraint(forall(i in ITEMS)(courier[i] = courier[successor[i]]));
 
 
 
@@ -106,14 +122,14 @@ constraint forall(i in END)(dist[i] = dist[predecessor[i]] + D[predecessor[i], i
 
 obj = sum(i in END)(dist[i]);
 
-solve 
+solve
 :: int_search([predecessor[j] | j in NODES], dom_w_deg, indomain_random, complete)
-::restart_luby(250) 
-satisfy;                                                                                                
-                                                                                                                                                                                                                                                                                                          
+::restart_luby(250)
+minimize obj;
+
 %output["From: " ++ show(i) ++ " To: " ++ show(j) ++ " Dist: " ++ show(D[i, j]) ++ "\n" | i, j in 1..N];
-output[show(predecessor) ++ "\n"]; 
+output[show(predecessor) ++ "\n"];
 output[show(successor) ++ "\n"];
-%output[show(courier) ++ "\n"]; 
-%output[show(dist[END]) ++ "\n"];        
-output[show(obj) ++ "\n"]; 
+%output[show(courier) ++ "\n"];
+%output[show(dist[END]) ++ "\n"];
+output[show(obj) ++ "\n"];

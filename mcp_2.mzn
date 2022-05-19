@@ -23,6 +23,8 @@ constraint nvalue(n+1, tour) :: domain;
 constraint forall(i in 1..m, j in 1..max_length-1)(tour[i, j] = 0 -> tour[i, j+1] = 0);
 % Togliamo della simmetria (corrieri identici)
 constraint forall(i in 1..m, j in i+1..m where l[i] = l[j])(lex_lesseq(row(tour, i), row(tour, j)) :: domain);
+% Togliamo simmetria loop orari e antiorari
+constraint forall(i in 1..m)(lex_lesseq(row(tour, i), [tour[i, j] | j in 1..max_length where tour[i, j] != 0] ++ [0 | j in 1..max_length where tour[i, j] = 0]));
 
 var 2*max(D)..2*sum(D[n+1, 1..n+1]): value;
 %Calcoliamo la distanza totale percorsa
