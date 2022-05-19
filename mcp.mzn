@@ -17,15 +17,21 @@ constraint forall(i in 1..m)(forall(j in (length[i]+1)..max_length)(tour[i, j] =
 
 % Imponiamo che i valori non possano essere ripetuti in tour
 constraint alldifferent_except_0(tour) :: domain;
+
 % Devono comparire tutti i valori
 constraint nvalue(n+1, tour) :: domain;
+
 % Se c'è uno zero sono zero tutti quelli dopo
-constraint forall(i in 1..m, j in 1..max_length-1)(tour[i, j] = 0 -> tour[i, j+1] = 0); %è inutile questo constraint!!!!
+% testate anche voi, ma questo constraint è assolutamente inutile
+% constraint forall(i in 1..m, j in 1..max_length-1)(tour[i, j] = 0 -> tour[i, j+1] = 0);
+
 % I corrieri non devono superare il peso massimo
 array[1..m] of var 0..1000: occuped_l = [sum(j in 1..max_length where tour[i, j] != 0)(s[tour[i, j]]) | i in 1..m];
 constraint forall(i in 1..m)(occuped_l[i] <= l[i]);
+
 % Togliamo della simmetria (corrieri identici)
 constraint forall(i in 1..m, j in i+1..m where l[i] = l[j])(lex_lesseq(row(tour, i), row(tour, j)) :: domain);
+
 % Togliamo simmetria loop orari e antiorari
 % Noto un piccolo peggioramento delle prestazioni che è il prezzo da pagare per ridurre lo spazio di ricerca
 % Se si vuole cavare basta commentare le seguenti 3 righe!
@@ -35,8 +41,6 @@ constraint forall(i in 1..m)(lex_lesseq(row(tour, i), row(tour_reverse, i)));
 
 % Testing !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 %constraint forall(i in 1..m-1)(occuped_l[i] >= occuped_l[i+1]);
-
-
 
 var 2*max(D)..2*sum(D[n+1, 1..n+1]): value;
 %Calcoliamo la distanza totale percorsa
