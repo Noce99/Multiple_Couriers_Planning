@@ -20,7 +20,7 @@ constraint alldifferent_except_0(tour) :: domain;
 % Devono comparire tutti i valori
 constraint nvalue(n+1, tour) :: domain;
 % Se c'è uno zero sono zero tutti quelli dopo
-constraint forall(i in 1..m, j in 1..max_length-1)(tour[i, j] = 0 -> tour[i, j+1] = 0);
+constraint forall(i in 1..m, j in 1..max_length-1)(tour[i, j] = 0 -> tour[i, j+1] = 0); %è inutile questo constraint!!!!
 % I corrieri non devono superare il peso massimo
 array[1..m] of var 0..1000: occuped_l = [sum(j in 1..max_length where tour[i, j] != 0)(s[tour[i, j]]) | i in 1..m];
 constraint forall(i in 1..m)(occuped_l[i] <= l[i]);
@@ -34,7 +34,7 @@ array[1..m, 1..max_length] of var 0..n: tour_reverse = array2d(1..m , 1..max_len
 constraint forall(i in 1..m)(lex_lesseq(row(tour, i), row(tour_reverse, i)));
 
 % Testing !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-constraint forall(i in 1..m-1)(occuped_l[i] >= occuped_l[i+1]);
+%constraint forall(i in 1..m-1)(occuped_l[i] >= occuped_l[i+1]);
 
 
 
