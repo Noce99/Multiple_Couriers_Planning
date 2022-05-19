@@ -21,6 +21,9 @@ constraint alldifferent_except_0(tour) :: domain;
 constraint nvalue(n+1, tour) :: domain;
 % Se c'è uno zero sono zero tutti quelli dopo
 constraint forall(i in 1..m, j in 1..max_length-1)(tour[i, j] = 0 -> tour[i, j+1] = 0);
+% I corrieri non devono superare il peso massimo
+array[1..m] of var 0..1000: occuped_l = [sum(j in 1..max_length where tour[i, j] != 0)(s[tour[i, j]]) | i in 1..m];
+constraint forall(i in 1..m)(occuped_l[i] <= l[i]);
 % Togliamo della simmetria (corrieri identici)
 constraint forall(i in 1..m, j in i+1..m where l[i] = l[j])(lex_lesseq(row(tour, i), row(tour, j)) :: domain);
 % Togliamo simmetria loop orari e antiorari
@@ -29,6 +32,11 @@ constraint forall(i in 1..m, j in i+1..m where l[i] = l[j])(lex_lesseq(row(tour,
 array[1..m] of var 0..max_length: not_zero_el = [sum(j in 1..max_length where tour[i, j] != 0)(1) | i in 1..m];
 array[1..m, 1..max_length] of var 0..n: tour_reverse = array2d(1..m , 1..max_length, [if j <= not_zero_el[i] then tour[i, not_zero_el[i] - j + 1] else 0 endif| i in 1..m, j in 1..max_length]);
 constraint forall(i in 1..m)(lex_lesseq(row(tour, i), row(tour_reverse, i)));
+
+% Testing !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+constraint forall(i in 1..m-1)(occuped_l[i] >= occuped_l[i+1]);
+
+
 
 var 2*max(D)..2*sum(D[n+1, 1..n+1]): value;
 %Calcoliamo la distanza totale percorsa
@@ -43,4 +51,6 @@ output["Tour: \n"];
 output[show(tour[i, 1..max_length]) ++ "\n" | i in 1..m];
 %output["Reverse Tour: \n"];
 %output[show(tour_reverse[i, 1..max_length]) ++ "\n" | i in 1..m];
+output["Occuped_l:\n"];
+output[show(occuped_l) ++ "\n"];
 output[show(value) ++ "\n"];
