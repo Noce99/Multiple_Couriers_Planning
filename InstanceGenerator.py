@@ -3,7 +3,7 @@
 import numpy as np
 import os
 
-os.mkdir('new_inst')
+os.mkdir('tsp_inst')
 
 for file in os.listdir("Inst/"):
 
@@ -48,7 +48,7 @@ for file in os.listdir("Inst/"):
     length.append(length_l)
 
   # Creating a file in the new folder
-  f = open('new_inst/' + file + '.dzn', "w")
+  f = open('tsp_inst/' + file + '.dzn', "w")
 
   # Writing the new file .dzn of the instance
   f.write('m = ' + content[0] + ';\n')

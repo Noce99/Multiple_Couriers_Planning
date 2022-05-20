@@ -2,8 +2,37 @@
 
 import numpy as np
 import os
+import math
 
-os.mkdir('new_inst')
+def binary_number_with_N_digits(N):
+    NUM_OF_INT = 1
+    for i in range(N):
+        NUM_OF_INT += 2**i
+    binary_list = np.zeros(shape=(NUM_OF_INT, N), dtype=int)
+    for i in range(1, NUM_OF_INT):
+        if binary_list[i-1][0] == 1:
+            carry = 1
+            binary_list[i][0] = 0
+        else:
+            binary_list[i][0] = 1
+            carry = 0
+        for j in range(1, N):
+            if binary_list[i-1][j] == 0:
+                if carry == 0:
+                    binary_list[i][j] = 0
+                else:
+                    binary_list[i][j] = 1
+                    carry = 0
+            else:
+                if carry == 0:
+                    binary_list[i][j] = 1
+                else:
+                    binary_list[i][j] = 0
+                    carry = 1
+    return binary_list
+
+
+os.mkdir('mcp_inst')
 
 for file in os.listdir("Inst/"):
 
@@ -17,6 +46,7 @@ for file in os.listdir("Inst/"):
 
   # Number of objects to deliver
   n = int(content[1])
+  m = int(content[0])
 
   # Delivery coordinates of each object
   x = [int(el) for el in content[4].split(' ')]
@@ -50,7 +80,7 @@ for file in os.listdir("Inst/"):
     length.append(length_l)
 
   # Creating a file in the new folder
-  f = open('new_inst/' + file + '.dzn', "w")
+  f = open('mcp_inst/' + file + '.dzn', "w")
 
   # Writing the new file .dzn of the instance
   f.write('m = ' + content[0] + ';\n')
@@ -66,6 +96,16 @@ for file in os.listdir("Inst/"):
   for i in range(n+1):
     for j in range(n+1):
       f.write(str(dist[i, j]) + ', ')
+    f.write('|')
+  f.write('];\n')
+
+  # Writing all reverse raw combination matrix
+  binary_list = binary_number_with_N_digits(m)
+  f.write('num_raw_combination = ' + str(len(binary_list)) + ';\n')
+  f.write('raw_combination = [|')
+  for i in range(len(binary_list)):
+    for j in range(m):
+      f.write(str(binary_list[i, j]) + ', ')
     f.write('|')
   f.write('];\n')
 
