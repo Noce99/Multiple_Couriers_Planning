@@ -38,8 +38,8 @@ array[NODES, NODES] of int: D = array2d(NODES, NODES,
 array[NODES] of var NODES: predecessor;
 array[NODES] of var NODES: successor;
 array[NODES] of var COURIERS: courier;
-array[NODES] of var 0..max(l): load;
-array[NODES] of var 0..10000: dist;
+%array[NODES] of var 0..max(s): load;
+array[COURIERS] of var 0..5000: dist;
 
 var 0..10000: obj; % ?????
 
@@ -99,37 +99,61 @@ constraint redundant_constraint(forall(i in ITEMS)(courier[i] = courier[successo
 % ------ LOAD CONSTRAINTS ---- %
 
 % Starting Load = 0. (Consider the inverse... like if we have to pickup the objects!)
-constraint forall(i in START)(load[i] = 0);
+%constraint forall(i in START)(load[i] = 0);
 
 % Ending load <= maximum for that Courier.
-constraint forall(i in END)(load[i] <= l[i-n-m]);
+%constraint forall(i in END)(load[i] <= l[i-n-m]);
 
 % Each item that is picked up (delivered) increase the weight of the load.
-constraint forall(i in ITEMS)(load[i] = load[predecessor[i]] + s[i]);
+%constraint forall(i in ITEMS)(load[i] = load[predecessor[i]] + s[i]);
 
 % Each Courier terminates with the load at the last pick up (delivery).
-constraint forall(i in END)(load[i] = load[predecessor[i]]);
+%constraint forall(i in END)(load[i] = load[predecessor[i]]);
 
+constraint forall(i in COURIERS)(sum(j in ITEMS where courier[j] = i)(s[j]) <= l[i]);
 
+array[COURIERS] of var int: peso;
+constraint forall(i in COURIERS)(sum(j in ITEMS where courier[j] = i)(s[j]) = peso[i]);
+
+constraint forall(i in COURIERS)(sum(j in NODES where courier[j] = i)(D[i, successor[i]]) = dist[i]);
+
+%constraint count_eq(courier, 2, 2);
 
 % ------ DISTANCE CONSTRAINTS ---- %
-constraint forall(i in START)(dist[i] = 0);
+%constraint forall(i in START)(dist[i] = 0);
 
-constraint forall(i in ITEMS)(dist[i] = dist[predecessor[i]] + D[predecessor[i], i]);
+%constraint forall(i in ITEMS)(dist[i] = dist[predecessor[i]] + D[predecessor[i], i]);
 
-constraint forall(i in END)(dist[i] = dist[predecessor[i]] + D[predecessor[i], i]);
+%constraint forall(i in END)(dist[i] = dist[predecessor[i]] + D[predecessor[i], i]);
 
 
-obj = sum(i in END)(dist[i]);
+%constraint obj = sum(i in END)(dist[i]);
+constraint obj = sum(dist);
 
-solve
-:: int_search([predecessor[j] | j in NODES], dom_w_deg, indomain_random, complete)
+% solve :: seq_search([int_search(courier, first_fail, indomain_max, complete),
+%                int_search([successor[j] | j in NODES], dom_w_deg, indomain_min, complete),
+%                int_search([dist[j] | j in NODES],first_fail, indomain_min, complete),
+%                int_search([load[j] | j in NODES], first_fail, indomain_min, complete)
+%               ])   
+% ::restart_luby(250)
+% satisfy;
+
+solve :: seq_search([int_search(courier, first_fail, indomain_random, complete),
+int_search([successor[j] | j in NODES], dom_w_deg, indomain_random, complete)
+              ])   
 ::restart_luby(250)
 minimize obj;
 
+% solve
+% :: int_search([predecessor[j] | j in NODES], dom_w_deg, indomain_min, complete)
+% ::restart_luby(250)
+% minimize obj;
+
 %output["From: " ++ show(i) ++ " To: " ++ show(j) ++ " Dist: " ++ show(D[i, j]) ++ "\n" | i, j in 1..N];
-output[show(predecessor) ++ "\n"];
+%output[show(predecessor) ++ "\n"];
 output[show(successor) ++ "\n"];
-%output[show(courier) ++ "\n"];
-%output[show(dist[END]) ++ "\n"];
+output[show(courier) ++ "\n"];
+output[show(peso) ++ "\n"];
 output[show(obj) ++ "\n"];
+
+%output[forall(c in COURIERS, i in ITEMS where courier[i] = c)(show(i))];
