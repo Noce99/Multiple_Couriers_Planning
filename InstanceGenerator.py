@@ -137,5 +137,9 @@ for file in os.listdir("Inst/"):
     f.write('|')
   f.write('];\n')
   """
+  if (file == "inst_banale"):
+      for i in range(n+1):
+          print([dist[i, j] for j in range(n+1)])
+      print("\n")
   # Closing the new file
   f.close()
