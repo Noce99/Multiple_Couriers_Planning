@@ -4,6 +4,8 @@ include "globals.mzn";
 int: n;
 set of int: ITEMS = 1..n;
 
+int: min_couriers;
+int: lower_bound;
 % The number of Couriers
 int: m;
 set of int: COURIERS = 1..m;

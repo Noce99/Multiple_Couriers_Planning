@@ -111,12 +111,14 @@ constraint redundant_constraint(forall(i in ITEMS)(courier[i] = courier[successo
 % Each Courier terminates with the load at the last pick up (delivery).
 %constraint forall(i in END)(load[i] = load[predecessor[i]]);
 
-constraint forall(i in COURIERS)(sum(j in ITEMS where courier[j] = i)(s[j]) <= l[i]);
+% constraint forall(i in COURIERS)(sum(j in ITEMS where courier[j] = i)(s[j]) <= l[i]);
 
 array[COURIERS] of var int: peso = [sum(j in ITEMS where courier[j] = i)(s[j]) | i in COURIERS];
+constraint forall(i in COURIERS)(peso[i] <= l[i]);
+
 % constraint forall(i in 1..m-1)(peso[i] >= peso[i+1]);
 
-array[COURIERS] of var 0..5000: dist = [(sum(j in NODES where courier[j] = i)(D[i, successor[i]])) | i in COURIERS];
+array[COURIERS] of var 0..5000: dist = [(sum(j in NODES where courier[j] = i)(D[j, successor[j]])) | i in COURIERS];
 % constraint forall(i in COURIERS)(sum(j in NODES where courier[j] = i)(D[i, successor[i]]) = dist[i]);
 
 %constraint count_eq(courier, 2, 2);
