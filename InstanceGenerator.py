@@ -3,6 +3,54 @@
 import numpy as np
 import os
 
+# Prim's Algorithm in Python
+def prim(G):
+
+  INF = 9999999
+  # number of vertices in graph
+  V = G.shape[0]
+
+  tot = 0
+
+  # create a array to track selected vertex
+  # selected will become true otherwise false
+  selected = np.zeros(shape=(G.shape[0],))
+  # set number of edge to 0
+  no_edge = 0
+  # the number of egde in minimum spanning tree will be
+  # always less than(V - 1), where V is number of vertices in
+  # graph
+  # choose 0th vertex and make it true
+  selected[0] = True
+  # print for edge and weight
+
+  while (no_edge < V - 1):
+      # For every vertex in the set S, find the all adjacent vertices
+      #, calculate the distance from the vertex selected at step 1.
+      # if the vertex is already in the set S, discard it otherwise
+      # choose another vertex nearest to selected vertex  at step 1.
+      minimum = INF
+      x = 0
+      y = 0
+      for i in range(V):
+          if selected[i]:
+              for j in range(V):
+                  if ((not selected[j]) and G[i][j]):
+                      # not in selected and there is an edge
+                      if minimum > G[i][j]:
+                          minimum = G[i][j]
+                          x = i
+                          y = j
+
+      selected[y] = True
+      tot += minimum
+      no_edge += 1
+
+  return tot
+
+
+
+
 os.mkdir('tsp_inst')
 
 for file in os.listdir("Inst/"):
@@ -30,12 +78,18 @@ for file in os.listdir("Inst/"):
     for j in range(i, n+1):
       dist[i, j] = dist[j, i] = abs(x[i] - x[j]) + abs(y[i] - y[j])
 
+  lst = list(dist[-1, :-1])
+  min_deposit_dist = lst.pop(np.argmin(lst)) + lst.pop(np.argmin(lst))
+  lower_bound = prim(dist[:-1, :-1]) + min_deposit_dist
+
   # Creating w (ordered s)
   w = [int(L) for L in content[3].split(' ')]
   w.sort()
 
   # Creating length
   l = [int(L) for L in content[2].split(' ')]
+  l.sort()
+  l.reverse()
   length = []
   for ll in l:
     sum = 0
@@ -47,16 +101,29 @@ for file in os.listdir("Inst/"):
       length_l += 1
     length.append(length_l)
 
+  capacity = l.copy()
+  while len(w) > 0:
+      obj = w.pop(0)
+      for idx, c in enumerate(capacity):
+          if c >= obj:
+              capacity[idx] -= obj
+              break
+
+  min_couriers = np.sum(np.array(capacity) - np.array(l) != 0)
+
+
   # Creating a file in the new folder
   f = open('tsp_inst/' + file + '.dzn', "w")
 
   # Writing the new file .dzn of the instance
   f.write('m = ' + content[0] + ';\n')
   f.write('n = ' + content[1] + ';\n')
-  f.write('l = ['); f.writelines([str(int(L)) + ', ' for L in content[2].split(' ')]); f.write('];\n')
+  f.write('l = ['); f.writelines([str(L) + ', ' for L in l]); f.write('];\n')
   f.write('s = ['); f.writelines([str(int(L)) + ', ' for L in content[3].split(' ')]); f.write('];\n')
   f.write('x = ['); f.writelines([str(L) + ', ' for L in x]); f.write('];\n')
   f.write('y = ['); f.writelines([str(L) + ', ' for L in y]); f.write('];\n')
+  f.write('min_couriers = ' + str(min_couriers) + ';\n')
+  f.write('lower_bound = ' + str(lower_bound) + ';\n')
   #f.write('w = ['); f.writelines([str(L) + ', ' for L in w]); f.write('];\n')
   #f.write('length = ['); f.writelines([str(L) + ', ' for L in length]); f.write('];\n')
   #f.write('max_length = ' + str(max(length)) + ';\n')

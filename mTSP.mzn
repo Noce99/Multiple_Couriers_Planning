@@ -5,6 +5,10 @@ include "circuit.mzn";
 int: n;
 set of int: ITEMS = 1..n;
 
+
+int: min_couriers;
+int: lower_bound;
+
 % The number of Couriers
 int: m;
 set of int: COURIERS = 1..m;
@@ -39,9 +43,6 @@ array[NODES] of var NODES: predecessor;
 array[NODES] of var NODES: successor;
 array[NODES] of var COURIERS: courier;
 %array[NODES] of var 0..max(s): load;
-array[COURIERS] of var 0..5000: dist;
-
-var 0..10000: obj; % ?????
 
 
 % =================================================%
@@ -54,7 +55,7 @@ var 0..10000: obj; % ?????
 constraint circuit(successor);
 constraint redundant_constraint(circuit(predecessor));
 
-% predecessor of start nodes are end nodes (Shifting di uno in avanti non sappiamo why!)
+% predecessor of start nodes are end nodes
 constraint redundant_constraint(
    forall(k in (n+2..n+m)) (
      predecessor[k] = k + m - 1
@@ -112,10 +113,11 @@ constraint redundant_constraint(forall(i in ITEMS)(courier[i] = courier[successo
 
 constraint forall(i in COURIERS)(sum(j in ITEMS where courier[j] = i)(s[j]) <= l[i]);
 
-array[COURIERS] of var int: peso;
-constraint forall(i in COURIERS)(sum(j in ITEMS where courier[j] = i)(s[j]) = peso[i]);
+array[COURIERS] of var int: peso = [sum(j in ITEMS where courier[j] = i)(s[j]) | i in COURIERS];
+% constraint forall(i in 1..m-1)(peso[i] >= peso[i+1]);
 
-constraint forall(i in COURIERS)(sum(j in NODES where courier[j] = i)(D[i, successor[i]]) = dist[i]);
+array[COURIERS] of var 0..5000: dist = [(sum(j in NODES where courier[j] = i)(D[i, successor[i]])) | i in COURIERS];
+% constraint forall(i in COURIERS)(sum(j in NODES where courier[j] = i)(D[i, successor[i]]) = dist[i]);
 
 %constraint count_eq(courier, 2, 2);
 
@@ -128,19 +130,26 @@ constraint forall(i in COURIERS)(sum(j in NODES where courier[j] = i)(D[i, succe
 
 
 %constraint obj = sum(i in END)(dist[i]);
-constraint obj = sum(dist);
+var 0..10000: obj = sum(dist);
 
 % solve :: seq_search([int_search(courier, first_fail, indomain_max, complete),
 %                int_search([successor[j] | j in NODES], dom_w_deg, indomain_min, complete),
 %                int_search([dist[j] | j in NODES],first_fail, indomain_min, complete),
 %                int_search([load[j] | j in NODES], first_fail, indomain_min, complete)
-%               ])   
+%               ])
 % ::restart_luby(250)
 % satisfy;
 
+
+% Simmetrie
+array[NODES] of var NODES: successor_reverse = [predecessor[i] | i in NODES];
+% array[NODES] of var NODES: predecessor_reverse = [successor[i] | i in NODES];
+constraint forall(i in COURIERS)(lex_lesseq(successor, [if courier[j] = i then successor_reverse[j] else successor[j] endif| j in NODES]));
+constraint forall(i1 in COURIERS, i2 in i1+1..m where l[i1] = l[i2])(lex_lesseq(courier, [if courier[j] = i1 then i2 elseif courier[j] = i2 then i1 else courier[j] endif| j in ITEMS]));
+
 solve :: seq_search([int_search(courier, first_fail, indomain_random, complete),
 int_search([successor[j] | j in NODES], dom_w_deg, indomain_random, complete)
-              ])   
+              ])
 ::restart_luby(250)
 minimize obj;
 
