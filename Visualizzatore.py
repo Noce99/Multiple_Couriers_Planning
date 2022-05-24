@@ -16,8 +16,8 @@ import matplotlib.pyplot as plt
 lines = []
 with open('input_visualizer.txt') as f:
     lines = f.readlines()
-lines[0] = [int(el)*5 for el in lines[0].split(' ')]
-lines[1] = [int(el)*5 for el in lines[1].split(' ')]
+lines[0] = [int(el) for el in lines[0].split(' ')]
+lines[1] = [int(el) for el in lines[1].split(' ')]
 lines[3] = lines[3][1:]
 lines[3] = lines[3][:-2]
 lines[3] = [int(el) for el in lines[3].split(', ')]
@@ -40,15 +40,50 @@ map = np.ones(shape=(max_dim, max_dim))*255
 
 # Creating POINTS on the map
 for i in range(len(x)):
-    cv2.circle(map, (x[i],y[i]), radius=10, color=(0, 0, 255), thickness=-1)
-"""
+    plt.gca().add_patch(plt.Circle((x[i],y[i]), 0.1, color='r'))
+
+
 start = len(x)-1
 current = start
-next = succesor[start]
+next = succesor[start] - 1
+x1s = []
+y1s = []
+x2s = []
+y2s = []
+# print("start: ", start)
+# print("next: ", next)
+color_i = 1
+color = 'C1'
 while next != start:
-    cv2.line(map, (x[current], y[current]), (x[next], y[next]), color=(0, 255, 0), thickness=1)
+    if current <=  len(x)-1:
+        wcurrent = current
+    else:
+        wcurrent = len(x)-1
+        color_i += 1
+        color = 'C'+str(color_i)
+        plt.quiver(x1s, y1s, x2s, y2s, angles='xy', scale_units='xy', color=[color], scale=1, width=0.001)
+        x1s.clear()
+        y1s.clear()
+        x2s.clear()
+        y2s.clear()
+    if next <=  len(x)-1:
+        wnext = next
+    else:
+        wnext = len(x)-1
+    x1s.append(x[wcurrent])
+    y1s.append(y[wcurrent])
+    x2s.append(x[wnext]-x[wcurrent])
+    y2s.append(y[wnext]-y[wcurrent])
+    # print((x[current], y[current], x[next], y[next]))
+    # plt.plot(x[current], y[current], x[next], y[next], marker = 'o')
     current = next
-    next = succesor[next]
-"""
-plt.imshow(map)
+    next = succesor[next] - 1
+    # print("current: ", current)
+    # print("next: ", next)
+color_i += 1
+color = 'C'+str(color_i)
+plt.quiver(x1s, y1s, x2s, y2s, angles='xy', scale_units='xy', color=[color], scale=1, width=0.001)
+plt.xlim(min(x)-2,max(x)+2)
+plt.ylim(min(y)-2,max(y)+2)
+plt.grid()
 plt.show()
