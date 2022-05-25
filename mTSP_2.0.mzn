@@ -118,9 +118,3 @@ output[show(peso) ++ "\n"];
 output[show(obj) ++ "\n"];
 
 %output[if fix(courier[i]) == c then show(i) ++ "->" ++ show(successor[i]) ++ " - " else "" endif ++ if i == N then "\n" else "" endif | c in COURIERS, i in reverse(NODES)];
-                            
-% Simmetrie
-%array[NODES] of var NODES: successor_reverse = [successor[i] | i in NODES];
-% array[NODES] of var NODES: predecessor_reverse = [successor[i] | i in NODES];
-%constraint forall(i in COURIERS)(lex_lesseq(successor, [if courier[j] = i then successor_reverse[j] else successor[j] endif| j in NODES]));
-constraint forall(i1 in COURIERS, i2 in i1+1..m where l[i1] = l[i2])(lex_lesseq(courier, [if courier[j] = i1 then i2 elseif courier[j] = i2 then i1 else courier[j] endif| j in ITEMS]));
