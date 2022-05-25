@@ -3,10 +3,9 @@ include "circuit.mzn";
 
 % The number of Items
 int: n;
-set of int: ITEMS = 1..n;
-
-%int: min_couriers;
+% int: min_couriers;
 int: lower_bound;
+set of int: ITEMS = 1..n;
 
 % The number of Couriers
 int: m;

@@ -124,7 +124,7 @@ for file in os.listdir("Inst/"):
   f.write('x = ['); f.writelines([str(L) + ', ' for L in x]); f.write('];\n')
   f.write('y = ['); f.writelines([str(L) + ', ' for L in y]); f.write('];\n')
   #f.write('min_couriers = ' + str(min_couriers) + ';\n')
-  f.write('lower_bound = ' + str(lower_bound) + ';\n')
+  f.write('% lower_bound = ' + str(lower_bound) + ';\n')
   #f.write('w = ['); f.writelines([str(L) + ', ' for L in w]); f.write('];\n')
   f.write('length = ['); f.writelines([str(L) + ', ' for L in length]); f.write('];\n')
   #f.write('max_length = ' + str(max(length)) + ';\n')
