@@ -110,22 +110,23 @@ for file in os.listdir("Inst/"):
               break
 
   min_couriers = np.sum(np.array(capacity) - np.array(l) != 0)
-
+  l = l[:min_couriers]
+  length = length[:min_couriers]
 
   # Creating a file in the new folder
   f = open('tsp_inst/' + file + '.dzn', "w")
 
   # Writing the new file .dzn of the instance
-  f.write('m = ' + content[0] + ';\n')
+  f.write('m = ' + str(min_couriers) + ';\n')
   f.write('n = ' + content[1] + ';\n')
   f.write('l = ['); f.writelines([str(L) + ', ' for L in l]); f.write('];\n')
   f.write('s = ['); f.writelines([str(int(L)) + ', ' for L in content[3].split(' ')]); f.write('];\n')
   f.write('x = ['); f.writelines([str(L) + ', ' for L in x]); f.write('];\n')
   f.write('y = ['); f.writelines([str(L) + ', ' for L in y]); f.write('];\n')
-  f.write('min_couriers = ' + str(min_couriers) + ';\n')
+  #f.write('min_couriers = ' + str(min_couriers) + ';\n')
   f.write('lower_bound = ' + str(lower_bound) + ';\n')
   #f.write('w = ['); f.writelines([str(L) + ', ' for L in w]); f.write('];\n')
-  #f.write('length = ['); f.writelines([str(L) + ', ' for L in length]); f.write('];\n')
+  f.write('length = ['); f.writelines([str(L) + ', ' for L in length]); f.write('];\n')
   #f.write('max_length = ' + str(max(length)) + ';\n')
 
   # Writing the matrix values in the file
