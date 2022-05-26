@@ -53,6 +53,13 @@ constraint forall(k in COURIERS)(sum(i in NODES, j in ITEMS)(table[i, j, k]*s[j]
 % Lento ma va
 array[NODES] of var 0..N+1: u;
 constraint forall(i, j in ITEMS, k in COURIERS where table[i, j, k] != 0)(u[j] > u[i]);
+
+% Percorsi in senso inverso
+constraint lex_lesseq(array1d(table), [table[j, i, k] | i, j in NODES, k in COURIERS]);
+
+constraint forall(k1 in 1..(m-1), k2 in (k1+1)..m where l[k1] = l[k2])(lex_lesseq(array1d(table), [if k = k1 then table[i, j, k2] elseif k = k2 then table[i, j, k1] else table[i, j, k] endif| i, j in NODES, k in COURIERS]));
+
+% Ricky matto:
 % constraint u[n+1] = 0;
 % constraint forall(i, j in 1..n, k in COURIERS)(table[i, j, k] + table[j, i, k] <= 1);
 % constraint forall(i in NODES, j in 1..n, k in COURIERS)(table[i, j, k] = 1 -> u[j] = u[i] + 1);
@@ -67,5 +74,5 @@ solve minimize obj;
 output["["];
 output[if i = 1 /\ j = 1 then "[" else "" endif ++ if j = 1 then "[" else "" endif ++ show(table[i, j, k]) ++ if j = N then "]," else "," endif ++ if j = N /\ i = N then "]," else "" endif | k in COURIERS, i in NODES, j in NODES];
 output["]\n"];
-output[show(u) ++ "\n"];
+% output[show(u) ++ "\n"];
 output[show(obj) ++ "\n"];
