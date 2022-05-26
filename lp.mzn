@@ -51,7 +51,7 @@ constraint forall(k in COURIERS)(sum(i in NODES, j in ITEMS)(table[i, j, k]*s[j]
 % constraint forall(k in COURIERS, i in 1..n)(u[k, i] = 2 \/ u[k, i] = 0);
 
 % Lento ma va
-array[NODES] of var 0..N: u;
+array[NODES] of var 0..N+1: u;
 constraint forall(i, j in ITEMS, k in COURIERS where table[i, j, k] != 0)(u[j] > u[i]);
 % constraint u[n+1] = 0;
 % constraint forall(i, j in 1..n, k in COURIERS)(table[i, j, k] + table[j, i, k] <= 1);
