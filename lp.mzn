@@ -54,18 +54,29 @@ constraint forall(k in COURIERS)(sum(i in NODES, j in ITEMS)(table[i, j, k]*s[j]
 array[NODES] of var 0..N+1: u;
 constraint forall(i, j in ITEMS, k in COURIERS where table[i, j, k] != 0)(u[j] > u[i]);
 
+% Altri esperimenti
+% array[NODES, NODES, COURIERS] of var 0..1: b1;
+% array[NODES, NODES, COURIERS] of var 0..1: b2;
+% constraint forall(i, j in ITEMS, k in COURIERS)(table[i, j, k] <= 1 - b1[i, j, k]);
+% constraint forall(i, j in ITEMS, k in COURIERS)(u[j] - u[i] <= (N+1)*(1 - b2[i, j, k]));
+% constraint forall(i, j in ITEMS, k in COURIERS)(b1[i, j, k] + b2[i, j, k] >= 1);
+
+
 % Percorsi in senso inverso
 constraint lex_lesseq(array1d(table), [table[j, i, k] | i, j in NODES, k in COURIERS]);
 
 constraint forall(k1 in 1..(m-1), k2 in (k1+1)..m where l[k1] = l[k2])(lex_lesseq(array1d(table), [if k = k1 then table[i, j, k2] elseif k = k2 then table[i, j, k1] else table[i, j, k] endif| i, j in NODES, k in COURIERS]));
 
+%constraint forall(k1 in 1..(m-1), k2 in (k1+1)..m where l[k1] = l[k2])(
+%            (sum(i in NODES, j in ITEMS)(table[i, j, k1]*s[j]) >= sum(i in NODES, j in ITEMS)(table[i, j, k2]*s[j])));
+            
 % Ricky matto:
 % constraint u[n+1] = 0;
-% constraint forall(i, j in 1..n, k in COURIERS)(table[i, j, k] + table[j, i, k] <= 1);
+constraint forall(i, j in 1..n, k in COURIERS)(table[i, j, k] + table[j, i, k] <= 1);
 % constraint forall(i in NODES, j in 1..n, k in COURIERS)(table[i, j, k] = 1 -> u[j] = u[i] + 1);
 % constraint forall(i in NODES, j in 1..n, k in COURIERS where table[i, j, k] = 1)(u[j] > u[i]);
 
-var 1..10000: obj = sum(i, j in NODES, k in COURIERS)(D[i, j]*table[i, j, k]);
+var 1..2*sum(D[N, NODES]): obj = sum(i, j in NODES, k in COURIERS)(D[i, j]*table[i, j, k]);
 
 solve minimize obj;
 
