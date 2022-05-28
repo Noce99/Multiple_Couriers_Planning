@@ -51,8 +51,14 @@ constraint forall(k in COURIERS)(sum(i in NODES, j in ITEMS)(table[i, j, k]*s[j]
 % constraint forall(k in COURIERS, i in 1..n)(u[k, i] = 2 \/ u[k, i] = 0);
 
 % Lento ma va
-array[NODES] of var 0..N+1: u;
-constraint forall(i, j in ITEMS, k in COURIERS where table[i, j, k] != 0)(u[j] > u[i]);
+array[NODES] of var 1..n: u;
+constraint u[N] = 1;
+%constraint forall(i, j in ITEMS, k in COURIERS where table[i, j, k] != 0)(u[j] > u[i]);
+
+% Non so se coreetto ma elimina i subtour e va un po' più veloce
+constraint forall(i in ITEMS)(u[i] >= 2);
+constraint forall(i in ITEMS)(u[i] <= n);
+constraint forall(k in COURIERS, i in NODES, j in 1..n)(u[i]-u[j]+1 <= (n-1)*(1-table[i,j,k]));
 
 % Altri esperimenti
 % array[NODES, NODES, COURIERS] of var 0..1: b1;
@@ -63,9 +69,9 @@ constraint forall(i, j in ITEMS, k in COURIERS where table[i, j, k] != 0)(u[j] >
 
 
 % Percorsi in senso inverso
-constraint lex_lesseq(array1d(table), [table[j, i, k] | i, j in NODES, k in COURIERS]);
+%constraint lex_lesseq(array1d(table), [table[j, i, k] | i, j in NODES, k in COURIERS]);
 
-constraint forall(k1 in 1..(m-1), k2 in (k1+1)..m where l[k1] = l[k2])(lex_lesseq(array1d(table), [if k = k1 then table[i, j, k2] elseif k = k2 then table[i, j, k1] else table[i, j, k] endif| i, j in NODES, k in COURIERS]));
+%constraint forall(k1 in 1..(m-1), k2 in (k1+1)..m where l[k1] = l[k2])(lex_lesseq(array1d(table), [if k = k1 then table[i, j, k2] elseif k = k2 then table[i, j, k1] else table[i, j, k] endif| i, j in NODES, k in COURIERS]));
 
 %constraint forall(k1 in 1..(m-1), k2 in (k1+1)..m where l[k1] = l[k2])(
 %            (sum(i in NODES, j in ITEMS)(table[i, j, k1]*s[j]) >= sum(i in NODES, j in ITEMS)(table[i, j, k2]*s[j])));
@@ -85,5 +91,5 @@ solve minimize obj;
 output["["];
 output[if i = 1 /\ j = 1 then "[" else "" endif ++ if j = 1 then "[" else "" endif ++ show(table[i, j, k]) ++ if j = N then "]," else "," endif ++ if j = N /\ i = N then "]," else "" endif | k in COURIERS, i in NODES, j in NODES];
 output["]\n"];
-% output[show(u) ++ "\n"];
+%output[show(u) ++ "\n"];
 output[show(obj) ++ "\n"];
