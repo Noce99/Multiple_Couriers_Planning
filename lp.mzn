@@ -78,9 +78,9 @@ constraint forall(k in COURIERS)(sum(table[NODES, NODES, k]) <= length[k]+1);
 
 constraint forall(k1 in 1..(m-1), k2 in (k1+1)..m where l[k1] = l[k2])(
             (sum(i in NODES, j in ITEMS)(table[i, j, k1]*s[j]) >= sum(i in NODES, j in ITEMS)(table[i, j, k2]*s[j])));
-        
-%constraint forall(k in COURIERS)(sum(i, j in 1..n)((j-i)*table[i, j, k]) <= 0);  
-                                                  
+
+%constraint forall(k in COURIERS)(sum(i, j in 1..n)((j-i)*table[i, j, k]) <= 0);
+
 % Ricky matto:
 % constraint u[n+1] = 0;
 % constraint forall(i, j in 1..n, k in COURIERS)(table[i, j, k] + table[j, i, k] <= 1);
@@ -96,5 +96,10 @@ solve minimize obj;
 output["["];
 output[if i = 1 /\ j = 1 then "[" else "" endif ++ if j = 1 then "[" else "" endif ++ show(table[i, j, k]) ++ if j = N then "]," else "," endif ++ if j = N /\ i = N then "]," else "" endif | k in COURIERS, i in NODES, j in NODES];
 output["]\n"];
+
+% output["[|"];
+% output[if i = 1 /\ j = 1 then "|" else "" endif ++ show(table[i, j, k]) ++ if j = N then "|" else "," endif | k in COURIERS, i in NODES, j in NODES];
+% output["|]\n"];
+
 %output[show(u) ++ "\n"];
 output[show(obj) ++ "\n"];
