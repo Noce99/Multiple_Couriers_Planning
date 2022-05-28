@@ -73,12 +73,13 @@ constraint forall(k in COURIERS, i in NODES, j in 1..n)(u[i]-u[j]+1 <= (n-1)*(1-
 
 %constraint forall(k1 in 1..(m-1), k2 in (k1+1)..m where l[k1] = l[k2])(lex_lesseq(array1d(table), [if k = k1 then table[i, j, k2] elseif k = k2 then table[i, j, k1] else table[i, j, k] endif| i, j in NODES, k in COURIERS]));
 
-%constraint forall(k1 in 1..(m-1), k2 in (k1+1)..m where l[k1] = l[k2])(
-%            (sum(i in NODES, j in ITEMS)(table[i, j, k1]*s[j]) >= sum(i in NODES, j in ITEMS)(table[i, j, k2]*s[j])));
-            
+constraint forall(k1 in 1..(m-1), k2 in (k1+1)..m where l[k1] = l[k2])(
+            (sum(i in NODES, j in ITEMS)(table[i, j, k1]*s[j]) >= sum(i in NODES, j in ITEMS)(table[i, j, k2]*s[j])));
+        
+                          
 % Ricky matto:
 % constraint u[n+1] = 0;
-constraint forall(i, j in 1..n, k in COURIERS)(table[i, j, k] + table[j, i, k] <= 1);
+% constraint forall(i, j in 1..n, k in COURIERS)(table[i, j, k] + table[j, i, k] <= 1);
 % constraint forall(i in NODES, j in 1..n, k in COURIERS)(table[i, j, k] = 1 -> u[j] = u[i] + 1);
 % constraint forall(i in NODES, j in 1..n, k in COURIERS where table[i, j, k] = 1)(u[j] > u[i]);
 
