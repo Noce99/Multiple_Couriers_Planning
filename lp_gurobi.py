@@ -3,17 +3,45 @@ import gurobipy as gp
 from gurobipy import GRB
 import scipy.sparse as sp
 import matplotlib.pyplot as plt
+import sys
+import time
 
-n = 47
-m = 3
+if len(sys.argv) < 2:
+    quit()
+try:
+    istanza = int(sys.argv[1])
+except:
+    print("Metti un numero da 1 a 11 per runnure un'istanza, 0 per banale e -1 per banale ma non troppo!")
+    quit()
 
-l = [300, 200, 200, ]
 
-s = [12, 8, 16, 5, 12, 5, 13, 20, 13, 18, 7, 6, 9, 9, 4, 25, 5, 17, 3, 16, 25, 21, 14, 19, 14, 6, 16, 9, 20, 13, 10, 16, 19, 22, 14, 10, 11, 15, 13, 15, 8, 22, 24, 3, 25, 19, 21, ]
+file = ""
+if istanza == 0:
+    file = "inst_banale"
+elif istanza == -1:
+    file = "inst_banale_ma_non_troppo"
+elif istanza < 10:
+    file = "inst0{}".format(istanza)
+else:
+    file = "inst{}".format(istanza)    
+f = open('tsp_inst/' + file + ".dzn", "r")
+text = f.read()
+f.close()
+content = text.split('\n')[:-2]
+content = [content[i][4:-1] for i in range(len(content)) if content[i][0] != '%']
+content[2] = content[2][1:-3]
+content[3] = content[3][1:-3] 
+content[4] = content[4][1:-3]
+content[5] = content[5][1:-3]
+                                                                                  
+n = int(content[1])
+m = int(content[0])
 
-x = [-30, -31, 52, -13, -67, 49, 5, -65, -4, 23, 25, -43, -77, -21, -52, -41, -92, -65, 19, -41, -38, 24, -43, -35, -55, -49, 57, -23, -57, -39, -17, -12, -47, 16, 1, -26, 4, -51, -23, -71, -8, 12, -19, -12, 30, 12, -38, -10, ]
-y = [64, 5, 5, 69, 68, 6, 22, 77, -2, 12, 6, -26, 99, 58, 7, 51, 28, 30, 97, 83, -33, 29, 20, -25, 14, 33, 24, 55, 73, -4, 20, 12, 98, 9, 7, 30, 15, -23, -10, -19, 32, -25, -24, 12, 12, -56, -22, 20, ]
-
+l = [int(L) for L in content[2].split(',')]
+s = [int(L) for L in content[3].split(',')]
+x = [int(L) for L in content[4].split(',')]
+y = [int(L) for L in content[5].split(',')]  
+     
 N = n + 1
 
 D = np.array([[0 for j in range(N)] for i in range(N)])
@@ -22,6 +50,8 @@ for i in range(N):
     for j in range(N):
         D[i, j] = abs(x[i] - x[j]) + abs(y[i] - y[j])
 
+gp.setParam("PoolSearchMode", 2) # Cerca meglio le soluzioni intermedie
+gp.setParam("TimeLimit", 300)# Dopo 5 minuti si ferma e mostra il meglio che ha ottenuto
 try:
     model = gp.Model("MCP")
 
@@ -44,8 +74,9 @@ try:
     for i in range(N-1):
         for j in range(N-1):
             for k in range(m):
-                model.addConstr(table[k, i, j]*u[j] >= table[k, i, j]*(u[i]+1))
-                pass
+                # Nuovo di Riky
+                model.addConstr(u[i]-u[j]+1 <= (N-2)*(1-table[k, i, j]))
+                # Vecchio di Noce: model.addConstr(table[k, i, j]*u[j] >= table[k, i, j]*(u[i]+1))
     """
     # Add row and column constraints
     for i in range(n):
@@ -104,4 +135,5 @@ try:
     plt.show()
 except gp.GurobiError as e:
     print('Error code ' + str(e.errno) + ": " + str(e))
+
 
