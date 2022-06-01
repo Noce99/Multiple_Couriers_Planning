@@ -54,13 +54,13 @@ var lower_bound..2*sum(D[N, NODES]): obj; % ?????
 % The elements of successor array must define a circuit where successor[i] = j means that j is the successor of i.
 constraint circuit(successor);
 
-% successors of end nodes are start nodes ***
+% successors of end nodes are start nodes
 constraint forall(i in n+m+1..N-1)(successor[i] = i - m + 1);
 
-constraint successor[N] = n+1; ***
+constraint successor[N] = n+1;
 
 
-% Select a Courier for each Starting and Ending point. ***
+% Select a Courier for each Starting and Ending point.
 constraint forall(i in START)(courier[i] = i - n);   %RECALL: START = n+1..n+m;fo
 constraint forall(i in END)(courier[i] = i - n - m); %RECALL: END = n+m+1..n+2*m;
 
