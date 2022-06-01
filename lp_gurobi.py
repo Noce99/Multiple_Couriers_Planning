@@ -23,25 +23,28 @@ elif istanza == -1:
 elif istanza < 10:
     file = "inst0{}".format(istanza)
 else:
-    file = "inst{}".format(istanza)    
+    file = "inst{}".format(istanza)
 f = open('tsp_inst/' + file + ".dzn", "r")
 text = f.read()
 f.close()
 content = text.split('\n')[:-2]
+
+lower_boud = int(content[6][16:-1])
+
 content = [content[i][4:-1] for i in range(len(content)) if content[i][0] != '%']
 content[2] = content[2][1:-3]
-content[3] = content[3][1:-3] 
+content[3] = content[3][1:-3]
 content[4] = content[4][1:-3]
 content[5] = content[5][1:-3]
-                                                                                  
+
 n = int(content[1])
 m = int(content[0])
 
 l = [int(L) for L in content[2].split(',')]
 s = [int(L) for L in content[3].split(',')]
 x = [int(L) for L in content[4].split(',')]
-y = [int(L) for L in content[5].split(',')]  
-     
+y = [int(L) for L in content[5].split(',')]
+
 N = n + 1
 
 D = np.array([[0 for j in range(N)] for i in range(N)])
@@ -58,19 +61,24 @@ try:
 
     table = model.addMVar(shape=(m, N, N), vtype=GRB.BINARY, name="table")
     u = model.addMVar(shape=(N), lb=0, ub=N+1, vtype=GRB.INTEGER, name="u")
-    model.setObjective(sum(D[i, j]*table[k, i, j] for i in range(N) for j in range(N) for k in range(m)), GRB.MINIMIZE)
-    
+
+    obj = sum(D[i, j]*table[k, i, j] for i in range(N) for j in range(N) for k in range(m))
+    model.addConstr(obj >= lower_boud)
+    model.setObjective(obj, GRB.MINIMIZE)
+
     for i in range(N):
         for k in range(m):
             model.addConstr(table[k,i,i] == 0)
             model.addConstr(sum(table[k,i,j] for j in range(N)) == sum(table[k,j,i] for j in range(N)))
+
     for j in range(N-1):
         model.addConstr(sum(table[k, i, j] for k in range(m) for i in range(N)) == 1)
+
     for k in range(m):
         model.addConstr(sum(table[k, N-1, j] for j in range(N-1)) == 1)
         model.addConstr(sum(table[k, j, N-1] for j in range(N-1)) == 1)
-        model.addConstr(sum(table[k, i,j]*s[j] for i in range(N) for j in range(N-1)) <= l[k])
-    
+        model.addConstr(sum(table[k, i, j]*s[j] for i in range(N) for j in range(N-1)) <= l[k])
+
     for i in range(N-1):
         for j in range(N-1):
             for k in range(m):
@@ -100,11 +108,11 @@ try:
     """
     # Optimize model
     model.optimize()
-    
+
     print(table.getAttr("x").astype(int))
     print(u.getAttr("x"))
     print(int(model.ObjVal))
-    
+
     matrix = table.getAttr("x")
     for i in range(len(x)):
         plt.gca().add_patch(plt.Circle((x[i],y[i]), 0.1, color='r'))
@@ -135,5 +143,3 @@ try:
     plt.show()
 except gp.GurobiError as e:
     print('Error code ' + str(e.errno) + ": " + str(e))
-
-

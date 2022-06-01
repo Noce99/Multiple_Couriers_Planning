@@ -26,6 +26,9 @@ f = open('tsp_inst/' + file + ".dzn", "r")
 text = f.read()
 f.close()
 content = text.split('\n')[:-2]
+
+lower_boud = int(content[6][16:-1])
+
 content = [content[i][4:-1] for i in range(len(content)) if content[i][0] != '%']
 content[2] = content[2][1:-3]
 content[3] = content[3][1:-3]
@@ -93,9 +96,10 @@ for k in COURIERS:
             arcs.append((i, j, table[k][i][j]))
     model.AddCircuit(arcs)
 
+obj = cp_model.LinearExpr.Sum([table[k][i][j]*D[i, j] for k in COURIERS for i in NODES for j in NODES])
+model.Add(obj >= lower_boud)
 
-
-model.Minimize(cp_model.LinearExpr.Sum([table[k][i][j]*D[i, j] for k in COURIERS for i in NODES for j in NODES]))
+model.Minimize(obj)
 solver = cp_model.CpSolver()
 # Massimo 5 minuti
 solver.parameters.max_time_in_seconds = 300.0
@@ -103,6 +107,7 @@ status = solver.Solve(model)
 
 
 if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
+    """
     for k in COURIERS:
         print(f"\nCourier{k}:\n")
         for i in NODES:
@@ -110,6 +115,7 @@ if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
                 print(f'{solver.Value(table[k][i][j])}', end=" ")
             print("")
         print("--------------------------------------")
+    """
     print(f'Minimum of objective function: {solver.ObjectiveValue()}\n')
     for k in COURIERS:
         somma = 0
