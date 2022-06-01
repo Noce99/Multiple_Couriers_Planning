@@ -7,7 +7,7 @@ rnd = np.random
 rnd.seed(0)
 
 lines = []
-with open('Inst/inst01.txt') as f:
+with open('Inst/inst01') as f:
     lines = f.readlines()
 
 m = int(lines[0])   
@@ -62,7 +62,7 @@ mdl.add_constraints(order[i] <= n for i in range(n))
 mdl.add_constraints(order[i]-order[j]+1 <= (n-1)*(1-table[i, j, k]) for i in range(N) for j in range(n) for k in range(m))
 
 # TIME LIMIT
-mdl.time_limit = 10
+mdl.time_limit = 300
 solution = mdl.solve(log_output=True)
 
 
