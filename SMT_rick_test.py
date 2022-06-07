@@ -73,5 +73,6 @@ for k in range(m):
             lines += [f"(assert (or (not (select table {k} {i} {j})) (xor {' '.join([f'(= (select table {k} {j} {jj}) 1)' for jj in range(n)])})))"]
 
 
-f.write(lines)
+for line in lines:
+    f.write(line + "\n")
 f.close()
