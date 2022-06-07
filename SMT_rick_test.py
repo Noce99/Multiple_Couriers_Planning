@@ -62,20 +62,48 @@ def at_most_one(bool_vars):
 def exactly_one(bool_vars):
     return at_most_one(bool_vars) + [at_least_one(bool_vars)]
 
+def at_least_one_np(bool_vars):
+    return Or(bool_vars)
+
+def at_least_one_seq(bool_vars):
+    return at_least_one_np(bool_vars)
+
+def at_most_one_seq(bool_vars, name=""):
+    constraints = []
+    n = len(bool_vars)
+    s = [Bool(f"s_{name}_{i}") for i in range(n - 1)]
+    constraints.append(Or(Not(bool_vars[0]), s[0]))
+    constraints.append(Or(Not(bool_vars[n-1]), Not(s[n-2])))
+    for i in range(1, n - 1):
+        constraints.append(Or(Not(bool_vars[i]), s[i]))
+        constraints.append(Or(Not(bool_vars[i]), Not(s[i-1])))
+        constraints.append(Or(Not(s[i-1]), s[i]))
+    return And(constraints)
+
+def exactly_one_seq(bool_vars, name=""):
+    return And(at_least_one_seq(bool_vars), at_most_one_seq(bool_vars, name))
+
+
+
 table = [[[Bool(f'table_{k}_{i}_{j}') for j in range(N)] for i in range(N)] for k in range(m)]
 s = Solver()
 
 for k in range(m):
-    s.add(exactly_one([table[k][N-1][j] for j in range(N)]))
+    s.add(exactly_one_seq([table[k][N-1][j] for j in range(N)], f"primo_{k}"))
 
 for k in range(m):
-    s.add(exactly_one([table[k][i][N-1] for i in range(N)]))
+    s.add(exactly_one_seq([table[k][i][N-1] for i in range(N)], f"secondo_{k}"))
 
 for i in range(N-1):
-    s.add(exactly_one([table[k][i][j] for k in range(m) for j in range(N)]))
+    s.add(exactly_one_seq([table[k][i][j] for k in range(m) for j in range(N)], f"terzo_{i}"))
 
 for j in range(N-1):
-    s.add(exactly_one([table[k][i][j] for k in range(m) for i in range(N)]))
+    s.add(exactly_one_seq([table[k][i][j] for k in range(m) for i in range(N)], f"quarto_{j}"))
+
+for k in range(m):
+    for i in range(N):
+        for j in range(N-1):
+            s.add(Implies(table[k][i][j], exactly_one_seq([table[k][j][jj] for jj in range(N)], f"quinto_{k}_{i}_{j}")))
 
 if s.check() == sat:
     m = s.model()
