@@ -60,7 +60,7 @@ try:
 
 
     table = model.addMVar(shape=(m, N, N), vtype=GRB.BINARY, name="table")
-    u = model.addMVar(shape=(N), lb=0, ub=N+1, vtype=GRB.INTEGER, name="u")
+    u = model.addMVar(shape=(N), lb=1, ub=N, vtype=GRB.INTEGER, name="u")
 
     obj = sum(D[i, j]*table[k, i, j] for i in range(N) for j in range(N) for k in range(m))
     model.addConstr(obj >= lower_boud)
@@ -79,10 +79,11 @@ try:
         model.addConstr(sum(table[k, j, N-1] for j in range(N-1)) == 1)
         model.addConstr(sum(table[k, i, j]*s[j] for i in range(N) for j in range(N-1)) <= l[k])
 
-    for i in range(N-1):
+    for i in range(N):
         for j in range(N-1):
             for k in range(m):
                 # Nuovo di Riky
+                model.addConstr(u[N-1] == 1)
                 model.addConstr(u[i]-u[j]+1 <= (N-2)*(1-table[k, i, j]))
                 # Vecchio di Noce: model.addConstr(table[k, i, j]*u[j] >= table[k, i, j]*(u[i]+1))
     """
