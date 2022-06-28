@@ -43,10 +43,12 @@ s = [int(L) for L in content[3].split(',')]
 x = [int(L) for L in content[4].split(',')]
 y = [int(L) for L in content[5].split(',')]
 
+
 N = n + 1
 ITEMS = list(range(n))
 NODES = list(range(N))
 COURIERS = list(range(m))
+
 
 D = np.array([[0 for j in range(N)] for i in range(N)])
 
@@ -95,6 +97,14 @@ for k in COURIERS:
         for j in NODES:
             arcs.append((i, j, table[k][i][j]))
     model.AddCircuit(arcs)
+
+'''
+# TEST - Symmetry Breaking
+for k in COURIERS:
+    for j in range(N):
+        for i in range(j+1, N):
+            model.Add(table[k][i][n] == 0).OnlyEnforceIf(table[k][n][j])
+'''
 
 obj = cp_model.LinearExpr.Sum([table[k][i][j]*D[i, j] for k in COURIERS for i in NODES for j in NODES])
 model.Add(obj >= lower_boud)
