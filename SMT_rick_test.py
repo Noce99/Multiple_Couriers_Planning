@@ -17,7 +17,6 @@ except:
     print("Metti un numero da 1 a 11 per runnure un'istanza, 0 per banale e -1 per banale ma non troppo!")
     quit()
 
-
 file = ""
 if istanza == 0:
     file = "inst_banale"
@@ -53,57 +52,42 @@ for i in range(N):
     for j in range(N):
         D[i, j] = abs(x[i] - x[j]) + abs(y[i] - y[j])
 
-def at_least_one(bool_vars):
-    return Or(bool_vars)
+M = n + 2*m
 
-def at_most_one(bool_vars):
-    return [Not(And(pair[0], pair[1])) for pair in combinations(bool_vars, 2)]
+successor = [Int(f'successor_{i}') for i in range(M)]
+order = [Int(f'order_{i}') for i in range(M)]
+courier = [Int(f'courier_{i}') for i in range(M)]
 
-def exactly_one(bool_vars):
-    return at_most_one(bool_vars) + [at_least_one(bool_vars)]
-
-def at_least_one_np(bool_vars):
-    return Or(bool_vars)
-
-def at_least_one_seq(bool_vars):
-    return at_least_one_np(bool_vars)
-
-def at_most_one_seq(bool_vars, name=""):
-    constraints = []
-    n = len(bool_vars)
-    s = [Bool(f"s_{name}_{i}") for i in range(n - 1)]
-    constraints.append(Or(Not(bool_vars[0]), s[0]))
-    constraints.append(Or(Not(bool_vars[n-1]), Not(s[n-2])))
-    for i in range(1, n - 1):
-        constraints.append(Or(Not(bool_vars[i]), s[i]))
-        constraints.append(Or(Not(bool_vars[i]), Not(s[i-1])))
-        constraints.append(Or(Not(s[i-1]), s[i]))
-    return And(constraints)
-
-def exactly_one_seq(bool_vars, name=""):
-    return And(at_least_one_seq(bool_vars), at_most_one_seq(bool_vars, name))
-
-
-
-table = [[[Bool(f'table_{k}_{i}_{j}') for j in range(N)] for i in range(N)] for k in range(m)]
 s = Solver()
+s.add(Distinct(successor))
+s.add(Distinct(order))
 
-for k in range(m):
-    s.add(exactly_one_seq([table[k][N-1][j] for j in range(N)], f"primo_{k}"))
+for i in range(M):
+    s.add(successor[i] >= 0)
+    s.add(successor[i] < M)
+    s.add(order[i] >= 0)
+    s.add(order[i] < M)
 
-for k in range(m):
-    s.add(exactly_one_seq([table[k][i][N-1] for i in range(N)], f"secondo_{k}"))
+# HAMILTONIAN PATH
+for i in range(M-1):
+    s.add([Implies(successor[i] == j, order[j] > order[i]) for j in range(M)])
 
-for i in range(N-1):
-    s.add(exactly_one_seq([table[k][i][j] for k in range(m) for j in range(N)], f"terzo_{i}"))
+# successor[last] = first courier
+s.add(successor[M-1] == n)
 
-for j in range(N-1):
-    s.add(exactly_one_seq([table[k][i][j] for k in range(m) for i in range(N)], f"quarto_{j}"))
+for i in range(n+m, M-1):
+    s.add(successor[i] == i-m+1)
 
-for k in range(m):
-    for i in range(N):
-        for j in range(N-1):
-            s.add(Implies(table[k][i][j], exactly_one_seq([table[k][j][jj] for jj in range(N)], f"quinto_{k}_{i}_{j}")))
+for i in range(n, n+m):
+    s.add(courier[i] == i - n)
+    s.add(courier[i+m] == i - n)
+
+for i in range(n):
+    s.add([Implies(successor[i] == j, courier[i] == courier[j]) for j in range(M) if j != i])
+
+s.add(order[M-1] == M-1)
+
+# DOBBIAMO AGGIUNGERE CONSTRAINTS PESO
 
 if s.check() == sat:
     m = s.model()
