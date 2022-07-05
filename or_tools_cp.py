@@ -83,13 +83,35 @@ for i in ITEMS:
 for k in COURIERS:
     model.Add(table[k][N-1][N-1] == 0)
 
-# constraint forall(k in COURIERS)(sum(i in NODES, j in ITEMS)(table[i, j, k]*s[j]) <= l[k]);
+"""
 for k in COURIERS:
     somma = 0
     for j in range(N-1):
         somma += sum([table[k][i][j] for i in NODES if i != j])*s[j]
     model.Add(somma <= l[k])
+"""
 
+for k in COURIERS:
+    model.Add(sum([table[k][i][j]*s[j] for i in NODES for j in range(N-1) if i != j]) <= l[k])
+
+"""
+ListOfItems = []
+for k in range(m):
+    objects = []
+    for i in range(n):
+        objects.append(model.NewBoolVar(name=f'O[{k},{i}]'))
+    ListOfItems.append(objects)
+
+for k in COURIERS:
+    for i in ITEMS:
+        model.Add(ListOfItems[k][i] == sum([table[k][i][j] for j in range(n)]))
+
+# TEST - Symmetry Breaking
+for k in COURIERS:
+    for kk in range(k+1, m):
+        if l[k] == l[kk]:
+            model.Add(sum([ListOfItems[k][j]*j for j in ITEMS]) < sum([ListOfItems[kk][j]*j for j in ITEMS]))
+"""
 
 for k in COURIERS:
     arcs = []
@@ -98,13 +120,7 @@ for k in COURIERS:
             arcs.append((i, j, table[k][i][j]))
     model.AddCircuit(arcs)
 
-'''
-# TEST - Symmetry Breaking
-for k in COURIERS:
-    for j in range(N):
-        for i in range(j+1, N):
-            model.Add(table[k][i][n] == 0).OnlyEnforceIf(table[k][n][j])
-'''
+
 
 obj = cp_model.LinearExpr.Sum([table[k][i][j]*D[i, j] for k in COURIERS for i in NODES for j in NODES])
 model.Add(obj >= lower_boud)

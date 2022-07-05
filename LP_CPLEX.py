@@ -33,7 +33,7 @@ Dist = {(i, j):np.sum([abs(x[i]-x[j]), abs(y[i]-y[j])]) for i in range(N) for j 
 mdl = Model('MCP')
 
 table = mdl.binary_var_dict(Arcs, name='table')
-order = mdl.integer_var_dict([i for i in range(N)], ub=n, name='order')
+order = mdl.integer_var_dict([i for i in range(N)], lb=0, ub=n, name='order')
 
 # OBJECTIVE FUNCTION
 mdl.minimize(mdl.sum(Dist[i, j]*table[i, j, k] for i in range(N) for j in range(N) for k in range(m)))
@@ -43,23 +43,33 @@ mdl.minimize(mdl.sum(Dist[i, j]*table[i, j, k] for i in range(N) for j in range(
 # DIAGONAL -> ZEROS
 mdl.add_constraint(mdl.sum(table[i, i, k] for i in range(n) for k in range(m)) == 0)
 
-mdl.add_constraints(mdl.sum(table[i, j, k] - table[j, i, k] for i in range(N)) == 0 for j in range(N) for k in range(m))
+#mdl.add_constraints(mdl.sum(table[i, j, k] - table[j, i, k] for i in range(N)) == 0 for j in range(N) for k in range(m))
+
+for i in range(N):
+    for k in range(m):
+        mdl.add_constraint(mdl.sum(table[i, j, k] for j in range(N)) == mdl.sum(table[j, i, k] for j in range(N)))
 
 # ALL OBJECTS
-mdl.add_constraints(mdl.sum(table[i, j, k] for i in range(N) for k in range(m)) == 1 for j in range(n))
-mdl.add_constraints(mdl.sum(table[i, j, k] for j in range(N) for k in range(m)) == 1 for i in range(n))
+for i in range(n):
+    mdl.add_constraint(mdl.sum(table[i, j, k] for j in range(N) for k in range(m)) == 1)
+    mdl.add_constraint(mdl.sum(table[j, i, k] for j in range(N) for k in range(m)) == 1)
 
 # ALL STARTS FROM THE DEPOT
-mdl.add_constraints(mdl.sum(table[n, j, k] for j in range(n)) == 1 for k in range(m))
+for k in range(m):
+    mdl.add_constraint(mdl.sum(table[N-1, j, k] for j in range(n)) == 1)
+    mdl.add_constraint(mdl.sum(table[j, N-1, k] for j in range(n)) == 1)
 
 # CHECK ON WEIGHTS
-mdl.add_constraints(mdl.sum(table[i, j, k]*s[j] for i in range(N) for j in range(n)) <= l[k] for k in range(m))
+for k in range(m):
+    mdl.add_constraint(mdl.sum(table[i, j, k]*s[j] for i in range(N) for j in range(n)) <= l[k])
 
 # REMOVE SUBTOURS
-mdl.add_constraint(order[n] == 1)
-mdl.add_constraints(order[i] >= 2 for i in range(n))
-mdl.add_constraints(order[i] <= n for i in range(n))
-mdl.add_constraints(order[i]-order[j]+1 <= (n-1)*(1-table[i, j, k]) for i in range(N) for j in range(n) for k in range(m))
+for i in range(N):
+    for j in range(N-1):
+        for k in range(m):
+            mdl.add_constraint(order[N-1] == 1)
+            mdl.add_constraint(order[i]-order[j]+1 <= (N-2)*(1-table[i, j, k]))
+
 
 # TIME LIMIT
 mdl.time_limit = 300
