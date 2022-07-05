@@ -53,7 +53,9 @@ for i in range(N):
     for j in range(N):
         D[i, j] = abs(x[i] - x[j]) + abs(y[i] - y[j])
 
-s = Solver()
+o = SolverFor("AUFLIRA")
+
+obj = Int('obj')
 
 row = []
 for k in range(m):
@@ -73,97 +75,72 @@ order = IntVector('u', N)
 
 for k in range(m):
     for i in range(N):
-        s.add(row[k][i][i] == False)
-        s.add(col[k][i][i] == False)
+        o.add(row[k][i][i] == False)
+        o.add(col[k][i][i] == False)
         for j in range(N):
-            s.add(row[k][i][j] == col[k][j][i])
+            o.add(row[k][i][j] == col[k][j][i])
 
 for k in range(m):
-    s.add(PbEq([(x,1) for x in row[k][N-1]], 1))
-    s.add(PbEq([(x,1) for x in col[k][N-1]], 1))
+    for i in range(N):
+        for j in range(N):
+            o.add(Implies(row[k][i][j], PbEq([(x,1) for x in row[k][j]], 1)))
+
+# print("Primi constraint: ", o.check())
+# o.push()
+
+for k in range(m):
+    o.add(PbEq([(x,1) for x in row[k][N-1]], 1))
+    o.add(PbEq([(x,1) for x in col[k][N-1]], 1))
     for i in range(N-1):
-        s.add(PbLe([(x,1) for x in row[k][i]], 1))
-        s.add(PbLe([(x,1) for x in col[k][i]], 1))
+        o.add(PbLe([(x,1) for x in row[k][i]], 1))
+        o.add(PbLe([(x,1) for x in col[k][i]], 1))
 
 for i in range(N-1):
-    s.add(PbEq([(x,1) for x in [col[k][i][j] for k in range(m) for j in range(N)]], 1))
+    o.add(PbEq([(x,1) for x in [col[k][i][j] for k in range(m) for j in range(N)]], 1))
 
 for k in range(m):
-    s.add(Sum([If(row[k][i][j], w[j], 0) for i in range(N) for j in range(N-1)]) <= l[k])
+    o.add(Sum([If(row[k][i][j], w[j], 0) for i in range(N) for j in range(N-1)]) <= l[k])
 
 for i in range(N):
     for j in range(N-1):
         for k in range(m):
-            #s.add(order[0] == 0)
-            s.add(order[i]-order[j]+1 <= (N-2)*(1-If(row[k][i][j], 1, 0)))
+            #o.add(order[N-1] == N-1)
+            o.add(order[i]-order[j]+1 <= (N-2)*(1-If(row[k][i][j], 1, 0)))
 
-s.minimize(Sum([If(row[k][i][j], D[i, j], 0) for k in range(m) for i in range(N) for j in range(N)]))
+o.add(obj == Sum([If(row[k][i][j], int(D[i, j]), 0) for k in range(m) for i in range(N) for j in range(N)]))
 
-if s.check() == sat:
-    m = s.model()
-    print(m)
+#o.minimize(obj)
+
+# o.set("sat.pb.solver", "solver")
+
+if o.check() == sat:
+    model = o.model()
+    # print(m)
 else:
     print("unsat")
+    quit()
 
 #print(s.check())
 #print(s.model())
 
-"""
-# Ogni corriere deve partire (xor last row)
-for k in range(m):
-    lines += [f"(assert (= (+ {' '.join([f'(select table {k} {N-1} {j})' for j in range(N)])}) 1))"]
-
-# Ogni corriere deve tornare (xor last column)
-for k in range(m):
-    lines += [f"(assert (= (+ {' '.join([f'(select table {k} {i} {N-1})' for i in range(N)])}) 1))"]
-
-
-# Un 1 per ogni riga
-for i in range(N-1):
-    lines += [f"(assert (= (+ {' '.join([f'(select table {k} {i} {j})' for k in range(m) for j in range(N)])}) 1))"]
-
-# Un 1 per ogni colonna
-for j in range(N-1):
-    lines += [f"(assert (= (+ {' '.join([f'(select table {k} {i} {j})' for k in range(m) for i in range(N)])}) 1))"]
-
-lines += [f"(assert (= distance (+ {' '.join([f'(* (select table {k} {i} {j}) {D[i, j]})' for k in range(m) for i in range(N) for j in range(N)])})))"]
-
-
-# Edge (i, j) = 1 -> (xor in row j)
-for k in range(m):
-    for i in range(N):
-        for j in range(N-1):
-            lines += [f"(assert (or (not (select table {k} {i} {j})) (= (+ {' '.join([f'(select table {k} {j} {jj})' for jj in range(N)])}) 1)))"]
-
-for k in range(m):
-    for i in range(N-1):
-        lines += [f"(assert (= (select table {k} {i} {i}) false))"]
-
-
-lines += ["(check-sat)"]
-
-for k in range(m):
-    lines += [f"(get-value ({' '.join([f'(select table {k} {i} {j})' for i in range(N) for j in range(N)])}))"]
-
-lines += ["(get-value (distance))"]
-
-for line in lines:
-    f.write(line + "\n")
-f.close()
-"""
-
-quit()
 
 for k in range(m):
     print("Tizio {}".format(k+1))
     for i in range(N):
-        print(table[k][i])
+        for j in range(N):
+            if model[row[k][i][j]]:
+                print(1, end=" ")
+            else:
+                print(0, end=" ")
+        print("")
     print("\n")
 
 for i in range(N):
     for j in range(N):
-        print(D[i, j]*table[0][i][j], end=" ")
+        print(D[i, j]*row[0][i][j], end=" ")
     print("")
+
+quit()
 
 print(distancestring)
 distanzacalcolatapy = 0
