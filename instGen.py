@@ -55,8 +55,8 @@ def unify_most_close_points(d):
     global n
     global s
     min = (1, 0)
-    for i in range(len(d)):
-        for j in range(len(d[0])):
+    for i in range(len(d)-1):
+        for j in range(len(d[0])-1):
             if d[i][j] < d[min[0]][min[1]] and d[i][j] > 0:
                 min = (i, j)
     print(f"Selected: {min}")
