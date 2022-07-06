@@ -160,6 +160,7 @@ for file in os.listdir("Inst/"):
           simpl_dist[i][j] = dist[i, j]
 
   unify_most_close_points(simpl_dist)
+  quit()
 
   # Writing the matrix values in the file
   """
