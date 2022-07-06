@@ -63,12 +63,14 @@ def unify_most_close_points(d):
     print("Before:")
     for i in range(len(d)):
         print(d[i])
+    """
     print("----------------------------")
     print(f"X= {x}")
     print(f"Y= {y}")
     print(f"n= {n}")
     print(f"s= {s}")
     print("----------------------------")
+    """
     new_x = int((x[min[0]] + x[min[1]])/2)
     new_y = int((y[min[0]] + y[min[1]])/2)
     for i in range(len(d)):
@@ -86,20 +88,18 @@ def unify_most_close_points(d):
     print("After:")
     for i in range(len(d)):
         print(d[i])
+    """
     print("----------------------------")
     print(f"X= {x}")
     print(f"Y= {y}")
     print(f"n= {n}")
     print(f"s= {s}")
     print("----------------------------")
+    """
+    return d
 
 
-NUM_OF_SECTIONS = 100 # If cahnged change also the same constant inside "cluster_assigner_gurobi.py"
-def get_angle_section(x, y):
-    angle = math.atan2(y, x)
-    section_size = 2*math.pi/NUM_OF_SECTIONS
-    return int(angle / section_size)
-
+MAX_ITEM_NUM = 100
 
 os.mkdir('tsp_inst')
 
@@ -185,10 +185,12 @@ for file in os.listdir("Inst/"):
   for i in range(n+1):
       for j in range(n+1):
           simpl_dist[i][j] = dist[i, j]
-
+  i = 0
+  while n > MAX_ITEM_NUM:
+      simpl_dist = unify_most_close_points(simpl_dist)
+      i += 1
+  print(f"{file} simplified {i} times!")
   print(file, "DONE!")
-  if file == "inst_banale":
-    unify_most_close_points(simpl_dist)
 
   # Writing the matrix values in the file
   """
