@@ -59,11 +59,11 @@ def unify_most_close_points(d):
         for j in range(len(d[0])-1):
             if d[i][j] < d[min[0]][min[1]] and d[i][j] > 0:
                 min = (i, j)
+    """
     print(f"Selected: {min}")
     print("Before:")
     for i in range(len(d)):
         print(d[i])
-    """
     print("----------------------------")
     print(f"X= {x}")
     print(f"Y= {y}")
@@ -85,10 +85,10 @@ def unify_most_close_points(d):
     n = n - 1
     s[min[1]] += s[min[0]]
     s.pop(min[0])
+    """
     print("After:")
     for i in range(len(d)):
         print(d[i])
-    """
     print("----------------------------")
     print(f"X= {x}")
     print(f"Y= {y}")
