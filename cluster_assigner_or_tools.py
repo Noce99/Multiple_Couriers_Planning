@@ -84,7 +84,7 @@ for k in range(m):
         model.AddBoolOr([not(divisor_expanded[k][i] == 1) or divisor_expanded[k][i-1] == -1,
                         True])
         #model.AddBoolOr([model.AddImplication(divisor_expanded[k][i] == 0, divisor_expanded[k][i-1] == 1),
-                        model.AddImplication(divisor_expanded[k][i] == 0, divisor_expanded[k][i-1] == 0)])
+        #                model.AddImplication(divisor_expanded[k][i] == 0, divisor_expanded[k][i-1] == 0)])
 
 """
 for k in range(m-1):
