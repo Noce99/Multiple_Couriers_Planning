@@ -81,10 +81,8 @@ for k in range(m):
 for k in range(m):
     for i in range(1, NUM_OF_SECTIONS):
         model.AddImplication(divisor_expanded[k][i] == -1, divisor_expanded[k][i-1] == -1)
-        model.AddBoolOr([not(divisor_expanded[k][i] == 1) or divisor_expanded[k][i-1] == -1,
-                        True])
-        #model.AddBoolOr([model.AddImplication(divisor_expanded[k][i] == 0, divisor_expanded[k][i-1] == 1),
-        #                model.AddImplication(divisor_expanded[k][i] == 0, divisor_expanded[k][i-1] == 0)])
+        model.AddImplication(divisor_expanded[k][i] == 0, divisor_expanded[k][i-1] <= 0)
+        model.AddImplication(divisor_expanded[k][i] == 1, divisor_expanded[k][i-1] >= 0)
 
 """
 for k in range(m-1):
