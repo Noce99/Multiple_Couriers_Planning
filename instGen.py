@@ -59,13 +59,19 @@ def unify_most_close_points(d):
     print("Before:")
     for i in range(len(d)):
         print(d[i])
+    new_x = int((x[min[0]] + x[min[1]])/2)
+    new_y = int((y[min[0]] + y[min[1]])/2)
+    for i in range(len(d)):
+        d[min[1]][i] = abs(new_x - x[i]) + abs(new_y - y[i])
+    for i in range(len(d)):
+        d[i][min[1]] = abs(new_x - x[i]) + abs(new_y - y[i])
     d.pop(min[0])
     for i in range(len(d)):
         d[i].pop(min[0])
     print("After:")
     for i in range(len(d)):
         print(d[i])
-
+    print("----------------------------")
 
 
 NUM_OF_SECTIONS = 100 # If cahnged change also the same constant inside "cluster_assigner_gurobi.py"
