@@ -191,6 +191,10 @@ for file in os.listdir("Inst/"):
       i += 1
   print(f"{file} simplified {i} times!")
   print(file, "DONE!")
+  f.write(f'n = {n}')
+  f.write(f"s = {s}")
+  f.write(f"x = {x}")
+  f.write(f"y = {y}")
 
   # Writing the matrix values in the file
   """
