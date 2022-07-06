@@ -50,7 +50,7 @@ def prim(G):
   return tot
 
 def unify_most_close_points(d):
-    min = (0, 0)
+    min = (1, 0)
     for i in range(n+1):
         for j in range(n+1):
             if d[i][j] < d[min[0]][min[1]] and d[i][j] > 0:
