@@ -160,7 +160,7 @@ for file in os.listdir("Inst/"):
           simpl_dist[i][j] = dist[i, j]
 
   print(file, "DONE!")
-  if file == "inst_banale.dzn":
+  if file == "inst_banale":
     unify_most_close_points(simpl_dist)
 
   # Writing the matrix values in the file
