@@ -142,7 +142,21 @@ for file in os.listdir("Inst/"):
           simpl_dist[i][j] = dist[i, j]
 
   def unify_most_close_points(d):
-      
+      min = (0, 0)
+      for i in range(n+1):
+          for j in range(n+1):
+              if d[i][j] < d[min[0]][min[1]]:
+                  min = (i, j)
+      print(f"Selected: {min}")
+      print("Before:")
+      for i in range(n+1):
+          print(d[i])
+      d.pop(min[0])
+      for i in range(n+1):
+          d[i].pop(min[0])
+      print("After:")
+      for i in range(n+1):
+          print(d[i])
 
   # Writing the matrix values in the file
   """
