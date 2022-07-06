@@ -7,8 +7,6 @@ import tempfile
 from itertools import combinations
 from z3 import *
 import math
-import gurobipy as gp
-from gurobipy import GRB
 import scipy.sparse as sp
 from ortools.sat.python import cp_model
 
@@ -83,8 +81,10 @@ for k in range(m):
 for k in range(m):
     for i in range(1, NUM_OF_SECTIONS):
         model.AddImplication(divisor_expanded[k][i] == -1, divisor_expanded[k][i-1] == -1)
-        model.AddImplication(divisor_expanded[k][i] == 1, model.AddBoolOr(divisor_expanded[k][i-1] == -1, divisor_expanded[k][i-1] == 1))
-        model.AddImplication(divisor_expanded[k][i] == 0, model.AddBoolOr(divisor_expanded[k][i-1] == 1, divisor_expanded[k][i-1] == 0))
+        model.AddBoolOr(model.AddImplication(divisor_expanded[k][i] == 1, divisor_expanded[k][i-1] == -1),
+                        model.AddImplication(divisor_expanded[k][i] == 1, divisor_expanded[k][i-1] == 1))
+        model.AddBoolOr(model.AddImplication(divisor_expanded[k][i] == 0, divisor_expanded[k][i-1] == 1),
+                        model.AddImplication(divisor_expanded[k][i] == 0, divisor_expanded[k][i-1] == 0))
 
 """
 for k in range(m-1):
