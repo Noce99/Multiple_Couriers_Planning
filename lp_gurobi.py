@@ -82,8 +82,9 @@ try:
             for k in range(m):
                 # Nuovo di Riky
                 model.addConstr(u[N-1] == 1)
-                model.addConstr(u[i]-u[j]+1 <= (N-2)*(1-table[k, i, j]))
-                # Vecchio di Noce: model.addConstr(table[k, i, j]*u[j] >= table[k, i, j]*(u[i]+1))
+                #model.addConstr(u[i]-u[j]+1 <= (N-2)*(1-table[k, i, j]))
+                # Vecchio di Noce:
+                model.addConstr(table[k, i, j]*u[j] >= table[k, i, j]*(u[i]+1))
     """
     # Add row and column constraints
     for i in range(n):
