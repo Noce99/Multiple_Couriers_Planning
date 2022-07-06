@@ -81,8 +81,11 @@ for k in range(m-1):
 
 couriers_assignement = []
 for k in range(m):
-    couriers_assignement.append(model.NewIntVar(lb=0, ub=m, name=f'couriers_assignement_{k}'))
+    couriers_assignement.append(model.NewIntVar(lb=1, ub=m, name=f'couriers_assignement_{k}'))
 model.AddAllDifferent(couriers_assignement)
+
+for k in range(m-1):
+    model.Add(sum(sections_weight[i] for i in range(NUM_OF_SECTIONS) if i > divisor[k] and i < divisor[k+1]) <= 40)
 
 solver = cp_model.CpSolver()
 # Massimo 5 minuti
