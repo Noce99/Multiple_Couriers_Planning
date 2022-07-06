@@ -50,6 +50,10 @@ def prim(G):
   return tot
 
 def unify_most_close_points(d):
+    global x
+    global y
+    global n
+    global s
     min = (1, 0)
     for i in range(len(d)):
         for j in range(len(d[0])):
@@ -59,6 +63,12 @@ def unify_most_close_points(d):
     print("Before:")
     for i in range(len(d)):
         print(d[i])
+    print("----------------------------")
+    print(f"X= {x}")
+    print(f"Y= {y}")
+    print(f"n= {n}")
+    print(f"s= {s}")
+    print("----------------------------")
     new_x = int((x[min[0]] + x[min[1]])/2)
     new_y = int((y[min[0]] + y[min[1]])/2)
     for i in range(len(d)):
@@ -68,9 +78,19 @@ def unify_most_close_points(d):
     d.pop(min[0])
     for i in range(len(d)):
         d[i].pop(min[0])
+    x.pop(min[0])
+    y.pop(min[0])
+    n = n - 1
+    s[min[1]] += s[min[0]]
+    s.pop(min[0])
     print("After:")
     for i in range(len(d)):
         print(d[i])
+    print("----------------------------")
+    print(f"X= {x}")
+    print(f"Y= {y}")
+    print(f"n= {n}")
+    print(f"s= {s}")
     print("----------------------------")
 
 
@@ -142,6 +162,7 @@ for file in os.listdir("Inst/"):
   min_couriers = np.sum(np.array(capacity) - np.array(l) != 0)
   l = l[:min_couriers]
   length = length[:min_couriers]
+  s = [int(L) for L in content[3].split(' ')]
 
   # Creating a file in the new folder
   f = open('tsp_inst/' + file + '.dzn', "w")
