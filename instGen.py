@@ -49,6 +49,24 @@ def prim(G):
 
   return tot
 
+def unify_most_close_points(d):
+    min = (0, 0)
+    for i in range(n+1):
+        for j in range(n+1):
+            if d[i][j] < d[min[0]][min[1]]:
+                min = (i, j)
+    print(f"Selected: {min}")
+    print("Before:")
+    for i in range(n+1):
+        print(d[i])
+    d.pop(min[0])
+    for i in range(n+1):
+        d[i].pop(min[0])
+    print("After:")
+    for i in range(n+1):
+        print(d[i])
+
+
 
 NUM_OF_SECTIONS = 100 # If cahnged change also the same constant inside "cluster_assigner_gurobi.py"
 def get_angle_section(x, y):
@@ -141,24 +159,7 @@ for file in os.listdir("Inst/"):
       for j in range(n+1):
           simpl_dist[i][j] = dist[i, j]
 
-  unify_most_close_points(simpl_dist)
-  
-  def unify_most_close_points(d):
-      min = (0, 0)
-      for i in range(n+1):
-          for j in range(n+1):
-              if d[i][j] < d[min[0]][min[1]]:
-                  min = (i, j)
-      print(f"Selected: {min}")
-      print("Before:")
-      for i in range(n+1):
-          print(d[i])
-      d.pop(min[0])
-      for i in range(n+1):
-          d[i].pop(min[0])
-      print("After:")
-      for i in range(n+1):
-          print(d[i])
+unify_most_close_points(simpl_dist)
 
   # Writing the matrix values in the file
   """
