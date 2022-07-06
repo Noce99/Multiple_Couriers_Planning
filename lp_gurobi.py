@@ -57,8 +57,6 @@ gp.setParam("PoolSearchMode", 2) # Cerca meglio le soluzioni intermedie
 gp.setParam("TimeLimit", 300)# Dopo 5 minuti si ferma e mostra il meglio che ha ottenuto
 try:
     model = gp.Model("MCP")
-
-
     table = model.addMVar(shape=(m, N, N), vtype=GRB.BINARY, name="table")
     u = model.addMVar(shape=(N), lb=1, ub=N, vtype=GRB.INTEGER, name="u")
 

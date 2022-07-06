@@ -2,6 +2,7 @@
 
 import numpy as np
 import os
+import math
 
 # Prim's Algorithm in Python
 def prim(G):
@@ -49,6 +50,11 @@ def prim(G):
   return tot
 
 
+NUM_OF_SECTIONS = 100 # If cahnged change also the same constant inside "cluster_assigner_gurobi.py"
+def get_angle_section(x, y):
+    angle = math.atan2(y, x)
+    section_size = 2*math.pi/NUM_OF_SECTIONS
+    return int(angle / section_size)
 
 
 os.mkdir('tsp_inst')
@@ -113,6 +119,14 @@ for file in os.listdir("Inst/"):
   l = l[:min_couriers]
   length = length[:min_couriers]
 
+  # Dividing Points in sections
+  s = [int(L) for L in content[3].split(' ')]
+  sections = [[] for i in range(NUM_OF_SECTIONS)]
+  sections_weight = [0 for i in range(NUM_OF_SECTIONS)]
+  for i in range(len(x)-1):
+      sections[get_angle_section(x[i]-x[len(x)-1], y[i]-y[len(y)-1])].append(i)
+      sections_weight[get_angle_section(x[i]-x[len(x)-1], y[i]-y[len(y)-1])] += s[i]
+
   # Creating a file in the new folder
   f = open('tsp_inst/' + file + '.dzn', "w")
 
@@ -127,6 +141,9 @@ for file in os.listdir("Inst/"):
   f.write('% lower_bound = ' + str(lower_bound) + ';\n')
   #f.write('w = ['); f.writelines([str(L) + ', ' for L in w]); f.write('];\n')
   f.write('length = ['); f.writelines([str(L) + ', ' for L in length]); f.write('];\n')
+  for i in range(NUM_OF_SECTIONS):
+      f.write(f'%{sections[i]}\n')
+  f.write(f'%{sections_weight}\n')
   #f.write('max_length = ' + str(max(length)) + ';\n')
 
   # Writing the matrix values in the file
