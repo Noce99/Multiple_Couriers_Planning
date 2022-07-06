@@ -141,6 +141,8 @@ for file in os.listdir("Inst/"):
       for j in range(n+1):
           simpl_dist[i][j] = dist[i, j]
 
+  unify_most_close_points(simpl_dist)
+  
   def unify_most_close_points(d):
       min = (0, 0)
       for i in range(n+1):
