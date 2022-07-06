@@ -72,20 +72,24 @@ for i in range(len(sections)):
 sections_weight = sections.pop()
 
 model = cp_model.CpModel()
-divisor  = []
+
+divisor_expanded = []
 for k in range(m):
-    divisor.append(model.NewIntVar(lb=0, ub=NUM_OF_SECTIONS, name=f'divisor_{k}'))
+    single_line = []
+    for i in range(NUM_OF_SECTIONS):
+        single_line.append(model.NewIntVar(lb=-1, ub=1, name=f'de[{k},{i}]'))
+    divisor_expanded.append(single_line)
 
-for k in range(m-1):
-    model.Add(divisor[k] < divisor[k+1])
-
-couriers_assignement = []
 for k in range(m):
-    couriers_assignement.append(model.NewIntVar(lb=1, ub=m, name=f'couriers_assignement_{k}'))
-model.AddAllDifferent(couriers_assignement)
+    for i in range(1, NUM_OF_SECTIONS):
+        model.AddImplication(divisor_expanded[k][i] == -1, divisor_expanded[k][i-1] == -1)
+        model.AddImplication(divisor_expanded[k][i] == 1, model.AddBoolOr(divisor_expanded[k][i-1] == -1, divisor_expanded[k][i-1] == 1))
+        model.AddImplication(divisor_expanded[k][i] == 0, model.AddBoolOr(divisor_expanded[k][i-1] == 1, divisor_expanded[k][i-1] == 0))
 
+"""
 for k in range(m-1):
     model.Add(sum(sections_weight[i] for i in range(NUM_OF_SECTIONS) if i > divisor[k] and i < divisor[k+1]) <= 40)
+"""
 
 solver = cp_model.CpSolver()
 # Massimo 5 minuti
