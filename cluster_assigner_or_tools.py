@@ -10,6 +10,7 @@ import math
 import gurobipy as gp
 from gurobipy import GRB
 import scipy.sparse as sp
+from ortools.sat.python import cp_model
 
 if len(sys.argv) < 2:
     print("Non hai messo parametri scemo!")
@@ -88,6 +89,12 @@ solver = cp_model.CpSolver()
 solver.parameters.max_time_in_seconds = 300.0
 status = solver.Solve(model)
 
+for k in range(m):
+    print(solver.Value(divisor[k]), end=',')
+print("")
+for k in range(m):
+    print(solver.Value(couriers_assignement[k]), end=', ')
+print("")
 """
 gp.setParam("PoolSearchMode", 2) # Cerca meglio le soluzioni intermedie
 gp.setParam("TimeLimit", 300)# Dopo 5 minuti si ferma e mostra il meglio che ha ottenuto
@@ -112,7 +119,7 @@ try:
     for k in range(m):
         model.addConstr(sum(sections_weight[i] for i in range(NUM_OF_SECTIONS) if i >= divisor[k] and i <= divisor[k+1]) <= sum(l[kk]*couriers_assignement[k][kk] for kk in range(m)))
 """
-    """
+"""
     means = model.addMVar(shape=(m), vtype=GRB.INTEGER, name="means")
     for k in range(m):
         model.addConstr(means[k]*sum(table[k, i] for i in range(NUM_OF_SECTIONS)) - sum(table[k, i]*i for i in range(NUM_OF_SECTIONS)) <= 2)
@@ -121,7 +128,7 @@ try:
         model.addConstr(sum(table[k, i]*i-means[k] for i in range(NUM_OF_SECTIONS)) <= 25)
         model.addConstr(sum(table[k, i]*i-means[k] for i in range(NUM_OF_SECTIONS)) >= -25)
         pass
-    """
+sssss"""
 """
     for k in range(m):
         model.addConstr()
@@ -145,6 +152,7 @@ try:
         print(cour_ass[k].getAttr("x"), end=", ")
     print("]")
 """
+"""
     colors = [f"C{i}" for i in range(m)]
     for i in range(NUM_OF_SECTIONS):
         for k in range(m):
@@ -156,8 +164,7 @@ try:
     plt.gca().add_patch(plt.Circle((x[len(x)-1], y[len(y)-1]), 0.05, color='r'))
     plt.xlim(min(x)-2,max(x)+2)
     plt.ylim(min(y)-2,max(y)+2)
+
     plt.show()
-    """
-except gp.GurobiError as e:
-    print('Error code ' + str(e.errno) + ": " + str(e))
+"""
 quit()
