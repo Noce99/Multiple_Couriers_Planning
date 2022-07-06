@@ -1,6 +1,5 @@
 import numpy as np
 import gurobipy as gp
-from gurobipy import quicksum
 from gurobipy import GRB
 import scipy.sparse as sp
 import matplotlib.pyplot as plt
@@ -61,22 +60,22 @@ try:
     table = model.addMVar(shape=(m, N, N), vtype=GRB.BINARY, name="table")
     u = model.addMVar(shape=(N), lb=1, ub=N, vtype=GRB.INTEGER, name="u")
 
-    obj = quicksum(D[i, j]*table[k, i, j] for i in range(N) for j in range(N) for k in range(m))
+    obj = sum(D[i, j]*table[k, i, j] for i in range(N) for j in range(N) for k in range(m))
     model.addConstr(obj >= lower_boud)
     model.setObjective(obj, GRB.MINIMIZE)
 
     for i in range(N):
         for k in range(m):
             model.addConstr(table[k,i,i] == 0)
-            model.addConstr(quicksum(table[k,i,j] for j in range(N)) == quicksum(table[k,j,i] for j in range(N)))
+            model.addConstr(sum(table[k,i,j] for j in range(N)) == sum(table[k,j,i] for j in range(N)))
 
     for j in range(N-1):
-        model.addConstr(quicksum(table[k, i, j] for k in range(m) for i in range(N)) == 1)
+        model.addConstr(sum(table[k, i, j] for k in range(m) for i in range(N)) == 1)
 
     for k in range(m):
-        model.addConstr(quicksum(table[k, N-1, j] for j in range(N-1)) == 1)
-        model.addConstr(quicksum(table[k, j, N-1] for j in range(N-1)) == 1)
-        model.addConstr(quicksum(table[k, i, j]*s[j] for i in range(N) for j in range(N-1)) <= l[k])
+        model.addConstr(sum(table[k, N-1, j] for j in range(N-1)) == 1)
+        model.addConstr(sum(table[k, j, N-1] for j in range(N-1)) == 1)
+        model.addConstr(sum(table[k, i, j]*s[j] for i in range(N) for j in range(N-1)) <= l[k])
 
     for i in range(N):
         for j in range(N-1):
