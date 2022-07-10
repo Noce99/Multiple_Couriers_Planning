@@ -3,6 +3,10 @@
 import numpy as np
 import os
 import math
+from math import sqrt
+
+#PARAMETERS
+MAX_ITEM_NUM = 40 #75 per far runnare tutti
 
 # Prim's Algorithm in Python
 def prim(G):
@@ -49,16 +53,30 @@ def prim(G):
 
   return tot
 
-def unify_most_close_points(d):
+
+def unify_most_close_points(d, verbose=False):
     global x
     global y
     global n
     global s
+    global l
+    global unifications_reconstructor_x
+    global unifications_reconstructor_y
+    global max_s
+    max_l = max(l)
+    if verbose:
+        print("Ecco la matrice d: ")
+        for i in range(len(d)-1):
+            for j in range(len(d[0])-1):
+                print(d[i][j], end=", ")
+            print("")
     min = (1, 0)
     for i in range(len(d)-1):
         for j in range(len(d[0])-1):
-            if d[i][j] < d[min[0]][min[1]] and d[i][j] > 0:
+            if d[i][j] < d[min[0]][min[1]] and i != j and s[i]+s[j] < max_l:
                 min = (i, j)
+    if verbose:
+        print(f"Il minimo è in posizione: {min}")
     """
     print(f"Selected: {min}")
     print("Before:")
@@ -71,17 +89,44 @@ def unify_most_close_points(d):
     print(f"s= {s}")
     print("----------------------------")
     """
-    new_x = int((x[min[0]] + x[min[1]])/2)
-    new_y = int((y[min[0]] + y[min[1]])/2)
+    new_x = (x[min[0]] + x[min[1]])/2.
+    new_y = (y[min[0]] + y[min[1]])/2.
+    if verbose:
+        print(f"Faccio la media tra ({x[min[0]]}, {y[min[0]]}) e ({x[min[1]]}, {y[min[1]]}) ottenendo ({new_x}, {new_y})")
     for i in range(len(d)):
-        d[min[1]][i] = abs(new_x - x[i]) + abs(new_y - y[i])
+        d[min[1]][i] = sqrt((new_x - x[i])**2 + (new_y - y[i])**2)
     for i in range(len(d)):
-        d[i][min[1]] = abs(new_x - x[i]) + abs(new_y - y[i])
+        d[i][min[1]] = sqrt((new_x - x[i])**2 + (new_y - y[i])**2)
     d.pop(min[0])
     for i in range(len(d)):
         d[i].pop(min[0])
+    if verbose:
+        print(f"Ecco la matrice d dopo l'eliminazione della riga e colonna {min[0]}: ")
+        for i in range(len(d)-1):
+            for j in range(len(d[0])-1):
+                print(d[i][j], end=", ")
+            print("")
+    if verbose:
+        print("x prima della modifica:")
+        print(x)
+    x[min[1]] = new_x
+    y[min[1]] = new_y
     x.pop(min[0])
     y.pop(min[0])
+    if verbose:
+        print("x dopo la modifica:")
+        print(x)
+    if verbose:
+        print(f"Unifico {unifications_reconstructor_x[min[1]]} e {unifications_reconstructor_x[min[0]]} in ", end="")
+        print("unifications_reconstructor_x prima della modifica")
+        print(unifications_reconstructor_x)
+    unifications_reconstructor_x[min[1]] += unifications_reconstructor_x[min[0]]
+    unifications_reconstructor_y[min[1]] += unifications_reconstructor_y[min[0]]
+    unifications_reconstructor_x.pop(min[0])
+    unifications_reconstructor_y.pop(min[0])
+    if verbose:
+        print("unifications_reconstructor_x dopo la modifica")
+        print(unifications_reconstructor_x)
     n = n - 1
     s[min[1]] += s[min[0]]
     s.pop(min[0])
@@ -98,8 +143,6 @@ def unify_most_close_points(d):
     """
     return d
 
-
-MAX_ITEM_NUM = 100
 
 os.mkdir('tsp_inst')
 
@@ -119,6 +162,8 @@ for file in os.listdir("Inst/"):
   # Delivery coordinates of each object
   x = [int(el) for el in content[4].split(' ')]
   y = [int(el) for el in content[5].split(' ')]
+  unifications_reconstructor_x = [[x[i]] for i in range(len(x))]
+  unifications_reconstructor_y = [[y[i]] for i in range(len(y))]
 
   # Intantiating the distance matrix
   dist = np.zeros(shape=(n+1,n+1), dtype=int)
@@ -126,7 +171,7 @@ for file in os.listdir("Inst/"):
   # Filling the matrix with the Manhattan distance between each pair of objects
   for i in range(n+1):
     for j in range(i, n+1):
-      dist[i, j] = dist[j, i] = abs(x[i] - x[j]) + abs(y[i] - y[j])
+      dist[i, j] = dist[j, i] = sqrt((x[i] - x[j])**2 + (y[i] - y[j])**2)
 
   lst = list(dist[-1, :-1])
   min_deposit_dist = lst.pop(np.argmin(lst)) + lst.pop(np.argmin(lst))
@@ -160,10 +205,15 @@ for file in os.listdir("Inst/"):
               break
 
   min_couriers = np.sum(np.array(capacity) - np.array(l) != 0)
+
+# tolgo momentaneante la riduzione dei min_couriers
+# min_couriers = len(l)
+
+
   l = l[:min_couriers]
   length = length[:min_couriers]
   s = [int(L) for L in content[3].split(' ')]
-
+  max_s = max(s)
   # Creating a file in the new folder
   f = open('tsp_inst/' + file + '.dzn', "w")
 
@@ -180,7 +230,6 @@ for file in os.listdir("Inst/"):
   f.write('length = ['); f.writelines([str(L) + ', ' for L in length]); f.write('];\n')
 
   #CREATING THE SIMPLIFIED MODEL
-  NUM_OF_POINTS = 100
   simpl_dist = [[0 for i in range(n+1)] for ii in range(n+1)]
   for i in range(n+1):
       for j in range(n+1):
@@ -189,12 +238,21 @@ for file in os.listdir("Inst/"):
   while n > MAX_ITEM_NUM:
       simpl_dist = unify_most_close_points(simpl_dist)
       i += 1
-  print(f"{file} simplified {i} times!")
+  print(f"\"{file}\" simplified {i} times!")
   print(file, "DONE!")
-  f.write(f'n = {n}\n')
+  f.write(f'n = {n};\n')
   f.write(f"s = {s}\n")
   f.write(f"x = {x}\n")
   f.write(f"y = {y}\n")
+  f.write(f"X = [")
+  for e in unifications_reconstructor_x:
+      f.write(f"{e}; ")
+  f.write("]\n")
+  f.write(f"Y = [")
+  for e in unifications_reconstructor_y:
+      f.write(f"{e}; ")
+  f.write("]\n")
+  f.write("\n")
 
   # Writing the matrix values in the file
   """
@@ -205,9 +263,11 @@ for file in os.listdir("Inst/"):
     f.write('|')
   f.write('];\n')
   """
+  """
   if (file == "inst_banale"):
       for i in range(n+1):
           print([dist[i, j] for j in range(n+1)])
       print("\n")
+  """
   # Closing the new file
   f.close()
