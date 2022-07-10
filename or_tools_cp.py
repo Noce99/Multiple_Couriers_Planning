@@ -219,7 +219,7 @@ if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
                         who_have_what[k].append(i)
         x_for_each = [[] for k in range(m)]
         y_for_each = [[] for k in range(m)]
-        print(who_have_what)
+        print("Who have_what: \n", who_have_what, "\n---------------")
         for k in range(m):
             for i in range(len(who_have_what[k])):
                 for ii in range(len(reconstructor_x[who_have_what[k][i]])):

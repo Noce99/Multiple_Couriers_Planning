@@ -6,7 +6,7 @@ import math
 from math import sqrt
 
 #PARAMETERS
-MAX_ITEM_NUM = 40 #75 per far runnare tutti
+MAX_ITEM_NUM = 15 #75 per far runnare tutti
 
 # Prim's Algorithm in Python
 def prim(G):
