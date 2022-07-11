@@ -1,10 +1,13 @@
-# UPLOAD ALL THE INSTANCES IN THE 'Inst' FOLDER, THEN RUN THIS PROGRAM.
-
 import numpy as np
 import os
 import math
 from math import sqrt
-
+# ------------------------------------------------------------------------------
+# This is our Data Preprocessing Program, given the original inst file it
+# generate new one optimizing the number of couriers, the order of data,
+# calculating a lower bound and aggregating items inside clusters.
+# Author: Enrico Mannocci, Riccardo Pasquini & Matteo Periani
+# ------------------------------------------------------------------------------
 #PARAMETERS
 MAX_ITEM_NUM = 40 # Put 15 for SMT
 
@@ -32,6 +35,7 @@ def prim(G):
       tot += minimum
       no_edge += 1
   return tot
+
 def unify_most_close_points(d, verbose=False):
     # Used to find out better point for aggregation
     global x
@@ -69,131 +73,96 @@ def unify_most_close_points(d, verbose=False):
     s.pop(min[0])
     return d
 
-
 os.mkdir('tsp_inst')
-
 for file in os.listdir("Inst/"):
-
-  # Reading the file
-  f = open('Inst/' + file, "r")
-  text = f.read()
-  f.close()
-
-  # Splitting the file by rows
-  content = text.split('\n')
-
-  # Number of objects to deliver
-  n = int(content[1])
-
-  # Delivery coordinates of each object
-  x = [int(el) for el in content[4].split(' ')]
-  y = [int(el) for el in content[5].split(' ')]
-  unifications_reconstructor_x = [[x[i]] for i in range(len(x))]
-  unifications_reconstructor_y = [[y[i]] for i in range(len(y))]
-
-  # Intantiating the distance matrix
-  dist = np.zeros(shape=(n+1,n+1), dtype=int)
-
-  # Filling the matrix with the Manhattan distance between each pair of objects
-  for i in range(n+1):
-    for j in range(i, n+1):
-      dist[i, j] = dist[j, i] = sqrt((x[i] - x[j])**2 + (y[i] - y[j])**2)
-
-  lst = list(dist[-1, :-1])
-  min_deposit_dist = lst.pop(np.argmin(lst)) + lst.pop(np.argmin(lst))
-  lower_bound = prim(dist[:-1, :-1]) + min_deposit_dist
-
-  # Creating w (ordered s)
-  w = [int(L) for L in content[3].split(' ')]
-  w.sort()
-
-  # Creating length
-  l = [int(L) for L in content[2].split(' ')]
-  l.sort()
-  l.reverse()
-  length = []
-  for ll in l:
-    sum = 0
-    length_l = 0
-    for ww in w:
-      sum += ww
-      if sum > ll:
-        break
-      length_l += 1
-    length.append(length_l)
-
-  capacity = l.copy()
-  while len(w) > 0:
-      obj = w.pop(0)
-      for idx, c in enumerate(capacity):
-          if c >= obj:
-              capacity[idx] -= obj
-              break
-
-  min_couriers = np.sum(np.array(capacity) - np.array(l) != 0)
-
-# tolgo momentaneante la riduzione dei min_couriers
-# min_couriers = len(l)
-
-
-  l = l[:min_couriers]
-  length = length[:min_couriers]
-  s = [int(L) for L in content[3].split(' ')]
-  max_s = max(s)
-  # Creating a file in the new folder
-  f = open('tsp_inst/' + file + '.dzn', "w")
-
-  # Writing the new file .dzn of the instance
-  f.write('m = ' + str(min_couriers) + ';\n')
-  f.write('n = ' + content[1] + ';\n')
-  f.write('l = ['); f.writelines([str(L) + ', ' for L in l]); f.write('];\n')
-  f.write('s = ['); f.writelines([str(int(L)) + ', ' for L in content[3].split(' ')]); f.write('];\n')
-  f.write('x = ['); f.writelines([str(L) + ', ' for L in x]); f.write('];\n')
-  f.write('y = ['); f.writelines([str(L) + ', ' for L in y]); f.write('];\n')
-  #f.write('min_couriers = ' + str(min_couriers) + ';\n')
-  f.write('% lower_bound = ' + str(lower_bound) + ';\n')
-  #f.write('w = ['); f.writelines([str(L) + ', ' for L in w]); f.write('];\n')
-  f.write('length = ['); f.writelines([str(L) + ', ' for L in length]); f.write('];\n')
-
-  #CREATING THE SIMPLIFIED MODEL
-  simpl_dist = [[0 for i in range(n+1)] for ii in range(n+1)]
-  for i in range(n+1):
+    # --------------------1--------------------
+    # There we get data from the original inst file
+    f = open('Inst/' + file, "r")
+    text = f.read()
+    f.close()
+    content = text.split('\n')
+    n = int(content[1])
+    x = [int(el) for el in content[4].split(' ')]
+    y = [int(el) for el in content[5].split(' ')]
+    l = [int(L) for L in content[2].split(' ')]
+    w = [int(L) for L in content[3].split(' ')]
+    s = [int(L) for L in content[3].split(' ')]
+    # --------------------1--------------------
+    # --------------------2--------------------
+    # There we inizialize "unifications_reconstructor_x" & "unifications_reconstructor_y",
+    # we caluclate the dist matrix, we calculate the lower bound with the Prim's Algorithm
+    # and we truncate w and l with the calculated minimun number of couriers needed
+    unifications_reconstructor_x = [[x[i]] for i in range(len(x))]
+    unifications_reconstructor_y = [[y[i]] for i in range(len(y))]
+    dist = np.zeros(shape=(n+1,n+1), dtype=int)
+    for i in range(n+1):
+        for j in range(i, n+1):
+          dist[i, j] = dist[j, i] = sqrt((x[i] - x[j])**2 + (y[i] - y[j])**2)
+    lst = list(dist[-1, :-1])
+    min_deposit_dist = lst.pop(np.argmin(lst)) + lst.pop(np.argmin(lst))
+    lower_bound = prim(dist[:-1, :-1]) + min_deposit_dist
+    w.sort()
+    l.sort()
+    l.reverse()
+    length = []
+    for ll in l:
+        sum = 0
+        length_l = 0
+        for ww in w:
+            sum += ww
+            if sum > ll:
+                break
+            length_l += 1
+        length.append(length_l)
+    capacity = l.copy()
+    while len(w) > 0:
+        obj = w.pop(0)
+        for idx, c in enumerate(capacity):
+            if c >= obj:
+                capacity[idx] -= obj
+                break
+    min_couriers = np.sum(np.array(capacity) - np.array(l) != 0)
+    l = l[:min_couriers]
+    length = length[:min_couriers]
+    # --------------------2--------------------
+    # --------------------3--------------------
+    # There we create the new inst file with preprocessed data
+    f = open('tsp_inst/' + file + '.dzn', "w")
+    f.write('m = ' + str(min_couriers) + ';\n')
+    f.write('n = ' + content[1] + ';\n')
+    f.write('l = ['); f.writelines([str(L) + ', ' for L in l]); f.write('];\n')
+    f.write('s = ['); f.writelines([str(int(L)) + ', ' for L in content[3].split(' ')]); f.write('];\n')
+    f.write('x = ['); f.writelines([str(L) + ', ' for L in x]); f.write('];\n')
+    f.write('y = ['); f.writelines([str(L) + ', ' for L in y]); f.write('];\n')
+    f.write('% lower_bound = ' + str(lower_bound) + ';\n')
+    f.write('length = ['); f.writelines([str(L) + ', ' for L in length]); f.write('];\n')
+    # --------------------3--------------------
+    # --------------------4--------------------
+    # There we create the clusters of items
+    simpl_dist = [[0 for i in range(n+1)] for ii in range(n+1)]
+    for i in range(n+1):
       for j in range(n+1):
           simpl_dist[i][j] = dist[i, j]
-  i = 0
-  while n > MAX_ITEM_NUM:
+    i = 0
+    while n > MAX_ITEM_NUM:
       simpl_dist = unify_most_close_points(simpl_dist)
       i += 1
-  print(f"\"{file}\" simplified {i} times!")
-  print(file, "DONE!")
-  f.write(f'n = {n};\n')
-  f.write(f"s = {s}\n")
-  f.write(f"x = {x}\n")
-  f.write(f"y = {y}\n")
-  f.write(f"X = [")
-  for e in unifications_reconstructor_x:
+    # --------------------4--------------------
+    # --------------------5--------------------
+    # There we write on the file the clusters rappresemtation
+    f.write(f'n = {n};\n')
+    f.write(f"s = {s}\n")
+    f.write(f"x = {x}\n")
+    f.write(f"y = {y}\n")
+    f.write(f"X = [")
+    for e in unifications_reconstructor_x:
       f.write(f"{e}; ")
-  f.write("]\n")
-  f.write(f"Y = [")
-  for e in unifications_reconstructor_y:
+    f.write("]\n")
+    f.write(f"Y = [")
+    for e in unifications_reconstructor_y:
       f.write(f"{e}; ")
-  f.write("]\n")
-  f.write("\n")
-
-  # Writing the matrix values in the file
-  """
-  f.write('D = [|')
-  for i in range(n+1):
-    for j in range(n+1):
-      f.write(str(dist[i, j]) + ', ')
-    f.write('|')
-  f.write('];\n')
-  """
-  """
-  if (file == "inst_banale"):
-      for i in range(n+1):
-          print([dist[i, j] for j in range(n+1)])
-      print("\n")
-  """
-  # Closing the new file
-  f.close()
+    f.write("]\n")
+    f.write("\n")
+    f.close()
+    print(f"{file} DONE! (simplified {i} times!)")
+    # --------------------5--------------------

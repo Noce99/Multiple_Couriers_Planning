@@ -3,8 +3,10 @@ import matplotlib.pyplot as plt
 from ortools.sat.python import cp_model
 import sys
 import time
+# ------------------------------------------------------------------------------
 # This is our CP model and we have used the ortools lib to build it
 # Author: Enrico Mannocci, Riccardo Pasquini & Matteo Periani
+# ------------------------------------------------------------------------------
 # --------------------1--------------------
 # There we get the argument that specifie the istance we want to solve
 if len(sys.argv) < 2:
