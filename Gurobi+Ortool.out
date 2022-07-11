@@ -1,0 +1,412 @@
+Set parameter Username
+Academic license - for non-commercial use only - expires 2022-07-28
+Done optimization for 0-courier.
+Done optimization for 1-courier.
+Done optimization for 2-courier.
+Courier 1: o -> d1 -> d16 -> d14 -> d15 -> d12 -> d9 -> d17 -> d18 -> d5 -> d19 -> d11 -> d13 -> d3 -> d4 -> d8 -> d6 -> d7 -> d2 -> d0 -> d10 -> d20 -> o
+Courier 2: o -> d7 -> d2 -> d3 -> d4 -> d1 -> d0 -> d11 -> d10 -> d12 -> d5 -> d6 -> d8 -> d9 -> d13 -> o
+Courier 3: o -> d12 -> d8 -> d9 -> d0 -> d5 -> d7 -> d10 -> d2 -> d3 -> d4 -> d11 -> d6 -> d1 -> d13 -> d14 -> o
+inst01-GUROBI Post optimization: 1152
+-r \033[0;31mStart inst 2\033[0m
+Set parameter Username
+Academic license - for non-commercial use only - expires 2022-07-28
+Done optimization for 0-courier.
+Done optimization for 1-courier.
+Done optimization for 2-courier.
+Done optimization for 3-courier.
+Done optimization for 4-courier.
+Done optimization for 5-courier.
+Courier 1: o -> d2 -> d1 -> d0 -> d7 -> d3 -> d4 -> d5 -> d6 -> d10 -> d8 -> d9 -> d15 -> d14 -> d13 -> d12 -> d11 -> d16 -> o
+Courier 2: o -> d13 -> d12 -> d11 -> d10 -> d5 -> d4 -> d0 -> d1 -> d3 -> d2 -> d8 -> d9 -> d7 -> d6 -> d14 -> o
+Courier 3: o -> d8 -> d9 -> d10 -> d12 -> d11 -> d17 -> d16 -> d15 -> d14 -> d13 -> d4 -> d5 -> d3 -> d2 -> d7 -> d6 -> d1 -> d0 -> d18 -> o
+Courier 4: o -> d14 -> d12 -> d9 -> d11 -> d10 -> d8 -> d5 -> d6 -> d3 -> d4 -> d2 -> d0 -> d1 -> d7 -> d13 -> d15 -> o
+Courier 5: o -> d5 -> d4 -> d6 -> d7 -> d11 -> d13 -> d12 -> d14 -> d2 -> d1 -> d0 -> d3 -> d16 -> d15 -> d17 -> d10 -> d9 -> d8 -> d18 -> o
+Courier 6: o -> d12 -> d10 -> d11 -> d13 -> d5 -> d6 -> d1 -> d8 -> d7 -> d0 -> d3 -> d2 -> d4 -> d9 -> d14 -> o
+inst02-GUROBI Post optimization: 2094
+-r \033[0;31mStart inst 3\033[0m
+Set parameter Username
+Academic license - for non-commercial use only - expires 2022-07-28
+Done optimization for 0-courier.
+Done optimization for 1-courier.
+Done optimization for 2-courier.
+Done optimization for 3-courier.
+Done optimization for 4-courier.
+Done optimization for 5-courier.
+Done optimization for 6-courier.
+Done optimization for 7-courier.
+Done optimization for 8-courier.
+Done optimization for 9-courier.
+Courier 1: o -> d14 -> d12 -> d11 -> d10 -> d3 -> d5 -> d4 -> d8 -> d6 -> d7 -> d9 -> d1 -> d0 -> d2 -> d13 -> d15 -> o
+Courier 2: o -> d5 -> d6 -> d1 -> d7 -> d8 -> d0 -> d12 -> d11 -> d10 -> d9 -> d4 -> d2 -> d3 -> d13 -> o
+Courier 3: o -> d6 -> d8 -> d7 -> d0 -> d1 -> d15 -> d16 -> d13 -> d12 -> d14 -> d9 -> d10 -> d11 -> d5 -> d3 -> d4 -> d2 -> d17 -> o
+Courier 4: o -> d5 -> d6 -> d8 -> d9 -> d4 -> d2 -> d1 -> d0 -> d3 -> d7 -> d10 -> o
+Courier 5: o -> d8 -> d7 -> d6 -> d10 -> d9 -> d11 -> d12 -> d13 -> d4 -> d5 -> d2 -> d1 -> d3 -> d16 -> d15 -> d14 -> d0 -> d17 -> o
+Courier 6: o -> d3 -> d0 -> d1 -> d6 -> d7 -> d4 -> d5 -> d8 -> d9 -> d10 -> d2 -> d11 -> o
+Courier 7: o -> d1 -> d0 -> d2 -> d11 -> d9 -> d3 -> d4 -> d5 -> d10 -> d7 -> d6 -> d8 -> d12 -> o
+Courier 8: o -> d10 -> d13 -> d12 -> d11 -> d14 -> d7 -> d8 -> d9 -> d6 -> d5 -> d2 -> d1 -> d4 -> d3 -> d0 -> d15 -> o
+Courier 9: o -> d6 -> d5 -> d4 -> d3 -> d8 -> d7 -> d1 -> d13 -> d12 -> d10 -> d11 -> d14 -> d15 -> d0 -> d2 -> d9 -> d16 -> o
+Courier 10: o -> d12 -> d13 -> d11 -> d10 -> d1 -> d2 -> d0 -> d7 -> d6 -> d8 -> d9 -> d16 -> d14 -> d15 -> d3 -> d5 -> d4 -> d17 -> o
+inst03-GUROBI Post optimization: 2871
+-r \033[0;31mStart inst 4\033[0m
+Set parameter Username
+Academic license - for non-commercial use only - expires 2022-07-28
+Done optimization for 0-courier.
+Done optimization for 1-courier.
+Done optimization for 2-courier.
+Done optimization for 3-courier.
+Done optimization for 4-courier.
+Done optimization for 5-courier.
+Done optimization for 6-courier.
+Done optimization for 7-courier.
+Done optimization for 8-courier.
+Done optimization for 9-courier.
+Done optimization for 10-courier.
+Done optimization for 11-courier.
+Done optimization for 12-courier.
+Done optimization for 13-courier.
+Courier 1: o -> d2 -> d3 -> d4 -> d1 -> d0 -> d7 -> d8 -> d9 -> d12 -> d11 -> d10 -> d6 -> d5 -> d13 -> o
+Courier 2: o -> d13 -> d11 -> d8 -> d10 -> d0 -> d1 -> d2 -> d9 -> d3 -> d4 -> d7 -> d5 -> d6 -> d12 -> d14 -> o
+Courier 3: o -> d5 -> d6 -> d3 -> d4 -> d8 -> d9 -> d10 -> d0 -> d11 -> d2 -> d1 -> d7 -> d12 -> o
+Courier 4: o -> d6 -> d5 -> d3 -> d4 -> d8 -> d7 -> d1 -> d0 -> d10 -> d2 -> d9 -> d11 -> o
+Courier 5: o -> d10 -> d6 -> d5 -> d4 -> d7 -> d2 -> d0 -> d1 -> d12 -> d13 -> d14 -> d3 -> d9 -> d8 -> d11 -> d15 -> o
+Courier 6: o -> d11 -> d10 -> d9 -> d8 -> d7 -> d3 -> d1 -> d2 -> d0 -> d14 -> d15 -> d13 -> d4 -> d5 -> d6 -> d12 -> d16 -> o
+Courier 7: o -> d8 -> d9 -> d7 -> d6 -> d10 -> d4 -> d5 -> d2 -> d3 -> d1 -> d0 -> d11 -> o
+Courier 8: o -> d3 -> d6 -> d7 -> d8 -> d9 -> d0 -> d1 -> d2 -> d4 -> d5 -> d10 -> o
+Courier 9: o -> d12 -> d11 -> d10 -> d9 -> d8 -> d13 -> d7 -> d6 -> d5 -> d1 -> d0 -> d2 -> d3 -> d4 -> d14 -> o
+Courier 10: o -> d3 -> d7 -> d9 -> d8 -> d6 -> d5 -> d13 -> d11 -> d10 -> d12 -> d0 -> d1 -> d2 -> d4 -> d14 -> o
+Courier 11: o -> d6 -> d4 -> d0 -> d1 -> d3 -> d2 -> d7 -> d21 -> d9 -> d8 -> d10 -> d11 -> d18 -> d19 -> d17 -> d20 -> d13 -> d12 -> d16 -> d15 -> d14 -> d5 -> d22 -> o
+Courier 12: o -> d7 -> d6 -> d5 -> d9 -> d4 -> d2 -> d3 -> d11 -> d10 -> d8 -> d13 -> d14 -> d12 -> d0 -> d1 -> d15 -> o
+Courier 13: o -> d5 -> d9 -> d8 -> d4 -> d1 -> d0 -> d3 -> d2 -> d7 -> d6 -> d10 -> o
+Courier 14: o -> d7 -> d8 -> d9 -> d6 -> d5 -> d4 -> d1 -> d0 -> d3 -> d2 -> d11 -> d10 -> d12 -> d13 -> d14 -> o
+inst04-GUROBI Post optimization: 3716
+-r \033[0;31mStart inst 5\033[0m
+Set parameter Username
+Academic license - for non-commercial use only - expires 2022-07-28
+Done optimization for 0-courier.
+Done optimization for 1-courier.
+Done optimization for 2-courier.
+Done optimization for 3-courier.
+Done optimization for 4-courier.
+Done optimization for 5-courier.
+Done optimization for 6-courier.
+Done optimization for 7-courier.
+Done optimization for 8-courier.
+Done optimization for 9-courier.
+Done optimization for 10-courier.
+Done optimization for 11-courier.
+Done optimization for 12-courier.
+Done optimization for 13-courier.
+Done optimization for 14-courier.
+Done optimization for 15-courier.
+Done optimization for 16-courier.
+Done optimization for 17-courier.
+Done optimization for 18-courier.
+Done optimization for 19-courier.
+Courier 1: o -> d0 -> d10 -> d1 -> d2 -> d5 -> d6 -> d9 -> d4 -> d8 -> d7 -> d3 -> d11 -> o
+Courier 2: o -> d4 -> d1 -> d2 -> d3 -> d5 -> d7 -> d6 -> d11 -> d12 -> d10 -> d8 -> d9 -> d14 -> d13 -> d0 -> d16 -> d15 -> d17 -> o
+Courier 3: o -> d15 -> d7 -> d8 -> d10 -> d11 -> d9 -> d4 -> d5 -> d6 -> d0 -> d3 -> d2 -> d1 -> d12 -> d14 -> d13 -> d16 -> o
+Courier 4: o -> d4 -> d0 -> d1 -> d2 -> d14 -> d13 -> d11 -> d12 -> d8 -> d9 -> d10 -> d3 -> d5 -> d7 -> d6 -> d15 -> o
+Courier 5: o -> d3 -> d4 -> d6 -> d5 -> d7 -> d8 -> d1 -> d0 -> d2 -> d12 -> d11 -> d10 -> d9 -> d13 -> o
+Courier 6: o -> d6 -> d0 -> d1 -> d2 -> d3 -> d4 -> d5 -> d11 -> d10 -> d9 -> d7 -> d8 -> d12 -> o
+Courier 7: o -> d7 -> d8 -> d1 -> d0 -> d3 -> d2 -> d4 -> d5 -> d6 -> d11 -> d9 -> d10 -> d12 -> o
+Courier 8: o -> d6 -> d8 -> d7 -> d10 -> d11 -> d9 -> d3 -> d2 -> d0 -> d1 -> d5 -> d4 -> d12 -> o
+Courier 9: o -> d8 -> d6 -> d7 -> d0 -> d1 -> d2 -> d3 -> d4 -> d5 -> d9 -> o
+Courier 10: o -> d1 -> d6 -> d7 -> d13 -> d10 -> d12 -> d11 -> d9 -> d8 -> d4 -> d5 -> d2 -> d3 -> d0 -> d14 -> o
+Courier 11: o -> d9 -> d6 -> d7 -> d1 -> d0 -> d2 -> d3 -> d5 -> d4 -> d8 -> d10 -> d11 -> o
+Courier 12: o -> d6 -> d7 -> d0 -> d5 -> d1 -> d9 -> d8 -> d10 -> d4 -> d3 -> d2 -> d11 -> d13 -> d12 -> d14 -> o
+Courier 13: o -> d3 -> d1 -> d0 -> d4 -> d5 -> d10 -> d8 -> d9 -> d6 -> d7 -> d2 -> d11 -> o
+Courier 14: o -> d9 -> d8 -> d7 -> d10 -> d3 -> d4 -> d6 -> d5 -> d0 -> d1 -> d2 -> d11 -> o
+Courier 15: o -> d1 -> d0 -> d2 -> d3 -> d4 -> d6 -> d5 -> d10 -> d9 -> d7 -> d8 -> d11 -> o
+Courier 16: o -> d8 -> d7 -> d10 -> d9 -> d12 -> d11 -> d6 -> d5 -> d0 -> d3 -> d2 -> d1 -> d4 -> d13 -> o
+Courier 17: o -> d2 -> d0 -> d1 -> d5 -> d4 -> d3 -> d6 -> o
+Courier 18: o -> d12 -> d10 -> d11 -> d9 -> d8 -> d0 -> d2 -> d4 -> d7 -> d5 -> d6 -> d3 -> d1 -> d13 -> o
+Courier 19: o -> d6 -> d4 -> d5 -> d3 -> d1 -> d0 -> d2 -> d7 -> d8 -> d9 -> o
+Courier 20: o -> d1 -> d2 -> d0 -> d5 -> d4 -> d3 -> d8 -> d7 -> d6 -> d9 -> o
+inst05-GUROBI Post optimization: 3801
+-r \033[0;31mStart inst 6\033[0m
+Set parameter Username
+Academic license - for non-commercial use only - expires 2022-07-28
+-r \033[0;31mStart inst 7\033[0m
+Set parameter Username
+Academic license - for non-commercial use only - expires 2022-07-28
+Done optimization for 0-courier.
+Done optimization for 1-courier.
+Done optimization for 2-courier.
+Done optimization for 3-courier.
+Courier 1: o -> d10 -> d9 -> d8 -> d11 -> d12 -> d13 -> d1 -> d17 -> d4 -> d14 -> d7 -> d6 -> d19 -> d18 -> d0 -> d3 -> d5 -> d20 -> d21 -> d22 -> d16 -> d15 -> d2 -> d23 -> o
+Courier 2: o -> d14 -> d15 -> d13 -> d8 -> d17 -> d18 -> d11 -> d12 -> d16 -> d0 -> d4 -> d19 -> d20 -> d3 -> d2 -> d1 -> d7 -> d21 -> d6 -> d9 -> d10 -> d5 -> d22 -> o
+Courier 3: o -> d7 -> d6 -> d8 -> d9 -> d10 -> d3 -> d2 -> d0 -> d1 -> d5 -> d4 -> d11 -> o
+Courier 4: o -> d4 -> d14 -> d12 -> d5 -> d6 -> d0 -> d1 -> d7 -> d8 -> d11 -> d10 -> d9 -> d13 -> d3 -> d2 -> d15 -> o
+inst07-GUROBI Post optimization: 1443
+-r \033[0;31mStart inst 8\033[0m
+Set parameter Username
+Academic license - for non-commercial use only - expires 2022-07-28
+Done optimization for 0-courier.
+Done optimization for 1-courier.
+Done optimization for 2-courier.
+Done optimization for 3-courier.
+Done optimization for 4-courier.
+Done optimization for 5-courier.
+Done optimization for 6-courier.
+Done optimization for 7-courier.
+Done optimization for 8-courier.
+Done optimization for 9-courier.
+Done optimization for 10-courier.
+Courier 1: o -> d10 -> d0 -> d1 -> d3 -> d2 -> d7 -> d6 -> d5 -> d4 -> d8 -> d9 -> d11 -> o
+Courier 2: o -> d1 -> d0 -> d3 -> d4 -> d2 -> d5 -> d6 -> d9 -> d8 -> d7 -> d11 -> d10 -> d12 -> o
+Courier 3: o -> d13 -> d11 -> d8 -> d4 -> d6 -> d7 -> d5 -> d2 -> d3 -> d1 -> d0 -> d12 -> d9 -> d10 -> d14 -> o
+Courier 4: o -> d4 -> d7 -> d5 -> d6 -> d8 -> d10 -> d9 -> d2 -> d3 -> d0 -> d1 -> d11 -> o
+Courier 5: o -> d17 -> d9 -> d1 -> d4 -> d2 -> d3 -> d0 -> d6 -> d5 -> d7 -> d8 -> d13 -> d16 -> d14 -> d15 -> d12 -> d11 -> d10 -> d18 -> o
+Courier 6: o -> d13 -> d11 -> d12 -> d9 -> d10 -> d8 -> d5 -> d6 -> d7 -> d4 -> d0 -> d3 -> d1 -> d2 -> d14 -> o
+Courier 7: o -> d1 -> d2 -> d4 -> d3 -> d7 -> d6 -> d5 -> d11 -> d10 -> d12 -> d0 -> d9 -> d8 -> d13 -> o
+Courier 8: o -> d8 -> d7 -> d5 -> d4 -> d3 -> d6 -> d1 -> d2 -> d0 -> d9 -> d10 -> o
+Courier 9: o -> d0 -> d2 -> d1 -> d14 -> d12 -> d13 -> d11 -> d10 -> d9 -> d8 -> d3 -> d7 -> d5 -> d4 -> d6 -> d15 -> d16 -> o
+Courier 10: o -> d2 -> d0 -> d1 -> d5 -> d4 -> d3 -> d6 -> d9 -> d10 -> d11 -> d7 -> d8 -> d12 -> o
+Courier 11: o -> d1 -> d3 -> d4 -> d5 -> d0 -> d10 -> d11 -> d2 -> d8 -> d6 -> d7 -> d9 -> d12 -> o
+inst08-GUROBI Post optimization: 2994
+-r \033[0;31mStart inst 9\033[0m
+Set parameter Username
+Academic license - for non-commercial use only - expires 2022-07-28
+Done optimization for 0-courier.
+Done optimization for 1-courier.
+Done optimization for 2-courier.
+Done optimization for 3-courier.
+Done optimization for 4-courier.
+Done optimization for 5-courier.
+Done optimization for 6-courier.
+Done optimization for 7-courier.
+Done optimization for 8-courier.
+Done optimization for 9-courier.
+Done optimization for 10-courier.
+Done optimization for 11-courier.
+Done optimization for 12-courier.
+Done optimization for 13-courier.
+Done optimization for 14-courier.
+Done optimization for 15-courier.
+Courier 1: o -> d11 -> d9 -> d7 -> d6 -> d3 -> d4 -> d2 -> d0 -> d1 -> d5 -> d8 -> d10 -> d12 -> o
+Courier 2: o -> d1 -> d0 -> d6 -> d3 -> d2 -> d4 -> d5 -> d13 -> d12 -> d8 -> d7 -> d9 -> d11 -> d10 -> d14 -> o
+Courier 3: o -> d9 -> d2 -> d1 -> d0 -> d13 -> d12 -> d5 -> d6 -> d3 -> d4 -> d7 -> d10 -> d11 -> d8 -> d14 -> o
+Courier 4: o -> d8 -> d7 -> d0 -> d1 -> d2 -> d3 -> d4 -> d6 -> d5 -> d13 -> d12 -> d11 -> d10 -> d9 -> d14 -> o
+Courier 5: o -> d7 -> d6 -> d5 -> d1 -> d2 -> d3 -> d4 -> d10 -> d11 -> d9 -> d0 -> d12 -> d13 -> d14 -> d15 -> d16 -> d8 -> d17 -> o
+Courier 6: o -> d8 -> d9 -> d3 -> d2 -> d4 -> d0 -> d1 -> d7 -> d6 -> d5 -> d10 -> o
+Courier 7: o -> d13 -> d12 -> d11 -> d9 -> d10 -> d0 -> d1 -> d2 -> d8 -> d7 -> d6 -> d4 -> d3 -> d5 -> d14 -> d15 -> d16 -> o
+Courier 8: o -> d12 -> d10 -> d9 -> d11 -> d8 -> d3 -> d2 -> d4 -> d0 -> d1 -> d6 -> d5 -> d7 -> d13 -> o
+Courier 9: o -> d8 -> d6 -> d7 -> d9 -> d11 -> d10 -> d12 -> d0 -> d1 -> d5 -> d2 -> d3 -> d4 -> d13 -> o
+Courier 10: o -> d8 -> d10 -> d9 -> d11 -> d0 -> d1 -> d2 -> d7 -> d3 -> d6 -> d4 -> d5 -> d12 -> o
+Courier 11: o -> d11 -> d9 -> d10 -> d12 -> d0 -> d1 -> d2 -> d3 -> d4 -> d5 -> d8 -> d7 -> d6 -> d13 -> o
+Courier 12: o -> d11 -> d12 -> d0 -> d1 -> d5 -> d2 -> d3 -> d4 -> d8 -> d6 -> d7 -> d9 -> d10 -> d13 -> o
+Courier 13: o -> d12 -> d13 -> d15 -> d14 -> d17 -> d16 -> d5 -> d11 -> d6 -> d10 -> d9 -> d8 -> d7 -> d0 -> d1 -> d2 -> d4 -> d3 -> d18 -> o
+Courier 14: o -> d0 -> d7 -> d6 -> d9 -> d8 -> d5 -> d4 -> d1 -> d3 -> d2 -> d10 -> o
+Courier 15: o -> d0 -> d1 -> d2 -> d3 -> d4 -> d8 -> d15 -> d13 -> d14 -> d12 -> d11 -> d9 -> d10 -> d5 -> d7 -> d6 -> d16 -> o
+Courier 16: o -> d4 -> d5 -> d8 -> d9 -> d6 -> d7 -> d2 -> d1 -> d3 -> d0 -> d10 -> o
+inst09-GUROBI Post optimization: 4149
+-r \033[0;31mStart inst 10\033[0m
+Set parameter Username
+Academic license - for non-commercial use only - expires 2022-07-28
+-r \033[0;31mStart inst 11\033[0m
+Set parameter Username
+Academic license - for non-commercial use only - expires 2022-07-28
+Done optimization for 0-courier.
+Done optimization for 1-courier.
+Done optimization for 2-courier.
+Courier 1: o -> d7 -> d6 -> d5 -> d10 -> d8 -> d9 -> d0 -> d1 -> d4 -> d3 -> d2 -> d11 -> o
+Courier 2: o -> d16 -> d1 -> d15 -> d6 -> d10 -> d11 -> d7 -> d9 -> d14 -> d3 -> d4 -> d5 -> d17 -> d8 -> d2 -> d0 -> d13 -> d12 -> d18 -> d19 -> d20 -> o
+Courier 3: o -> d4 -> d2 -> d1 -> d7 -> d5 -> d15 -> d3 -> d13 -> d14 -> d6 -> d9 -> d8 -> d12 -> d0 -> d11 -> d10 -> d16 -> o
+inst11-GUROBI Post optimization: 1162
+-r \033[0;31mStart inst 1\033[0m
+Done optimization for 0-courier
+Done optimization for 1-courier
+Done optimization for 2-courier
+Courier 1: o -> d16 -> d15 -> d0 -> d2 -> d7 -> d6 -> d8 -> d4 -> d3 -> d12 -> d10 -> d20 -> d5 -> d19 -> d18 -> d9 -> d11 -> d14 -> d13 -> d17 -> d1 -> d21 -> o
+Courier 2: o -> d2 -> d3 -> d4 -> d1 -> d0 -> d8 -> d10 -> d9 -> d5 -> d6 -> d7 -> d11 -> o
+Courier 3: o -> d14 -> d1 -> d6 -> d12 -> d4 -> d3 -> d2 -> d10 -> d7 -> d5 -> d0 -> d9 -> d8 -> d13 -> d11 -> d15 -> o
+inst01-OR-TOOLS OBJ Post optimization: 1144
+-r \033[0;31mStart inst 2\033[0m
+Done optimization for 0-courier
+Done optimization for 1-courier
+Done optimization for 2-courier
+Done optimization for 3-courier
+Done optimization for 4-courier
+Done optimization for 5-courier
+Courier 1: o -> d9 -> d3 -> d4 -> d10 -> d7 -> d8 -> d12 -> d11 -> d17 -> d16 -> d15 -> d14 -> d13 -> d6 -> d0 -> d1 -> d2 -> d5 -> d18 -> d19 -> o
+Courier 2: o -> d14 -> d15 -> d7 -> d6 -> d12 -> d13 -> d11 -> d0 -> d1 -> d2 -> d10 -> d9 -> d8 -> d5 -> d4 -> d3 -> d16 -> o
+Courier 3: o -> d8 -> d11 -> d12 -> d10 -> d9 -> d7 -> d0 -> d2 -> d1 -> d6 -> d4 -> d5 -> d3 -> d13 -> o
+Courier 4: o -> d6 -> d7 -> d2 -> d15 -> d14 -> d16 -> d8 -> d3 -> d0 -> d1 -> d5 -> d4 -> d13 -> d9 -> d11 -> d12 -> d10 -> d17 -> o
+Courier 5: o -> d14 -> d15 -> d13 -> d10 -> d9 -> d8 -> d7 -> d12 -> d11 -> d2 -> d5 -> d6 -> d1 -> d0 -> d4 -> d3 -> d16 -> o
+Courier 6: o -> d1 -> d0 -> d2 -> d13 -> d12 -> d10 -> d11 -> d4 -> d3 -> d6 -> d5 -> d7 -> d8 -> d9 -> d14 -> o
+inst02-OR-TOOLS OBJ Post optimization: 1892
+-r \033[0;31mStart inst 3\033[0m
+Done optimization for 0-courier
+Done optimization for 1-courier
+Done optimization for 2-courier
+Done optimization for 3-courier
+Done optimization for 4-courier
+Done optimization for 5-courier
+Done optimization for 6-courier
+Done optimization for 7-courier
+Done optimization for 8-courier
+Done optimization for 9-courier
+Courier 1: o -> d2 -> d3 -> d1 -> d5 -> d6 -> d4 -> d7 -> d8 -> d0 -> d12 -> d11 -> d10 -> d9 -> d13 -> o
+Courier 2: o -> d4 -> d2 -> d3 -> d0 -> d1 -> d11 -> d10 -> d9 -> d8 -> d5 -> d7 -> d6 -> d12 -> o
+Courier 3: o -> d0 -> d3 -> d4 -> d1 -> d2 -> d6 -> d5 -> d18 -> d17 -> d16 -> d14 -> d15 -> d11 -> d12 -> d13 -> d7 -> d8 -> d10 -> d9 -> d19 -> o
+Courier 4: o -> d6 -> d8 -> d7 -> d0 -> d1 -> d15 -> d16 -> d13 -> d12 -> d14 -> d10 -> d9 -> d11 -> d5 -> d3 -> d4 -> d2 -> d17 -> o
+Courier 5: o -> d2 -> d4 -> d3 -> d11 -> d10 -> d8 -> d9 -> d12 -> d13 -> d14 -> d15 -> d1 -> d16 -> d0 -> d7 -> d5 -> d6 -> d17 -> o
+Courier 6: o -> d2 -> d3 -> d5 -> d4 -> d8 -> d6 -> d9 -> d7 -> d0 -> d1 -> d10 -> o
+Courier 7: o -> d2 -> d10 -> d9 -> d8 -> d5 -> d4 -> d7 -> d6 -> d1 -> d0 -> d3 -> d11 -> o
+Courier 8: o -> d13 -> d11 -> d8 -> d6 -> d0 -> d1 -> d2 -> d7 -> d4 -> d5 -> d3 -> d10 -> d9 -> d12 -> d14 -> o
+Courier 9: o -> d10 -> d13 -> d12 -> d11 -> d14 -> d8 -> d7 -> d9 -> d6 -> d5 -> d2 -> d1 -> d4 -> d3 -> d0 -> d15 -> o
+Courier 10: o -> d0 -> d1 -> d3 -> d4 -> d2 -> d10 -> d11 -> d9 -> d8 -> d7 -> d6 -> d5 -> d13 -> d12 -> d14 -> d15 -> o
+inst03-OR-TOOLS OBJ Post optimization: 2828
+-r \033[0;31mStart inst 4\033[0m
+Done optimization for 0-courier
+Done optimization for 1-courier
+Done optimization for 2-courier
+Done optimization for 3-courier
+Done optimization for 4-courier
+Done optimization for 5-courier
+Done optimization for 6-courier
+Done optimization for 7-courier
+Done optimization for 8-courier
+Done optimization for 9-courier
+Done optimization for 10-courier
+Done optimization for 11-courier
+Done optimization for 12-courier
+Done optimization for 13-courier
+Courier 1: o -> d6 -> d7 -> d5 -> d9 -> d8 -> d4 -> d0 -> d1 -> d2 -> d3 -> d10 -> o
+Courier 2: o -> d11 -> d10 -> d9 -> d8 -> d2 -> d1 -> d3 -> d4 -> d6 -> d0 -> d7 -> d5 -> d12 -> d14 -> d13 -> d15 -> o
+Courier 3: o -> d4 -> d3 -> d7 -> d9 -> d8 -> d6 -> d5 -> d13 -> d11 -> d10 -> d12 -> d0 -> d1 -> d2 -> d14 -> o
+Courier 4: o -> d10 -> d5 -> d6 -> d7 -> d8 -> d9 -> d11 -> d12 -> d1 -> d2 -> d0 -> d4 -> d3 -> d13 -> o
+Courier 5: o -> d11 -> d10 -> d9 -> d8 -> d7 -> d6 -> d2 -> d1 -> d0 -> d12 -> d13 -> d14 -> d3 -> d4 -> d5 -> d15 -> o
+Courier 6: o -> d3 -> d2 -> d0 -> d1 -> d4 -> d5 -> d6 -> d7 -> o
+Courier 7: o -> d10 -> d11 -> d9 -> d5 -> d6 -> d8 -> d7 -> d12 -> d15 -> d16 -> d14 -> d13 -> d17 -> d18 -> d19 -> d2 -> d4 -> d3 -> d0 -> d1 -> d20 -> o
+Courier 8: o -> d8 -> d9 -> d11 -> d1 -> d0 -> d2 -> d3 -> d10 -> d6 -> d7 -> d5 -> d4 -> d12 -> o
+Courier 9: o -> d4 -> d3 -> d2 -> d0 -> d1 -> d5 -> d6 -> d7 -> d11 -> d8 -> d9 -> d14 -> d10 -> d12 -> d13 -> d15 -> o
+Courier 10: o -> d9 -> d10 -> d11 -> d7 -> d8 -> d15 -> d12 -> d14 -> d13 -> d6 -> d5 -> d3 -> d4 -> d16 -> d2 -> d1 -> d0 -> d17 -> o
+Courier 11: o -> d10 -> d11 -> d8 -> d9 -> d13 -> d12 -> d14 -> d3 -> d6 -> d5 -> d4 -> d7 -> d2 -> d1 -> d0 -> d15 -> o
+Courier 12: o -> d8 -> d7 -> d9 -> d6 -> d5 -> d4 -> d1 -> d0 -> d3 -> d2 -> d11 -> d10 -> d12 -> d13 -> d14 -> o
+Courier 13: o -> d13 -> d12 -> d8 -> d9 -> d10 -> d11 -> d5 -> d7 -> d6 -> d0 -> d1 -> d4 -> d2 -> d3 -> d14 -> o
+Courier 14: o -> d5 -> d4 -> d2 -> d0 -> d1 -> d9 -> d8 -> d7 -> d6 -> d3 -> d10 -> o
+inst04-OR-TOOLS OBJ Post optimization: 3596
+-r \033[0;31mStart inst 5\033[0m
+Done optimization for 0-courier
+Done optimization for 1-courier
+Done optimization for 2-courier
+Done optimization for 3-courier
+Done optimization for 4-courier
+Done optimization for 5-courier
+Done optimization for 6-courier
+Done optimization for 7-courier
+Done optimization for 8-courier
+Done optimization for 9-courier
+Done optimization for 10-courier
+Done optimization for 11-courier
+Done optimization for 12-courier
+Done optimization for 13-courier
+Done optimization for 14-courier
+Done optimization for 15-courier
+Done optimization for 16-courier
+Done optimization for 17-courier
+Done optimization for 18-courier
+Done optimization for 19-courier
+Courier 1: o -> d13 -> d14 -> d12 -> d1 -> d2 -> d3 -> d0 -> d6 -> d5 -> d4 -> d9 -> d11 -> d10 -> d8 -> d7 -> d15 -> d16 -> o
+Courier 2: o -> d10 -> d9 -> d11 -> d6 -> d5 -> d4 -> d2 -> d3 -> d1 -> d0 -> d8 -> d7 -> d12 -> o
+Courier 3: o -> d12 -> d9 -> d8 -> d7 -> d11 -> d10 -> d6 -> d2 -> d0 -> d1 -> d5 -> d4 -> d3 -> d13 -> o
+Courier 4: o -> d9 -> d10 -> d11 -> d12 -> d2 -> d0 -> d1 -> d7 -> d8 -> d5 -> d6 -> d4 -> d3 -> d13 -> o
+Courier 5: o -> d6 -> d7 -> d5 -> d3 -> d10 -> d8 -> d9 -> d12 -> d11 -> d13 -> d14 -> d2 -> d1 -> d0 -> d4 -> d15 -> o
+Courier 6: o -> d6 -> d7 -> d0 -> d5 -> d1 -> d4 -> d3 -> d2 -> d10 -> d8 -> d9 -> d12 -> d11 -> d14 -> d13 -> d15 -> d16 -> o
+Courier 7: o -> d7 -> d8 -> d9 -> d10 -> d11 -> d5 -> d4 -> d3 -> d2 -> d1 -> d0 -> d6 -> d12 -> o
+Courier 8: o -> d10 -> d8 -> d4 -> d5 -> d3 -> d2 -> d0 -> d1 -> d7 -> d6 -> d9 -> d11 -> o
+Courier 9: o -> d4 -> d3 -> d5 -> d7 -> d10 -> d8 -> d9 -> d6 -> d2 -> d1 -> d11 -> d0 -> d12 -> o
+Courier 10: o -> d6 -> d8 -> d7 -> d11 -> d10 -> d9 -> d3 -> d2 -> d0 -> d1 -> d5 -> d4 -> d12 -> o
+Courier 11: o -> d5 -> d6 -> d4 -> d3 -> d2 -> d7 -> d1 -> d0 -> d10 -> d8 -> d9 -> d11 -> o
+Courier 12: o -> d1 -> d0 -> d2 -> d3 -> d4 -> d6 -> d5 -> d10 -> d9 -> d8 -> d7 -> d11 -> o
+Courier 13: o -> d2 -> d7 -> d6 -> d9 -> d8 -> d10 -> d5 -> d4 -> d0 -> d1 -> d3 -> d11 -> o
+Courier 14: o -> d0 -> d1 -> d6 -> d7 -> d13 -> d10 -> d11 -> d12 -> d9 -> d8 -> d4 -> d5 -> d2 -> d3 -> d14 -> o
+Courier 15: o -> d6 -> d7 -> d8 -> d3 -> d4 -> d5 -> d0 -> d2 -> d1 -> d9 -> o
+Courier 16: o -> d3 -> d0 -> d1 -> d2 -> d4 -> d6 -> d5 -> d10 -> d11 -> d9 -> d7 -> d8 -> d12 -> o
+Courier 17: o -> d5 -> d4 -> d3 -> d2 -> d1 -> d0 -> d7 -> d6 -> d8 -> d9 -> o
+Courier 18: o -> d8 -> d7 -> d2 -> d0 -> d1 -> d3 -> d5 -> d4 -> d6 -> d9 -> o
+Courier 19: o -> d2 -> d6 -> d5 -> d7 -> d3 -> d4 -> d0 -> d1 -> d8 -> o
+Courier 20: o -> d8 -> d7 -> d10 -> d9 -> d12 -> d11 -> d6 -> d5 -> d0 -> d3 -> d2 -> d1 -> d4 -> d13 -> o
+inst05-OR-TOOLS OBJ Post optimization: 3800
+-r \033[0;31mStart inst 6\033[0m
+No solution found.
+-r \033[0;31mStart inst 7\033[0m
+Done optimization for 0-courier
+Done optimization for 1-courier
+Done optimization for 2-courier
+Done optimization for 3-courier
+Courier 1: o -> d2 -> d11 -> d10 -> d8 -> d7 -> d9 -> d6 -> d5 -> d1 -> d0 -> d4 -> d3 -> d12 -> o
+Courier 2: o -> d20 -> d22 -> d23 -> d24 -> d4 -> d5 -> d6 -> d19 -> d18 -> d7 -> d1 -> d0 -> d2 -> d3 -> d13 -> d14 -> d17 -> d16 -> d8 -> d15 -> d9 -> d10 -> d11 -> d12 -> d21 -> d25 -> o
+Courier 3: o -> d7 -> d6 -> d5 -> d8 -> d9 -> d10 -> d0 -> d17 -> d2 -> d14 -> d4 -> d3 -> d18 -> d19 -> d22 -> d21 -> d20 -> d16 -> d15 -> d1 -> d11 -> d13 -> d12 -> d23 -> o
+Courier 4: o -> d8 -> d9 -> d4 -> d10 -> d2 -> d3 -> d6 -> d5 -> d1 -> d7 -> d0 -> d11 -> o
+inst07-OR-TOOLS OBJ Post optimization: 1472
+-r \033[0;31mStart inst 8\033[0m
+Done optimization for 0-courier
+Done optimization for 1-courier
+Done optimization for 2-courier
+Done optimization for 3-courier
+Done optimization for 4-courier
+Done optimization for 5-courier
+Done optimization for 6-courier
+Done optimization for 7-courier
+Done optimization for 8-courier
+Done optimization for 9-courier
+Done optimization for 10-courier
+Courier 1: o -> d3 -> d2 -> d4 -> d1 -> d6 -> d7 -> d5 -> d11 -> d10 -> d0 -> d9 -> d8 -> d12 -> d13 -> o
+Courier 2: o -> d13 -> d10 -> d9 -> d12 -> d0 -> d1 -> d3 -> d2 -> d5 -> d7 -> d6 -> d4 -> d8 -> d11 -> d14 -> o
+Courier 3: o -> d17 -> d9 -> d1 -> d4 -> d2 -> d3 -> d0 -> d6 -> d5 -> d7 -> d8 -> d13 -> d16 -> d14 -> d15 -> d12 -> d11 -> d10 -> d18 -> o
+Courier 4: o -> d0 -> d3 -> d1 -> d2 -> d4 -> d11 -> d10 -> d8 -> d9 -> d5 -> d6 -> d7 -> d12 -> o
+Courier 5: o -> d11 -> d3 -> d1 -> d4 -> d5 -> d6 -> d10 -> d8 -> d7 -> d0 -> d15 -> d16 -> d2 -> d9 -> d14 -> d12 -> d13 -> d17 -> o
+Courier 6: o -> d9 -> d7 -> d8 -> d5 -> d4 -> d0 -> d2 -> d1 -> d6 -> d3 -> d10 -> o
+Courier 7: o -> d1 -> d9 -> d10 -> d0 -> d6 -> d7 -> d8 -> d5 -> d4 -> d3 -> d2 -> d11 -> o
+Courier 8: o -> d0 -> d9 -> d7 -> d8 -> d6 -> d5 -> d4 -> d3 -> d1 -> d2 -> d10 -> o
+Courier 9: o -> d9 -> d10 -> d0 -> d1 -> d2 -> d3 -> d7 -> d6 -> d5 -> d4 -> d8 -> d11 -> o
+Courier 10: o -> d3 -> d2 -> d0 -> d1 -> d9 -> d8 -> d12 -> d11 -> d10 -> d4 -> d6 -> d5 -> d7 -> d13 -> o
+Courier 11: o -> d7 -> d8 -> d9 -> d10 -> d13 -> d11 -> d12 -> d4 -> d5 -> d6 -> d2 -> d3 -> d1 -> d0 -> d14 -> o
+inst08-OR-TOOLS OBJ Post optimization: 2754
+-r \033[0;31mStart inst 9\033[0m
+Done optimization for 0-courier
+Done optimization for 1-courier
+Done optimization for 2-courier
+Done optimization for 3-courier
+Done optimization for 4-courier
+Done optimization for 5-courier
+Done optimization for 6-courier
+Done optimization for 7-courier
+Done optimization for 8-courier
+Done optimization for 9-courier
+Done optimization for 10-courier
+Done optimization for 11-courier
+Done optimization for 12-courier
+Done optimization for 13-courier
+Done optimization for 14-courier
+Done optimization for 15-courier
+Courier 1: o -> d3 -> d4 -> d5 -> d2 -> d0 -> d1 -> d6 -> d8 -> d7 -> d9 -> d10 -> d11 -> o
+Courier 2: o -> d2 -> d1 -> d0 -> d3 -> d5 -> d4 -> d6 -> d10 -> d12 -> d13 -> d11 -> d7 -> d8 -> d9 -> d14 -> o
+Courier 3: o -> d0 -> d5 -> d4 -> d2 -> d1 -> d3 -> d7 -> d6 -> d8 -> d9 -> d10 -> d11 -> d13 -> d12 -> d14 -> o
+Courier 4: o -> d13 -> d12 -> d14 -> d15 -> d11 -> d18 -> d16 -> d17 -> d7 -> d8 -> d10 -> d9 -> d3 -> d2 -> d1 -> d0 -> d4 -> d5 -> d6 -> d19 -> o
+Courier 5: o -> d9 -> d10 -> d11 -> d12 -> d13 -> d5 -> d6 -> d4 -> d3 -> d2 -> d1 -> d0 -> d7 -> d8 -> d14 -> o
+Courier 6: o -> d8 -> d9 -> d3 -> d2 -> d4 -> d0 -> d1 -> d7 -> d6 -> d5 -> d10 -> o
+Courier 7: o -> d12 -> d11 -> d10 -> d9 -> d0 -> d1 -> d2 -> d8 -> d7 -> d6 -> d4 -> d3 -> d5 -> d13 -> d14 -> d15 -> d16 -> o
+Courier 8: o -> d5 -> d4 -> d7 -> d6 -> d8 -> d9 -> d0 -> d2 -> d3 -> d1 -> d14 -> d12 -> d10 -> d11 -> d13 -> d15 -> o
+Courier 9: o -> d8 -> d10 -> d9 -> d11 -> d0 -> d2 -> d7 -> d3 -> d6 -> d5 -> d4 -> d1 -> d12 -> o
+Courier 10: o -> d10 -> d9 -> d11 -> d6 -> d7 -> d5 -> d1 -> d0 -> d8 -> d2 -> d3 -> d4 -> d12 -> d13 -> o
+Courier 11: o -> d2 -> d1 -> d0 -> d3 -> d4 -> d15 -> d16 -> d10 -> d8 -> d6 -> d7 -> d9 -> d5 -> d13 -> d14 -> d12 -> d11 -> d17 -> o
+Courier 12: o -> d11 -> d12 -> d0 -> d1 -> d5 -> d2 -> d4 -> d3 -> d8 -> d6 -> d7 -> d9 -> d10 -> d13 -> o
+Courier 13: o -> d0 -> d1 -> d9 -> d10 -> d2 -> d3 -> d7 -> d4 -> d5 -> d6 -> d8 -> d11 -> o
+Courier 14: o -> d6 -> d8 -> d7 -> d5 -> d4 -> d3 -> d2 -> d0 -> d1 -> d12 -> d10 -> d9 -> d11 -> d13 -> o
+Courier 15: o -> d0 -> d10 -> d11 -> d12 -> d7 -> d6 -> d5 -> d8 -> d9 -> d1 -> d2 -> d3 -> d4 -> d13 -> o
+Courier 16: o -> d2 -> d3 -> d1 -> d4 -> d5 -> d8 -> d9 -> d6 -> d7 -> d0 -> d10 -> o
+inst09-OR-TOOLS OBJ Post optimization: 4068
+-r \033[0;31mStart inst 10\033[0m
+No solution found.
+-r \033[0;31mStart inst 11\033[0m
+Done optimization for 0-courier
+Done optimization for 1-courier
+Done optimization for 2-courier
+Courier 1: o -> d15 -> d14 -> d0 -> d2 -> d6 -> d4 -> d3 -> d11 -> d9 -> d19 -> d5 -> d18 -> d17 -> d7 -> d10 -> d13 -> d12 -> d16 -> d1 -> d8 -> d20 -> o
+Courier 2: o -> d16 -> d15 -> d10 -> d11 -> d0 -> d1 -> d6 -> d14 -> d4 -> d3 -> d2 -> d12 -> d7 -> d5 -> d9 -> d8 -> d13 -> d17 -> o
+Courier 3: o -> d2 -> d3 -> d4 -> d1 -> d0 -> d7 -> d9 -> d8 -> d5 -> d6 -> d10 -> o
+inst11-OR-TOOLS OBJ Post optimization: 1142
+-r \033[0;31mFinished!\033[0m

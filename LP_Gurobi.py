@@ -59,6 +59,7 @@ content[9] = content[9][1:]
 content[10] = content[10][1:]
 content[11] = content[11][1:-2]
 content[12] = content[12][1:-2]
+content[13] = content[13][1:-2]
 n = int(content[7])
 m = int(content[0])
 l = [int(L) for L in content[2].split(',')]
@@ -70,10 +71,12 @@ x = [float(L) for L in content[9].split(',')]
 y = [float(L) for L in content[10].split(',')]
 reconstructor_x = [L.strip()[1:-1] for L in content[11].split(';')]
 reconstructor_y = [L.strip()[1:-1] for L in content[12].split(';')]
+reconstructor = [L.strip()[1:-1] for L in content[13].split(';')]
 for i in range(len(reconstructor_x)):
     try:
         reconstructor_x[i] = [int(L) for L in reconstructor_x[i].split(',')]
         reconstructor_y[i] = [int(L) for L in reconstructor_y[i].split(',')]
+        reconstructor[i] = [int(L) for L in reconstructor[i].split(',')]
     except:
         pass
 # --------------------2--------------------
@@ -93,6 +96,7 @@ for i in range(N):
 # --------------------4--------------------
 # ------------------MODEL------------------
 # There we have the first model that run on aggregated items
+gp.setParam("OutputFlag", 0) # Suppres Output
 gp.setParam("PoolSearchMode", 2) # To find better intermediary solution
 gp.setParam("TimeLimit", 300) # Time Limit of 5 minutes
 
@@ -192,14 +196,17 @@ try:
                     who_have_what[k].append(i)
     x_for_each = [[] for k in range(m)]
     y_for_each = [[] for k in range(m)]
+    who_have_what_after_clustering = [[] for k in range(m)]
     for k in range(m):
         for i in range(len(who_have_what[k])):
             for ii in range(len(reconstructor_x[who_have_what[k][i]])):
                 x_for_each[k].append(reconstructor_x[who_have_what[k][i]][ii])
                 y_for_each[k].append(reconstructor_y[who_have_what[k][i]][ii])
+                who_have_what_after_clustering[k].append(reconstructor[who_have_what[k][i]][ii])
     # --------------------6--------------------
     color_i = 1
     color = 'C1'
+    final_i_for_each = [[] for k in range(m)]
     for k in range(m):
         # --------------------7--------------------
         # ------------------MODEL------------------
@@ -214,9 +221,9 @@ try:
             for j in range(N_opt):
                 D[i, j] = abs(x_for_each[k][i] - x_for_each[k][j]) + abs(y_for_each[k][i] - y_for_each[k][j])
 
+        gp.setParam("OutputFlag", 0) # Suppres Output
         gp.setParam("PoolSearchMode", 2)
         gp.setParam("TimeLimit", 20) # 20 Second of Time Limit
-        gp.setParam("OutputFlag", 0) # Suppres Output
 
         # Model Initialization
         model = gp.Model(f"ottimizzazione_{k}")
@@ -272,6 +279,26 @@ try:
         color_i += 1
         color = 'C'+str(color_i)
         # --------------------8--------------------
+        # --------------------9--------------------
+        # There we print solution in the desired format
+        for j in range(N_opt):
+            if matrix[N_opt-1, j] > 0.5:
+                next_one = j
+                final_i_for_each[k].append(who_have_what_after_clustering[k][next_one])
+                break
+        while next_one != N_opt-1:
+            for j in range(N_opt):
+                if matrix[next_one, j] > 0.5:
+                    next_one = j
+                    if next_one != N_opt-1:
+                        final_i_for_each[k].append(who_have_what_after_clustering[k][next_one])
+                    break
+    for k in range(m):
+        print(f"Courier {k+1}: o -> ", end="")
+        for i in range(len(final_i_for_each[k])):
+            print(f"d{final_i_for_each[k][i]} -> ", end="")
+        print("o")
+    # --------------------9--------------------
     print(f"{file}-GUROBI Post optimization: {post_optimization}")
     plt.xlim(min(all_x)-2,max(all_x)+2)
     plt.ylim(min(all_y)-2,max(all_y)+2)

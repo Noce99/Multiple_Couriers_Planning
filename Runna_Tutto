@@ -1,49 +1,23 @@
 #!/bin/bash
-RED='\033[0;31m'
-NC='\033[0m'
-echo -r "${RED}Starting!${NC}"
-echo -r "${RED}Start inst 1${NC}"
 python LP_Gurobi.py 1 optimization
-echo -r "${RED}Start inst 2${NC}"
 python LP_Gurobi.py 2 optimization
-echo -r "${RED}Start inst 3${NC}"
 python LP_Gurobi.py 3 optimization
-echo -r "${RED}Start inst 4${NC}"
 python LP_Gurobi.py 4 optimization
-echo -r "${RED}Start inst 5${NC}"
 python LP_Gurobi.py 5 optimization
-echo -r "${RED}Start inst 6${NC}"
 python LP_Gurobi.py 6 optimization
-echo -r "${RED}Start inst 7${NC}"
 python LP_Gurobi.py 7 optimization
-echo -r "${RED}Start inst 8${NC}"
 python LP_Gurobi.py 8 optimization
-echo -r "${RED}Start inst 9${NC}"
 python LP_Gurobi.py 9 optimization
-echo -r "${RED}Start inst 10${NC}"
 python LP_Gurobi.py 10 optimization
-echo -r "${RED}Start inst 11${NC}"
 python LP_Gurobi.py 11 optimization
-echo -r "${RED}Start inst 1${NC}"
 python CP_Or_Tools.py 1 optimization
-echo -r "${RED}Start inst 2${NC}"
 python CP_Or_Tools.py 2 optimization
-echo -r "${RED}Start inst 3${NC}"
 python CP_Or_Tools.py 3 optimization
-echo -r "${RED}Start inst 4${NC}"
 python CP_Or_Tools.py 4 optimization
-echo -r "${RED}Start inst 5${NC}"
 python CP_Or_Tools.py 5 optimization
-echo -r "${RED}Start inst 6${NC}"
 python CP_Or_Tools.py 6 optimization
-echo -r "${RED}Start inst 7${NC}"
 python CP_Or_Tools.py 7 optimization
-echo -r "${RED}Start inst 8${NC}"
 python CP_Or_Tools.py 8 optimization
-echo -r "${RED}Start inst 9${NC}"
 python CP_Or_Tools.py 9 optimization
-echo -r "${RED}Start inst 10${NC}"
 python CP_Or_Tools.py 10 optimization
-echo -r "${RED}Start inst 11${NC}"
 python CP_Or_Tools.py 11 optimization
-echo -r "${RED}Finished!${NC}"

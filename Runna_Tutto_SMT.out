@@ -586,3 +586,381 @@ Optimization-2-OBJ:
 852
 Done optimization for 2-courier
 inst11-SMT Post optimization: 1554
+OBJ: 
+1757
+1629
+1576
+1556
+1551
+1509
+1499
+1498
+1388
+1317
+1248
+1246
+1197
+1179
+1150
+1137
+1103
+1075
+1062
+Optimized the first Model!
+Optimization-0-OBJ:
+948
+942
+910
+854
+832
+828
+812
+810
+Done optimization for 0-courier
+Optimization-1-OBJ:
+716
+630
+620
+578
+576
+522
+514
+510
+504
+496
+494
+488
+474
+454
+452
+450
+446
+438
+436
+430
+428
+Done optimization for 1-courier
+Optimization-2-OBJ:
+326
+310
+306
+300
+298
+276
+268
+258
+250
+244
+Done optimization for 2-courier
+Courier 1: o -> d19 -> d18 -> d14 -> d16 -> d13 -> d12 -> d11 -> d9 -> d8 -> d7 -> d5 -> d3 -> d1 -> d6 -> d4 -> d2 -> d0 -> d15 -> d17 -> d10 -> d20 -> d21 -> o
+Courier 2: o -> d3 -> d7 -> d0 -> d4 -> d5 -> d6 -> d2 -> d8 -> d10 -> d9 -> d1 -> d11 -> d12 -> o
+Courier 3: o -> d5 -> d4 -> d1 -> d3 -> d8 -> d9 -> d0 -> d2 -> d7 -> d6 -> d13 -> d11 -> d10 -> d12 -> d14 -> o
+inst01-SMT Post optimization: 1482
+OBJ: 
+OBJ: 
+2462
+2070
+2069
+2069
+2016
+Optimized the first Model!
+Optimization-0-OBJ:
+206
+202
+192
+186
+184
+170
+168
+166
+162
+148
+142
+140
+Done optimization for 0-courier
+Optimization-1-OBJ:
+380
+348
+330
+324
+318
+316
+314
+308
+306
+304
+300
+292
+290
+288
+286
+Done optimization for 1-courier
+Optimization-2-OBJ:
+808
+792
+784
+774
+772
+770
+Done optimization for 2-courier
+Optimization-3-OBJ:
+250
+246
+244
+240
+238
+234
+230
+228
+226
+222
+220
+216
+Done optimization for 3-courier
+Optimization-4-OBJ:
+426
+406
+400
+392
+378
+360
+358
+352
+350
+348
+336
+330
+322
+316
+308
+Done optimization for 4-courier
+Optimization-5-OBJ:
+688
+682
+680
+676
+Done optimization for 5-courier
+Optimization-6-OBJ:
+492
+478
+468
+458
+454
+442
+438
+432
+404
+402
+Done optimization for 6-courier
+Optimization-7-OBJ:
+490
+474
+466
+464
+458
+438
+430
+414
+408
+394
+390
+382
+378
+360
+352
+Done optimization for 7-courier
+Optimization-8-OBJ:
+264
+262
+260
+256
+252
+242
+240
+232
+228
+224
+222
+218
+214
+Done optimization for 8-courier
+Optimization-9-OBJ:
+302
+284
+282
+280
+276
+266
+256
+246
+244
+240
+234
+Done optimization for 9-courier
+Courier 1: o -> d11 -> d0 -> d8 -> d5 -> d2 -> d1 -> d4 -> d3 -> d6 -> d7 -> d10 -> d9 -> d12 -> o
+Courier 2: o -> d9 -> d0 -> d6 -> d4 -> d5 -> d8 -> d7 -> d2 -> d3 -> d1 -> d10 -> d11 -> d12 -> o
+Courier 3: o -> d18 -> d1 -> d2 -> d7 -> d8 -> d3 -> d9 -> d12 -> d14 -> d13 -> d4 -> d5 -> d6 -> d10 -> d11 -> d15 -> d0 -> d19 -> d16 -> d17 -> d20 -> o
+Courier 4: o -> d12 -> d11 -> d1 -> d2 -> d5 -> d4 -> d3 -> d6 -> d10 -> d8 -> d7 -> d9 -> d0 -> d13 -> d14 -> o
+Courier 5: o -> d9 -> d1 -> d0 -> d8 -> d6 -> d5 -> d4 -> d7 -> d2 -> d3 -> d10 -> o
+Courier 6: o -> d16 -> d14 -> d7 -> d8 -> d11 -> d5 -> d4 -> d10 -> d9 -> d13 -> d12 -> d6 -> d0 -> d1 -> d2 -> d3 -> d15 -> d17 -> o
+Courier 7: o -> d16 -> d14 -> d13 -> d15 -> d6 -> d4 -> d3 -> d8 -> d2 -> d1 -> d7 -> d5 -> d0 -> d9 -> d11 -> d10 -> d12 -> d17 -> d18 -> o
+Courier 8: o -> d2 -> d1 -> d3 -> d5 -> d4 -> d0 -> d6 -> d7 -> d8 -> d9 -> d10 -> d12 -> d11 -> d13 -> o
+Courier 9: o -> d10 -> d9 -> d8 -> d6 -> d5 -> d7 -> d0 -> d4 -> d3 -> d2 -> d1 -> d12 -> d11 -> d13 -> o
+Courier 10: o -> d12 -> d9 -> d4 -> d0 -> d3 -> d2 -> d1 -> d8 -> d10 -> d7 -> d6 -> d5 -> d11 -> d13 -> d14 -> o
+inst03-SMT Post optimization: 3598
+OBJ: 
+OBJ: 
+OBJ: 
+OBJ: 
+1693
+1654
+1612
+1594
+1541
+1530
+1529
+1474
+1422
+1382
+1375
+1272
+1239
+1195
+1189
+1177
+1173
+1159
+1130
+Optimized the first Model!
+Optimization-0-OBJ:
+286
+278
+262
+252
+250
+246
+240
+234
+Done optimization for 0-courier
+Optimization-1-OBJ:
+976
+958
+942
+934
+904
+888
+886
+882
+862
+838
+834
+832
+758
+752
+744
+Done optimization for 1-courier
+Optimization-2-OBJ:
+552
+548
+546
+Done optimization for 2-courier
+Optimization-3-OBJ:
+738
+730
+704
+700
+650
+648
+646
+638
+636
+602
+598
+588
+Done optimization for 3-courier
+Courier 1: o -> d6 -> d7 -> d9 -> d8 -> d1 -> d2 -> d3 -> d5 -> d4 -> d0 -> d10 -> d11 -> o
+Courier 2: o -> d1 -> d3 -> d11 -> d12 -> d14 -> d6 -> d5 -> d0 -> d10 -> d8 -> d7 -> d9 -> d4 -> d13 -> d16 -> d2 -> d15 -> d17 -> d18 -> o
+Courier 3: o -> d21 -> d22 -> d23 -> d17 -> d18 -> d20 -> d19 -> d3 -> d6 -> d5 -> d13 -> d11 -> d15 -> d12 -> d14 -> d9 -> d8 -> d7 -> d4 -> d0 -> d1 -> d10 -> d2 -> d16 -> d24 -> o
+Courier 4: o -> d16 -> d15 -> d1 -> d8 -> d6 -> d7 -> d0 -> d9 -> d11 -> d10 -> d12 -> d17 -> d3 -> d4 -> d2 -> d5 -> d13 -> d14 -> d18 -> o
+inst07-SMT Post optimization: 2112
+OBJ: 
+OBJ: 
+OBJ: 
+OBJ: 
+1459
+1362
+1357
+1353
+1330
+1324
+1301
+1258
+1236
+1189
+1162
+1160
+1139
+1127
+1124
+1117
+1072
+1066
+Optimized the first Model!
+Optimization-0-OBJ:
+438
+Done optimization for 0-courier
+Optimization-1-OBJ:
+488
+486
+478
+470
+462
+434
+416
+400
+374
+372
+368
+364
+350
+338
+334
+330
+328
+320
+308
+302
+298
+296
+294
+292
+284
+276
+272
+268
+264
+Done optimization for 1-courier
+Optimization-2-OBJ:
+1274
+1270
+1266
+1240
+1184
+1136
+1100
+1052
+1032
+1022
+986
+982
+942
+934
+896
+876
+868
+852
+Done optimization for 2-courier
+Courier 1: o -> d15 -> d14 -> d13 -> d12 -> d11 -> d10 -> d9 -> d8 -> d7 -> d6 -> d5 -> d4 -> d3 -> d2 -> d1 -> d0 -> d16 -> o
+Courier 2: o -> d1 -> d8 -> d3 -> d2 -> d0 -> d4 -> d10 -> d9 -> d6 -> d5 -> d7 -> d11 -> o
+Courier 3: o -> d3 -> d14 -> d12 -> d2 -> d13 -> d10 -> d8 -> d9 -> d1 -> d11 -> d15 -> d7 -> d0 -> d18 -> d19 -> d6 -> d5 -> d4 -> d16 -> d17 -> d20 -> o
+inst11-SMT Post optimization: 1554

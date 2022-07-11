@@ -6,7 +6,7 @@ from math import sqrt
 # This is our Data Preprocessing Program, given the original inst file it
 # generate new one optimizing the number of couriers, the order of data,
 # calculating a lower bound and aggregating items inside clusters.
-# Author: Enrico Mannocci, Riccardo Pasquini & Matteo Periani
+# Author: Enrico Mannocci, Riccardo Paolini & Matteo Periani
 # ------------------------------------------------------------------------------
 #PARAMETERS
 MAX_ITEM_NUM = 40 # Put 15 for SMT
@@ -45,6 +45,7 @@ def unify_most_close_points(d, verbose=False):
     global l
     global unifications_reconstructor_x
     global unifications_reconstructor_y
+    global unifications_reconstructor
     max_l = max(l)
     min = (1, 0)
     for i in range(len(d)-1):
@@ -66,8 +67,10 @@ def unify_most_close_points(d, verbose=False):
     y.pop(min[0])
     unifications_reconstructor_x[min[1]] += unifications_reconstructor_x[min[0]]
     unifications_reconstructor_y[min[1]] += unifications_reconstructor_y[min[0]]
+    unifications_reconstructor[min[1]] += unifications_reconstructor[min[0]]
     unifications_reconstructor_x.pop(min[0])
     unifications_reconstructor_y.pop(min[0])
+    unifications_reconstructor.pop(min[0])
     n = n - 1
     s[min[1]] += s[min[0]]
     s.pop(min[0])
@@ -94,6 +97,7 @@ for file in os.listdir("Inst/"):
     # and we truncate w and l with the calculated minimun number of couriers needed
     unifications_reconstructor_x = [[x[i]] for i in range(len(x))]
     unifications_reconstructor_y = [[y[i]] for i in range(len(y))]
+    unifications_reconstructor = [[i] for i in range(len(x))]
     dist = np.zeros(shape=(n+1,n+1), dtype=int)
     for i in range(n+1):
         for j in range(i, n+1):
@@ -160,6 +164,10 @@ for file in os.listdir("Inst/"):
     f.write("]\n")
     f.write(f"Y = [")
     for e in unifications_reconstructor_y:
+      f.write(f"{e}; ")
+    f.write("]\n")
+    f.write(f"I = [")
+    for e in unifications_reconstructor:
       f.write(f"{e}; ")
     f.write("]\n")
     f.write("\n")
