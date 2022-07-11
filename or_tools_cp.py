@@ -181,8 +181,8 @@ if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
     color = 'C1'
     for k in range(m):
         # --------------------7--------------------
-        # There we create a CP model for each couriers minimizing the distance
-        # only minimizing the order at witch they are collected and don't
+        # There we create a LP model for each couriers minimizing the distance.
+        # We only modify the order at witch items are collected and don't
         # changing at witch courier each item belong.
         N_opt = len(x_for_each[k])
         D = np.array([[0 for j in range(N_opt)] for i in range(N_opt)])
@@ -215,7 +215,7 @@ if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
         # MINIMIZATION OF THE OBJ FUNCTION
         model.Minimize(obj)
         solver = cp_model.CpSolver()
-        solver.parameters.max_time_in_seconds = 20.0
+        solver.parameters.max_time_in_seconds = 20.0 # 20 Second of Time Limit
         status = solver.Solve(model)
         print(f"Done optimization for {k}-courier")
         # --------------------7--------------------
