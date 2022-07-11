@@ -236,7 +236,7 @@ if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
 
         # OBJECTIVE FUNCTION
         obj = cp_model.LinearExpr.Sum([table[i][j]*D[i, j] for i in NODES for j in NODES])
-        
+
         # MINIMIZATION OF THE OBJ FUNCTION
         model.Minimize(obj)
         solver = cp_model.CpSolver()
