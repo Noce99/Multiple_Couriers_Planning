@@ -92,6 +92,7 @@ for i in range(N):
         D[i, j] = abs(x[i] - x[j]) + abs(y[i] - y[j])
 # --------------------3--------------------
 # --------------------4--------------------
+# ------------------MODEL------------------
 # There we have the first model that run on aggregated items
 model = cp_model.CpModel()
 
@@ -196,6 +197,7 @@ if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
     color = 'C1'
     for k in range(m):
         # --------------------7--------------------
+        # ------------------MODEL------------------
         # There we create a LP model for each courier that minimize the distance it travels.
         # We only modify the order at witch items are collected and do not
         # change at which courier each item belongs.
