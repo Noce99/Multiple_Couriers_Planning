@@ -221,7 +221,7 @@ if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
                 cols.append(model.NewBoolVar(name=f't[{i},{j}]'))
             table.append(cols)
 
-        # CONSTRAINTS
+        # CONSTRAINTS - same of the ones above (excluding weights)
         for i in ITEMS:
             model.AddExactlyOne([table[i][j] for j in NODES if j != i])
             model.AddExactlyOne([table[j][i] for j in NODES if j != i])
