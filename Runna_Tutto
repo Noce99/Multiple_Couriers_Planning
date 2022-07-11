@@ -3,47 +3,47 @@ RED='\033[0;31m'
 NC='\033[0m'
 echo -r "${RED}Starting!${NC}"
 echo -r "${RED}Start inst 1${NC}"
-python lp_gurobi.py 1 optimization
+python LP_Gurobi.py 1 optimization
 echo -r "${RED}Start inst 2${NC}"
-python lp_gurobi.py 2 optimization
+python LP_Gurobi.py 2 optimization
 echo -r "${RED}Start inst 3${NC}"
-python lp_gurobi.py 3 optimization
+python LP_Gurobi.py 3 optimization
 echo -r "${RED}Start inst 4${NC}"
-python lp_gurobi.py 4 optimization
+python LP_Gurobi.py 4 optimization
 echo -r "${RED}Start inst 5${NC}"
-python lp_gurobi.py 5 optimization
+python LP_Gurobi.py 5 optimization
 echo -r "${RED}Start inst 6${NC}"
-python lp_gurobi.py 6 optimization
+python LP_Gurobi.py 6 optimization
 echo -r "${RED}Start inst 7${NC}"
-python lp_gurobi.py 7 optimization
+python LP_Gurobi.py 7 optimization
 echo -r "${RED}Start inst 8${NC}"
-python lp_gurobi.py 8 optimization
+python LP_Gurobi.py 8 optimization
 echo -r "${RED}Start inst 9${NC}"
-python lp_gurobi.py 9 optimization
+python LP_Gurobi.py 9 optimization
 echo -r "${RED}Start inst 10${NC}"
-python lp_gurobi.py 10 optimization
+python LP_Gurobi.py 10 optimization
 echo -r "${RED}Start inst 11${NC}"
-python lp_gurobi.py 11 optimization
+python LP_Gurobi.py 11 optimization
 echo -r "${RED}Start inst 1${NC}"
-python or_tools_cp.py 1 optimization
+python CP_Or_Tools.py 1 optimization
 echo -r "${RED}Start inst 2${NC}"
-python or_tools_cp.py 2 optimization
+python CP_Or_Tools.py 2 optimization
 echo -r "${RED}Start inst 3${NC}"
-python or_tools_cp.py 3 optimization
+python CP_Or_Tools.py 3 optimization
 echo -r "${RED}Start inst 4${NC}"
-python or_tools_cp.py 4 optimization
+python CP_Or_Tools.py 4 optimization
 echo -r "${RED}Start inst 5${NC}"
-python or_tools_cp.py 5 optimization
+python CP_Or_Tools.py 5 optimization
 echo -r "${RED}Start inst 6${NC}"
-python or_tools_cp.py 6 optimization
+python CP_Or_Tools.py 6 optimization
 echo -r "${RED}Start inst 7${NC}"
-python or_tools_cp.py 7 optimization
+python CP_Or_Tools.py 7 optimization
 echo -r "${RED}Start inst 8${NC}"
-python or_tools_cp.py 8 optimization
+python CP_Or_Tools.py 8 optimization
 echo -r "${RED}Start inst 9${NC}"
-python or_tools_cp.py 9 optimization
+python CP_Or_Tools.py 9 optimization
 echo -r "${RED}Start inst 10${NC}"
-python or_tools_cp.py 10 optimization
+python CP_Or_Tools.py 10 optimization
 echo -r "${RED}Start inst 11${NC}"
-python or_tools_cp.py 11 optimization
+python CP_Or_Tools.py 11 optimization
 echo -r "${RED}Finished!${NC}"

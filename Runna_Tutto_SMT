@@ -1,0 +1,13 @@
+#!/bin/bash
+python SMT_Z3.py 1
+python SMT_Z3.py 2
+python SMT_Z3.py 3
+python SMT_Z3.py 4
+python SMT_Z3.py 5
+python SMT_Z3.py 6
+python SMT_Z3.py 7
+python SMT_Z3.py 8
+python SMT_Z3.py 9
+python SMT_Z3.py 10
+python SMT_Z3.py 11
+
