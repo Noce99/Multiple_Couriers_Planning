@@ -6,34 +6,17 @@ import math
 from math import sqrt
 
 #PARAMETERS
-MAX_ITEM_NUM = 15 #75 per far runnare tutti
+MAX_ITEM_NUM = 40 # Put 15 for SMT
 
-# Prim's Algorithm in Python
 def prim(G):
-
+  # Prim's Algorithm used to calculate the lower bound
   INF = 9999999
-  # number of vertices in graph
   V = G.shape[0]
-
   tot = 0
-
-  # create a array to track selected vertex
-  # selected will become true otherwise false
   selected = np.zeros(shape=(G.shape[0],))
-  # set number of edge to 0
   no_edge = 0
-  # the number of egde in minimum spanning tree will be
-  # always less than(V - 1), where V is number of vertices in
-  # graph
-  # choose 0th vertex and make it true
   selected[0] = True
-  # print for edge and weight
-
   while (no_edge < V - 1):
-      # For every vertex in the set S, find the all adjacent vertices
-      #, calculate the distance from the vertex selected at step 1.
-      # if the vertex is already in the set S, discard it otherwise
-      # choose another vertex nearest to selected vertex  at step 1.
       minimum = INF
       x = 0
       y = 0
@@ -41,20 +24,16 @@ def prim(G):
           if selected[i]:
               for j in range(V):
                   if ((not selected[j]) and G[i][j]):
-                      # not in selected and there is an edge
                       if minimum > G[i][j]:
                           minimum = G[i][j]
                           x = i
                           y = j
-
       selected[y] = True
       tot += minimum
       no_edge += 1
-
   return tot
-
-
 def unify_most_close_points(d, verbose=False):
+    # Used to find out better point for aggregation
     global x
     global y
     global n
@@ -62,37 +41,14 @@ def unify_most_close_points(d, verbose=False):
     global l
     global unifications_reconstructor_x
     global unifications_reconstructor_y
-    global max_s
     max_l = max(l)
-    if verbose:
-        print("Ecco la matrice d: ")
-        for i in range(len(d)-1):
-            for j in range(len(d[0])-1):
-                print(d[i][j], end=", ")
-            print("")
     min = (1, 0)
     for i in range(len(d)-1):
         for j in range(len(d[0])-1):
             if d[i][j] < d[min[0]][min[1]] and i != j and s[i]+s[j] < max_l:
                 min = (i, j)
-    if verbose:
-        print(f"Il minimo è in posizione: {min}")
-    """
-    print(f"Selected: {min}")
-    print("Before:")
-    for i in range(len(d)):
-        print(d[i])
-    print("----------------------------")
-    print(f"X= {x}")
-    print(f"Y= {y}")
-    print(f"n= {n}")
-    print(f"s= {s}")
-    print("----------------------------")
-    """
     new_x = (x[min[0]] + x[min[1]])/2.
     new_y = (y[min[0]] + y[min[1]])/2.
-    if verbose:
-        print(f"Faccio la media tra ({x[min[0]]}, {y[min[0]]}) e ({x[min[1]]}, {y[min[1]]}) ottenendo ({new_x}, {new_y})")
     for i in range(len(d)):
         d[min[1]][i] = sqrt((new_x - x[i])**2 + (new_y - y[i])**2)
     for i in range(len(d)):
@@ -100,47 +56,17 @@ def unify_most_close_points(d, verbose=False):
     d.pop(min[0])
     for i in range(len(d)):
         d[i].pop(min[0])
-    if verbose:
-        print(f"Ecco la matrice d dopo l'eliminazione della riga e colonna {min[0]}: ")
-        for i in range(len(d)-1):
-            for j in range(len(d[0])-1):
-                print(d[i][j], end=", ")
-            print("")
-    if verbose:
-        print("x prima della modifica:")
-        print(x)
     x[min[1]] = new_x
     y[min[1]] = new_y
     x.pop(min[0])
     y.pop(min[0])
-    if verbose:
-        print("x dopo la modifica:")
-        print(x)
-    if verbose:
-        print(f"Unifico {unifications_reconstructor_x[min[1]]} e {unifications_reconstructor_x[min[0]]} in ", end="")
-        print("unifications_reconstructor_x prima della modifica")
-        print(unifications_reconstructor_x)
     unifications_reconstructor_x[min[1]] += unifications_reconstructor_x[min[0]]
     unifications_reconstructor_y[min[1]] += unifications_reconstructor_y[min[0]]
     unifications_reconstructor_x.pop(min[0])
     unifications_reconstructor_y.pop(min[0])
-    if verbose:
-        print("unifications_reconstructor_x dopo la modifica")
-        print(unifications_reconstructor_x)
     n = n - 1
     s[min[1]] += s[min[0]]
     s.pop(min[0])
-    """
-    print("After:")
-    for i in range(len(d)):
-        print(d[i])
-    print("----------------------------")
-    print(f"X= {x}")
-    print(f"Y= {y}")
-    print(f"n= {n}")
-    print(f"s= {s}")
-    print("----------------------------")
-    """
     return d
 
 
