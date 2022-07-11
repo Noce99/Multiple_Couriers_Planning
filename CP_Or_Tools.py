@@ -79,18 +79,23 @@ for i in range(len(reconstructor_x)):
 # There we create some important constants from the data we have got in the
 # prevous section.
 # D[i, j]   ->  Is the Manatthan distaces between item i and item j
+
 N = n + 1
+
 ITEMS = list(range(n))
 NODES = list(range(N))
 COURIERS = list(range(m))
+
 D = np.array([[0 for j in range(N)] for i in range(N)])
 for i in range(N):
     for j in range(N):
         D[i, j] = abs(x[i] - x[j]) + abs(y[i] - y[j])
 # --------------------3--------------------
 # --------------------4--------------------
+# ------------------MODEL------------------
 # There we have the first model that run on aggregated items
 model = cp_model.CpModel()
+
 # VARIABLES
 # We simply have a 3D Matrix [k*N*N]
 table = []
@@ -102,23 +107,34 @@ for k in COURIERS:
             cols.append(model.NewBoolVar(name=f't[{k},{i},{j}]'))
         rows.append(cols)
     table.append(rows)
+
 # CONSTRAINTS
+# Exactly One - all items are delivered
 for i in ITEMS:
     model.AddExactlyOne([table[k][i][j] for k in COURIERS for j in NODES if j != i])
     model.AddExactlyOne([table[k][j][i] for k in COURIERS for j in NODES if j != i])
+
+# All the couriers leave the depot
 for k in COURIERS:
     model.Add(table[k][N-1][N-1] == 0)
+
+# Weights - do not overcome the capacity limit
 for k in COURIERS:
     model.Add(sum([table[k][i][j]*s[j] for i in NODES for j in range(N-1) if i != j]) <= l[k])
+
+# Circuit - Hamiltonian path
 for k in COURIERS:
     arcs = []
     for i in NODES:
         for j in NODES:
             arcs.append((i, j, table[k][i][j]))
     model.AddCircuit(arcs)
-# OBJECTIVE FUNCTION
+
+# OBJECTIVE FUNCTION - minimize the distance
 obj = cp_model.LinearExpr.Sum([table[k][i][j]*D[i, j] for k in COURIERS for i in NODES for j in NODES])
+
 model.Add(obj >= lower_boud)
+
 # MINIMIZATION OF THE OBJ FUNCTION
 model.Minimize(obj)
 solver = cp_model.CpSolver()
@@ -181,17 +197,21 @@ if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
     color = 'C1'
     for k in range(m):
         # --------------------7--------------------
-        # There we create a LP model for each couriers minimizing the distance.
-        # We only modify the order at witch items are collected and don't
-        # changing at witch courier each item belong.
+        # ------------------MODEL------------------
+        # There we create a LP model for each courier that minimize the distance it travels.
+        # We only modify the order at witch items are collected and do not
+        # change at which courier each item belongs.
         N_opt = len(x_for_each[k])
+
         D = np.array([[0 for j in range(N_opt)] for i in range(N_opt)])
         for i in range(N_opt):
             for j in range(N_opt):
                 D[i, j] = abs(x_for_each[k][i] - x_for_each[k][j]) + abs(y_for_each[k][i] - y_for_each[k][j])
+
         ITEMS = list(range(N_opt-1))
         NODES = list(range(N_opt))
         model = cp_model.CpModel()
+
         # We create our 3D Matrix
         table = []
         table.clear()
@@ -200,18 +220,23 @@ if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
             for j in NODES:
                 cols.append(model.NewBoolVar(name=f't[{i},{j}]'))
             table.append(cols)
-        # CONSTRAINTS
+
+        # CONSTRAINTS - same of the ones above (excluding weights)
         for i in ITEMS:
             model.AddExactlyOne([table[i][j] for j in NODES if j != i])
             model.AddExactlyOne([table[j][i] for j in NODES if j != i])
+
         model.Add(table[N_opt-1][N_opt-1] == 0)
+
         arcs = []
         for i in NODES:
             for j in NODES:
                 arcs.append((i, j, table[i][j]))
         model.AddCircuit(arcs)
+
         # OBJECTIVE FUNCTION
         obj = cp_model.LinearExpr.Sum([table[i][j]*D[i, j] for i in NODES for j in NODES])
+        
         # MINIMIZATION OF THE OBJ FUNCTION
         model.Minimize(obj)
         solver = cp_model.CpSolver()

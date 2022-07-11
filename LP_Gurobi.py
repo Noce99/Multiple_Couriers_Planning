@@ -7,7 +7,7 @@ import sys
 import time
 # ------------------------------------------------------------------------------
 # This is our LP model and we have used the gurobipy lib to build it
-# Author: Enrico Mannocci, Riccardo Pasquini & Matteo Periani
+# Author: Enrico Mannocci, Riccardo Paolini & Matteo Periani
 # ------------------------------------------------------------------------------
 # --------------------1--------------------
 # There we get the argument that specifie the istance we want to solve
@@ -81,44 +81,65 @@ for i in range(len(reconstructor_x)):
 # There we create some important constants from the data we have got in the
 # prevous section.
 # D[i, j]   ->  Is the Manatthan distaces between item i and item j
+
 N = n + 1
+
 D = np.array([[0 for j in range(N)] for i in range(N)])
 for i in range(N):
     for j in range(N):
         D[i, j] = abs(x[i] - x[j]) + abs(y[i] - y[j])
+
 # --------------------3--------------------
 # --------------------4--------------------
+# ------------------MODEL------------------
 # There we have the first model that run on aggregated items
 gp.setParam("PoolSearchMode", 2) # To find better intermediary solution
 gp.setParam("TimeLimit", 300) # Time Limit of 5 minutes
+
 try:
     # Model Initialization
     model = gp.Model("LP_Model")
-    # We have 2 variables, a 3D matrix as in CP and a u Vector to remove loops
+
+    # We have 2 variables, a 3D matrix as in CP and a 'u' Vector to remove loops
     table = model.addMVar(shape=(m, N, N), vtype=GRB.BINARY, name="table")
     u = model.addMVar(shape=(N), lb=1, ub=N, vtype=GRB.INTEGER, name="u")
+
     # Obj definition
     obj = sum(D[i, j]*table[k, i, j] for i in range(N) for j in range(N) for k in range(m))
+
     model.addConstr(obj >= lower_boud)
     model.setObjective(obj, GRB.MINIMIZE)
+
     # Constraints
     for i in range(N):
         for k in range(m):
+            # Each courier leaves the depot
             model.addConstr(table[k,i,i] == 0)
+            # If an item is reached, it is also leaved by the same courier
             model.addConstr(sum(table[k,i,j] for j in range(N)) == sum(table[k,j,i] for j in range(N)))
+
+    # Every item is delivered
     for j in range(N-1):
         model.addConstr(sum(table[k, i, j] for k in range(m) for i in range(N)) == 1)
+
+
     for k in range(m):
+        # Start from the depot and come back to it at the end
         model.addConstr(sum(table[k, N-1, j] for j in range(N-1)) == 1)
         model.addConstr(sum(table[k, j, N-1] for j in range(N-1)) == 1)
+        # Weights constraint
         model.addConstr(sum(table[k, i, j]*s[j] for i in range(N) for j in range(N-1)) <= l[k])
+
+    # Sub-tours (Loops) elimination
     for i in range(N):
         for j in range(N-1):
             for k in range(m):
                 model.addConstr(u[N-1] == 1)
                 model.addConstr(table[k, i, j]*u[j] >= table[k, i, j]*(u[i]+1))
+
     # Model Optimization
     model.optimize()
+
     # There we check if we have gotten a solution and if yes we put results
     # inside the matrix variable
     try:
@@ -181,36 +202,47 @@ try:
     color = 'C1'
     for k in range(m):
         # --------------------7--------------------
-        # There we create a LP model for each couriers minimizing the distance.
+        # ------------------MODEL------------------
+        # There we create a LP model for each courier that minimize the distance it travels.
         # We only modify the order at witch items are collected and don't
         # changing at witch courier each item belong.
+
         N_opt = len(x_for_each[k])
+
         D = np.array([[0 for j in range(N_opt)] for i in range(N_opt)])
         for i in range(N_opt):
             for j in range(N_opt):
                 D[i, j] = abs(x_for_each[k][i] - x_for_each[k][j]) + abs(y_for_each[k][i] - y_for_each[k][j])
+
         gp.setParam("PoolSearchMode", 2)
         gp.setParam("TimeLimit", 20) # 20 Second of Time Limit
         gp.setParam("OutputFlag", 0) # Suppres Output
+
         # Model Initialization
         model = gp.Model(f"ottimizzazione_{k}")
+
         # We have 2 variables, a 3D matrix as in CP and a u Vector to remove loops
         table = model.addMVar(shape=(N_opt, N_opt), vtype=GRB.BINARY, name="table")
         u = model.addMVar(shape=(N_opt), lb=1, ub=N_opt, vtype=GRB.INTEGER, name="u")
+
         # Obj definition
         obj = sum(D[i, j]*table[i, j] for i in range(N_opt) for j in range(N_opt))
         model.setObjective(obj, GRB.MINIMIZE)
-        # Constraints
+
+        # Constraints - same of the ones above (excluding weights)
         for i in range(N_opt):
                 model.addConstr(table[i,i] == 0)
                 model.addConstr(sum(table[i,j] for j in range(N_opt)) == sum(table[j,i] for j in range(N_opt)))
+
         for j in range(N_opt):
             model.addConstr(sum(table[i, j] for i in range(N_opt)) == 1)
             model.addConstr(sum(table[j, i] for i in range(N_opt)) == 1)
+
         for i in range(N_opt):
             for j in range(N_opt-1):
                 model.addConstr(u[N_opt-1] == 1)
                 model.addConstr(table[i, j]*u[j] >= table[i, j]*(u[i]+1))
+
         # Model Optimization
         model.optimize()
         print(f"Done optimization for {k}-courier.")
