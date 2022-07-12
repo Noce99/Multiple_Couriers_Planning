@@ -9,7 +9,9 @@ from z3 import *
 import math
 # ------------------------------------------------------------------------------
 # This is our SMT model and we have used the z3 lib to build it
-# Author: Enrico Mannocci, Riccardo Pasquini & Matteo Periani
+# Author: Enrico Mannocci enrico.mannocci@studio.unibo.it),
+# Riccardo Paolini (riccardo.paolini5@studio.unibo.it) &
+# Matteo Periani (matteo.periani2@studio.unibo.it)
 # ------------------------------------------------------------------------------
 # --------------------1--------------------
 # There we get the argument that specifie the istance we want to solve

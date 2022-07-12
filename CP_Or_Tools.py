@@ -5,7 +5,9 @@ import sys
 import time
 # ------------------------------------------------------------------------------
 # This is our CP model and we have used the ortools lib to build it
-# Author: Enrico Mannocci, Riccardo Paolini & Matteo Periani
+# Author: Enrico Mannocci enrico.mannocci@studio.unibo.it),
+# Riccardo Paolini (riccardo.paolini5@studio.unibo.it) &
+# Matteo Periani (matteo.periani2@studio.unibo.it)
 # ------------------------------------------------------------------------------
 # --------------------1--------------------
 # There we get the argument that specifie the istance we want to solve

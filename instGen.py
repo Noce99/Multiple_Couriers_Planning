@@ -6,7 +6,9 @@ from math import sqrt
 # This is our Data Preprocessing Program, given the original inst file it
 # generate new one optimizing the number of couriers, the order of data,
 # calculating a lower bound and aggregating items inside clusters.
-# Author: Enrico Mannocci, Riccardo Paolini & Matteo Periani
+# Author: Enrico Mannocci enrico.mannocci@studio.unibo.it),
+# Riccardo Paolini (riccardo.paolini5@studio.unibo.it) &
+# Matteo Periani (matteo.periani2@studio.unibo.it)
 # ------------------------------------------------------------------------------
 #PARAMETERS
 MAX_ITEM_NUM = 40 # Put 15 for SMT
